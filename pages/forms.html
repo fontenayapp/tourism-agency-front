@@ -436,30 +436,37 @@
 
                                         <div class="tab"  class="form-group">
                                             <h2>Productos</h2>
-                                            <label>Proveedor</label>
-                                            <select class="form-control">
-                                                <option>Promotor 1</option>
-                                                <option>Promotor 2</option>
-                                                <option>Promotor 3</option>
-                                            </select>
-                                            <label>Servicio</label>
-                                            <select class="form-control">
-                                                <option>Promotor 1</option>
-                                                <option>Promotor 2</option>
-                                                <option>Promotor 3</option>
-                                            </select>
-                                            <label>Fecha</label>
-                                            <label>Traslado</label>
-                                            <select class="form-control">
-                                                <option>Sí</option>
-                                                <option>No</option>
-                                            </select>
-                                            <label>Adulto(s)</label>
-                                            <input class="form-control" type="number" name="quantity" min="0">
-                                            <label>Niño(s)</label>
-                                            <input class="form-control" type="number" name="quantity" min="0">
-                                            <label>Bebé(s)</label>
-                                            <input class="form-control" type="number" name="quantity" min="0">
+                                            <div class="panel panel-default col-lg-4">
+                                                <div class="panel-heading">
+                                                    Producto 1
+                                                </div>
+                                                <div class="panel-body">
+                                                    <label>Proveedor</label>
+                                                    <select class="form-control">
+                                                        <option>Promotor 1</option>
+                                                        <option>Promotor 2</option>
+                                                        <option>Promotor 3</option>
+                                                    </select>
+                                                    <label>Servicio</label>
+                                                    <select class="form-control">
+                                                        <option>Promotor 1</option>
+                                                        <option>Promotor 2</option>
+                                                        <option>Promotor 3</option>
+                                                    </select>
+                                                    <label>Fecha</label>
+                                                    <label>Traslado</label>
+                                                    <select class="form-control">
+                                                        <option>Sí</option>
+                                                        <option>No</option>
+                                                    </select>
+                                                    <label>Adulto(s)</label>
+                                                    <input class="form-control" type="number" name="quantity" min="0">
+                                                    <label>Niño(s)</label>
+                                                    <input class="form-control" type="number" name="quantity" min="0">
+                                                    <label>Bebé(s)</label>
+                                                    <input class="form-control" type="number" name="quantity" min="0">
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="tab" class="form-group">
@@ -495,7 +502,7 @@
                                             <p><input placeholder="Password..." oninput="this.className = ''"></p>
                                         </div>
 
-                                        <div style="overflow:auto;">
+                                        <div class="col-lg-12" style="overflow:auto;">
                                             <div style="float:right;">
                                                 <button type="button" class="btn btn-primary" id="prevBtn" onclick="nextPrev(-1)">Volver</button>
                                                 <button type="button" class="btn btn-success" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
@@ -503,7 +510,7 @@
                                         </div>
 
                                         <!-- Circles which indicates the steps of the form: -->
-                                        <div style="text-align:center;margin-top:40px;">
+                                        <div class="col-lg-12" style="text-align:center;margin-top:40px;">
                                             <span class="step"></span>
                                             <span class="step"></span>
                                             <span class="step"></span>
