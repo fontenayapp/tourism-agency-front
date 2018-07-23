@@ -406,36 +406,45 @@
 
                                         <div class="tab"  class="form-group">
                                             <h2>Productos</h2>
-                                            <div class="panel panel-default col-lg-4">
-                                                <div class="panel-heading">
-                                                    Producto 1
+                                            <div id="listOfProducts">
+                                                <div id="product-1" class="productPanel panel panel-default col-lg-4" style='padding:  0;'>
+                                                    <div class="panel-heading">
+                                                        Producto 1
+                                                        <button id="deleteProduct" type="button" class="close">×</button>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <label>Proveedor</label>
+                                                        <select class="form-control">
+                                                            <option>Promotor 1</option>
+                                                            <option>Promotor 2</option>
+                                                            <option>Promotor 3</option>
+                                                        </select>
+                                                        <label>Servicio</label>
+                                                        <select class="form-control">
+                                                            <option>Promotor 1</option>
+                                                            <option>Promotor 2</option>
+                                                            <option>Promotor 3</option>
+                                                        </select>
+                                                        <label>Fecha</label>
+                                                        <label>Traslado</label>
+                                                        <select class="form-control">
+                                                            <option>Sí</option>
+                                                            <option>No</option>
+                                                        </select>
+                                                        <label>Adulto(s)</label>
+                                                        <input class="form-control" type="number" name="quantity" min="0">
+                                                        <label>Niño(s)</label>
+                                                        <input class="form-control" type="number" name="quantity" min="0">
+                                                        <label>Bebé(s)</label>
+                                                        <input class="form-control" type="number" name="quantity" min="0">
+                                                    </div>
                                                 </div>
-                                                <div class="panel-body">
-                                                    <label>Proveedor</label>
-                                                    <select class="form-control">
-                                                        <option>Promotor 1</option>
-                                                        <option>Promotor 2</option>
-                                                        <option>Promotor 3</option>
-                                                    </select>
-                                                    <label>Servicio</label>
-                                                    <select class="form-control">
-                                                        <option>Promotor 1</option>
-                                                        <option>Promotor 2</option>
-                                                        <option>Promotor 3</option>
-                                                    </select>
-                                                    <label>Fecha</label>
-                                                    <label>Traslado</label>
-                                                    <select class="form-control">
-                                                        <option>Sí</option>
-                                                        <option>No</option>
-                                                    </select>
-                                                    <label>Adulto(s)</label>
-                                                    <input class="form-control" type="number" name="quantity" min="0">
-                                                    <label>Niño(s)</label>
-                                                    <input class="form-control" type="number" name="quantity" min="0">
-                                                    <label>Bebé(s)</label>
-                                                    <input class="form-control" type="number" name="quantity" min="0">
-                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <button id="addProduct" type="button" class="btn btn-success btn-lg btn-block" style='height: 425px;font-size: 40px;'>
+                                                    Agregar<br>producto<br><br>
+                                                    <span class="glyphicon glyphicon-plus" style='font-size: 75px;'></span>
+                                                </button>
                                             </div>
                                         </div>
 
@@ -764,6 +773,49 @@
             //... and adds the "active" class to the current step:
             x[n].className += " active";
         }
+
+
+        $("#deleteProduct").click(function(){
+            $("#deleteProduct").closest(".productPanel").remove();
+        });
+
+        $("#addProduct").click(function(){
+            var = $("#listOfProducts").children().length;
+            $("#deleteProduct").closest(".productPanel").remove();
+        })
+/*
+        <div id="product-1" class="productPanel panel panel-default col-lg-4" style='padding:  0;'>
+            <div class="panel-heading">
+            Producto 1
+        <button id="deleteProduct" type="button" class="close">×</button>
+        </div>
+        <div class="panel-body">
+            <label>Proveedor</label>
+            <select class="form-control">
+            <option>Promotor 1</option>
+        <option>Promotor 2</option>
+        <option>Promotor 3</option>
+        </select>
+        <label>Servicio</label>
+        <select class="form-control">
+            <option>Promotor 1</option>
+        <option>Promotor 2</option>
+        <option>Promotor 3</option>
+        </select>
+        <label>Fecha</label>
+        <label>Traslado</label>
+        <select class="form-control">
+            <option>Sí</option>
+            <option>No</option>
+            </select>
+            <label>Adulto(s)</label>
+            <input class="form-control" type="number" name="quantity" min="0">
+            <label>Niño(s)</label>
+            <input class="form-control" type="number" name="quantity" min="0">
+            <label>Bebé(s)</label>
+            <input class="form-control" type="number" name="quantity" min="0">
+            </div>
+            </div>*/
     </script>
 </body>
 
