@@ -378,30 +378,46 @@
                                         <!-- One "tab" for each step in the form: -->
                                         <div class="tab" class="form-group">
                                             <h2>Datos del cliente</h2>
-                                            <label>Nombre y Apellido</label>
+                                                <div class="form-group col-lg-4">
+                                                <label>Nombre y Apellido</label>
                                             <input class="form-control">
-                                            <label>Hotel</label>
-                                            <input class="form-control">
-                                            <label>Dirección</label>
-                                            <input class="form-control">
+                                            </div>
+                                            <div class="form-group col-lg-4">
+                                                <label>Hotel</label>
+                                                <input class="form-control">
+                                            </div>
+                                            <div class="form-group col-lg-4">
+                                                <label>Dirección</label>
+                                                <input class="form-control">
+                                            </div>
+                                            <div class="form-group col-lg-4">
                                             <label>Habitación</label>
-                                            <input class="form-control">
+                                                <input class="form-control">
+                                                </div>
+                                            <div class="form-group col-lg-4">
                                             <label>Número de contacto</label>
-                                            <input class="form-control">
-                                            <label>Email</label>
-                                            <input class="form-control">
-                                            <label>Promotor</label>
-                                            <select class="form-control">
-                                                <option>Promotor 1</option>
-                                                <option>Promotor 2</option>
-                                                <option>Promotor 3</option>
-                                            </select>
-                                            <label>Vendedor</label>
-                                            <select class="form-control">
-                                                <option>Vendedor 1</option>
-                                                <option>Vendedor 2</option>
-                                                <option>Vendedor 3</option>
-                                            </select>
+                                                <input class="form-control">
+                                                </div>
+                                            <div class="form-group col-lg-4">
+                                                <label>Email</label>
+                                                <input class="form-control">
+                                            </div>
+                                            <div class="form-group col-lg-4">
+                                                <label>Promotor</label>
+                                                <select class="form-control">
+                                                    <option>Promotor 1</option>
+                                                    <option>Promotor 2</option>
+                                                    <option>Promotor 3</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-lg-4">
+                                                <label>Vendedor</label>
+                                                <select class="form-control">
+                                                    <option>Vendedor 1</option>
+                                                    <option>Vendedor 2</option>
+                                                    <option>Vendedor 3</option>
+                                                </select>
+                                            </div>
                                         </div>
 
                                         <div class="tab"  class="form-group">
@@ -416,15 +432,15 @@
                                                         <div class="panel-body">
                                                             <label>Proveedor</label>
                                                             <select class="form-control">
-                                                                <option>Promotor 1</option>
-                                                                <option>Promotor 2</option>
-                                                                <option>Promotor 3</option>
+                                                                <option>Proveedor 1</option>
+                                                                <option>Proveedor 2</option>
+                                                                <option>Proveedor 3</option>
                                                             </select>
                                                             <label>Servicio</label>
                                                             <select class="form-control">
-                                                                <option>Promotor 1</option>
-                                                                <option>Promotor 2</option>
-                                                                <option>Promotor 3</option>
+                                                                <option>Servicio 1</option>
+                                                                <option>Servicio 2</option>
+                                                                <option>Servicio 3</option>
                                                             </select>
                                                             <label>Fecha</label>
                                                             <div></div>
@@ -434,7 +450,7 @@
                                                                 <option>No</option>
                                                             </select>
                                                             <label>Adulto(s)</label>
-                                                            <input class="form-control" type="number" name="quantity" min="0">
+                                                            <input class="form-control" type="number" name="quantity" min="1">
                                                             <label>Niño(s)</label>
                                                             <input class="form-control" type="number" name="quantity" min="0">
                                                             <label>Bebé(s)</label>
@@ -453,31 +469,87 @@
 
                                         <div class="tab" class="form-group">
                                             <h2>Confirmación</h2>
-                                            <label>Datos del cliente</label>
-                                            <select class="form-control">
-                                                <option>Promotor 1</option>
-                                                <option>Promotor 2</option>
-                                                <option>Promotor 3</option>
-                                            </select>
-                                            <label>Servicio</label>
-                                            <select class="form-control">
-                                                <option>Promotor 1</option>
-                                                <option>Promotor 2</option>
-                                                <option>Promotor 3</option>
-                                            </select>
-                                            <label>Fecha</label>
-                                            <div></div>
-                                            <label>Traslado</label>
-                                            <select class="form-control">
-                                                <option>Sí</option>
-                                                <option>No</option>
-                                            </select>
-                                            <label>Adulto(s)</label>
-                                            <input class="form-control" type="number" name="quantity" min="0">
-                                            <label>Niño(s)</label>
-                                            <input class="form-control" type="number" name="quantity" min="0">
-                                            <label>Bebé(s)</label>
-                                            <input class="form-control" type="number" name="quantity" min="0">
+                                            <h4>Datos del cliente</h4>
+                                            <div class="form-group col-lg-3">
+                                                <label>Nombre y Apellido</label>
+                                                <p class="form-control-static">email@example.com</p>
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <label>Hotel</label>
+                                                <p class="form-control-static">email@example.com</p>
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <label>Dirección</label>
+                                                <p class="form-control-static">email@example.com</p>
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <label>Habitación</label>
+                                                <p class="form-control-static">email@example.com</p>
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <label>Número de contacto</label>
+                                                <p class="form-control-static">email@example.com</p>
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <label>Email</label>
+                                                <p class="form-control-static">email@example.com</p>
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <label>Promotor</label>
+                                                <p class="form-control-static">email@example.com</p>
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <label>Vendedor</label>
+                                                <p class="form-control-static">email@example.com</p>
+                                            </div>
+
+                                            <h4>Productos</h4>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Proveedor</th>
+                                                        <th>Servicio</th>
+                                                        <th>Fecha</th>
+                                                        <th>Traslado</th>
+                                                        <th>Adulto(s)</th>
+                                                        <th>Niño(s)</th>
+                                                        <th>Bebé(s)</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>Tango 1</td>
+                                                        <td>Clase 1</td>
+                                                        <td>22/12/2022</td>
+                                                        <td>Sí</td>
+                                                        <td>2</td>
+                                                        <td>0</td>
+                                                        <td>0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Excursion 1</td>
+                                                        <td>Viaje 1</td>
+                                                        <td>23/02/2020</td>
+                                                        <td>No</td>
+                                                        <td>2</td>
+                                                        <td>3</td>
+                                                        <td>1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Teatro 2</td>
+                                                        <td>Obra 2</td>
+                                                        <td>13/04/2021</td>
+                                                        <td>Sí</td>
+                                                        <td>2</td>
+                                                        <td>2</td>
+                                                        <td>0</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
                                         </div>
 
                                         <div class="tab" class="form-group">Login Info:
@@ -754,9 +826,11 @@
             // A loop that checks every input field in the current tab:
             for (i = 0; i < y.length; i++) {
                 // If a field is empty...
-                if (false && y[i].value == "") {
+                var elem = $(y[i]);
+                elem.removeClass("invalid").parent().removeClass("has-error");
+                if ("" == elem.text()) {
                     // add an "invalid" class to the field:
-                    y[i].className += " invalid";
+                    elem.addClass("invalid").parent().addClass("has-error");
                     // and set the current valid status to false:
                     valid = false;
                 }
@@ -796,9 +870,9 @@
             var panelBody = $(document.createElement('div')).addClass("panel-body");
             var lbl1 = $(document.createElement('label')).text("Proveedor");
             var sel1 = $(document.createElement('select')).addClass("form-control");
-            var op11 = $(document.createElement('option')).text("Promotor 1");
-            var op12 = $(document.createElement('option')).text("Promotor 2");
-            var op13 = $(document.createElement('option')).text("Promotor 3");
+            var op11 = $(document.createElement('option')).text("Proveedor 1");
+            var op12 = $(document.createElement('option')).text("Proveedor 2");
+            var op13 = $(document.createElement('option')).text("Proveedor 3");
             var lbl2 = $(document.createElement('label')).text("Servicio");
             var sel2 = $(document.createElement('select')).addClass("form-control");
             var op21 = $(document.createElement('option')).text("Servicio 1");
