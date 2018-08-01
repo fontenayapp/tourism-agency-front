@@ -66,7 +66,6 @@
 
 <body>
     <div id="wrapper">
-
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -360,425 +359,372 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Forms</h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Proceso de venta
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <form id="regForm" role="form" action="">
-                                        <!-- One "tab" for each step in the form: -->
-                                        <div class="tab" class="form-group">
-                                            <h2>Datos del cliente</h2>
-                                                <div class="form-group col-lg-4">
-                                                <label>Nombre y Apellido</label>
-                                                <input class="form-control" id="clientname">
-                                            </div>
-                                            <div class="form-group col-lg-4">
-                                                <label>Hotel</label>
-                                                <input class="form-control" id="hotel">
-                                            </div>
-                                            <div class="form-group col-lg-4">
-                                                <label>Dirección</label>
-                                                <input class="form-control" id="address">
-                                            </div>
-                                            <div class="form-group col-lg-4">
-                                                <label>Habitación</label>
-                                                <input class="form-control" id="room">
-                                            </div>
-                                            <div class="form-group col-lg-4">
-                                                <label>Número de contacto</label>
-                                                <input class="form-control" id="phonenumber">
-                                            </div>
-                                            <div class="form-group col-lg-4">
-                                                <label>Email</label>
-                                                <input class="form-control" id="email">
-                                            </div>
-                                            <div class="form-group col-lg-4">
-                                                <label>Promotor</label>
-                                                <select class="form-control" id="promotorsel">
-                                                    <option>Promotor 1</option>
-                                                    <option>Promotor 2</option>
-                                                    <option>Promotor 3</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-lg-4">
-                                                <label>Vendedor</label>
-                                                <select class="form-control" id="sellersel">
-                                                    <option>Vendedor 1</option>
-                                                    <option>Vendedor 2</option>
-                                                    <option>Vendedor 3</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="tab"  class="form-group">
-                                            <h2>Productos</h2>
-                                            <div id="listOfProducts">
-                                                <div id="product-1" class="productPanel col-lg-3">
-                                                    <div class="panel panel-default" >
-                                                        <div class="panel-heading">
-                                                            Producto
-                                                            <button id="deleteProduct" type="button" class="close">×</button>
-                                                        </div>
-                                                        <div class="panel-body">
-                                                            <div class="form-group">
-                                                                <label>Proveedor</label>
-                                                                <select class="form-control" id="providersel">
-                                                                    <option>Proveedor 1</option>
-                                                                    <option>Proveedor 2</option>
-                                                                    <option>Proveedor 3</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Servicio</label>
-                                                                <select class="form-control" id="servicesel">
-                                                                    <option>Servicio 1</option>
-                                                                    <option>Servicio 2</option>
-                                                                    <option>Servicio 3</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Fecha</label>
-                                                                <div></div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Traslado</label>
-                                                                <select class="form-control">
-                                                                    <option>Sí</option>
-                                                                    <option>No</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Adulto(s)</label>
-                                                                <input class="form-control" type="number" name="quantity" min="1">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Niño(s)</label>
-                                                                <input class="form-control" type="number" name="quantity" min="0">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Bebé(s)</label>
-                                                                <input class="form-control" type="number" name="quantity" min="0">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <button id="addProduct" type="button" class="btn btn-success btn-lg btn-block" style='height: 425px;font-size: 40px;'>
-                                                    Agregar<br>producto<br><br>
-                                                    <span class="glyphicon glyphicon-plus" style='font-size: 75px;'></span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div class="tab" class="form-group">
-                                            <h2>Confirmación</h2>
-                                            <h4>Datos del cliente</h4>
-                                            <div class="form-group col-lg-3">
-                                                <label>Nombre y Apellido</label>
-                                                <p class="form-control-static">email@example.com</p>
-                                            </div>
-                                            <div class="form-group col-lg-3">
-                                                <label>Hotel</label>
-                                                <p class="form-control-static">email@example.com</p>
-                                            </div>
-                                            <div class="form-group col-lg-3">
-                                                <label>Dirección</label>
-                                                <p class="form-control-static">email@example.com</p>
-                                            </div>
-                                            <div class="form-group col-lg-3">
-                                                <label>Habitación</label>
-                                                <p class="form-control-static">email@example.com</p>
-                                            </div>
-                                            <div class="form-group col-lg-3">
-                                                <label>Número de contacto</label>
-                                                <p class="form-control-static">email@example.com</p>
-                                            </div>
-                                            <div class="form-group col-lg-3">
-                                                <label>Email</label>
-                                                <p class="form-control-static">email@example.com</p>
-                                            </div>
-                                            <div class="form-group col-lg-3">
-                                                <label>Promotor</label>
-                                                <p class="form-control-static">email@example.com</p>
-                                            </div>
-                                            <div class="form-group col-lg-3">
-                                                <label>Vendedor</label>
-                                                <p class="form-control-static">email@example.com</p>
-                                            </div>
-
-                                            <h4>Productos</h4>
-                                            <div class="table-responsive">
-                                                <table class="table table-striped">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Proveedor</th>
-                                                        <th>Servicio</th>
-                                                        <th>Fecha</th>
-                                                        <th>Traslado</th>
-                                                        <th>Adulto(s)</th>
-                                                        <th>Niño(s)</th>
-                                                        <th>Bebé(s)</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>Tango 1</td>
-                                                        <td>Clase 1</td>
-                                                        <td>22/12/2022</td>
-                                                        <td>Sí</td>
-                                                        <td>2</td>
-                                                        <td>0</td>
-                                                        <td>0</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Excursion 1</td>
-                                                        <td>Viaje 1</td>
-                                                        <td>23/02/2020</td>
-                                                        <td>No</td>
-                                                        <td>2</td>
-                                                        <td>3</td>
-                                                        <td>1</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Teatro 2</td>
-                                                        <td>Obra 2</td>
-                                                        <td>13/04/2021</td>
-                                                        <td>Sí</td>
-                                                        <td>2</td>
-                                                        <td>2</td>
-                                                        <td>0</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
-
-                                        </div>
-
-                                        <div class="tab" class="form-group">Login Info:
-                                            <p><input placeholder="Username..." oninput="this.className = ''"></p>
-                                            <p><input placeholder="Password..." oninput="this.className = ''"></p>
-                                        </div>
-
-                                        <div class="col-lg-12" style="overflow:auto;">
-                                            <div style="float:right;">
-                                                <button type="button" class="btn btn-primary" id="prevBtn" onclick="nextPrev(-1)">Volver</button>
-                                                <button type="button" class="btn btn-success" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
-                                            </div>
-                                        </div>
-
-                                        <!-- Circles which indicates the steps of the form: -->
-                                        <div class="col-lg-12" style="text-align:center;margin-top:40px;">
-                                            <span class="step"></span>
-                                            <span class="step"></span>
-                                            <span class="step"></span>
-                                            <span class="step"></span>
-                                        </div>
-
-                                    </form>
-                                </div>
-                                <!--<div class="col-lg-6">-->
-                                    <!--<form role="form">-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label>Text Input</label>-->
-                                            <!--<input class="form-control">-->
-                                            <!--<p class="help-block">Example block-level help text here.</p>-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label>Text Input with Placeholder</label>-->
-                                            <!--<input class="form-control" placeholder="Enter text">-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label>Static Control</label>-->
-                                            <!--<p class="form-control-static">email@example.com</p>-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label>File input</label>-->
-                                            <!--<input type="file">-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label>Text area</label>-->
-                                            <!--<textarea class="form-control" rows="3"></textarea>-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label>Checkboxes</label>-->
-                                            <!--<div class="checkbox">-->
-                                                <!--<label>-->
-                                                    <!--<input type="checkbox" value="">Checkbox 1-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div class="checkbox">-->
-                                                <!--<label>-->
-                                                    <!--<input type="checkbox" value="">Checkbox 2-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div class="checkbox">-->
-                                                <!--<label>-->
-                                                    <!--<input type="checkbox" value="">Checkbox 3-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label>Inline Checkboxes</label>-->
-                                            <!--<label class="checkbox-inline">-->
-                                                <!--<input type="checkbox">1-->
-                                            <!--</label>-->
-                                            <!--<label class="checkbox-inline">-->
-                                                <!--<input type="checkbox">2-->
-                                            <!--</label>-->
-                                            <!--<label class="checkbox-inline">-->
-                                                <!--<input type="checkbox">3-->
-                                            <!--</label>-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label>Radio Buttons</label>-->
-                                            <!--<div class="radio">-->
-                                                <!--<label>-->
-                                                    <!--<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Radio 1-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div class="radio">-->
-                                                <!--<label>-->
-                                                    <!--<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Radio 2-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<div class="radio">-->
-                                                <!--<label>-->
-                                                    <!--<input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">Radio 3-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label>Inline Radio Buttons</label>-->
-                                            <!--<label class="radio-inline">-->
-                                                <!--<input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked>1-->
-                                            <!--</label>-->
-                                            <!--<label class="radio-inline">-->
-                                                <!--<input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2">2-->
-                                            <!--</label>-->
-                                            <!--<label class="radio-inline">-->
-                                                <!--<input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3">3-->
-                                            <!--</label>-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label>Selects</label>-->
-                                            <!--<select class="form-control">-->
-                                                <!--<option>1</option>-->
-                                                <!--<option>2</option>-->
-                                                <!--<option>3</option>-->
-                                                <!--<option>4</option>-->
-                                                <!--<option>5</option>-->
-                                            <!--</select>-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group">-->
-                                            <!--<label>Multiple Selects</label>-->
-                                            <!--<select multiple class="form-control">-->
-                                                <!--<option>1</option>-->
-                                                <!--<option>2</option>-->
-                                                <!--<option>3</option>-->
-                                                <!--<option>4</option>-->
-                                                <!--<option>5</option>-->
-                                            <!--</select>-->
-                                        <!--</div>-->
-                                        <!--<button type="submit" class="btn btn-default">Submit Button</button>-->
-                                        <!--<button type="reset" class="btn btn-default">Reset Button</button>-->
-                                    <!--</form>-->
-                                <!--</div>-->
-                                <!--/.col-lg-6 (nested) -->
-                                <!--<div class="col-lg-6">-->
-                                    <!--<h1>Disabled Form States</h1>-->
-                                    <!--<form role="form">-->
-                                        <!--<fieldset disabled>-->
-                                            <!--<div class="form-group">-->
-                                                <!--<label for="disabledSelect">Disabled input</label>-->
-                                                <!--<input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" disabled>-->
-                                            <!--</div>-->
-                                            <!--<div class="form-group">-->
-                                                <!--<label for="disabledSelect">Disabled select menu</label>-->
-                                                <!--<select id="disabledSelect" class="form-control">-->
-                                                    <!--<option>Disabled select</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
-                                            <!--<div class="checkbox">-->
-                                                <!--<label>-->
-                                                    <!--<input type="checkbox">Disabled Checkbox-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <!--<button type="submit" class="btn btn-primary">Disabled Button</button>-->
-                                        <!--</fieldset>-->
-                                    <!--</form>-->
-                                    <!--<h1>Form Validation States</h1>-->
-                                    <!--<form role="form">-->
-                                        <!--<div class="form-group has-success">-->
-                                            <!--<label class="control-label" for="inputSuccess">Input with success</label>-->
-                                            <!--<input type="text" class="form-control" id="inputSuccess">-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group has-warning">-->
-                                            <!--<label class="control-label" for="inputWarning">Input with warning</label>-->
-                                            <!--<input type="text" class="form-control" id="inputWarning">-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group has-error">-->
-                                            <!--<label class="control-label" for="inputError">Input with error</label>-->
-                                            <!--<input type="text" class="form-control" id="inputError">-->
-                                        <!--</div>-->
-                                    <!--</form>-->
-                                    <!--<h1>Input Groups</h1>-->
-                                    <!--<form role="form">-->
-                                        <!--<div class="form-group input-group">-->
-                                            <!--<span class="input-group-addon">@</span>-->
-                                            <!--<input type="text" class="form-control" placeholder="Username">-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group input-group">-->
-                                            <!--<input type="text" class="form-control">-->
-                                            <!--<span class="input-group-addon">.00</span>-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group input-group">-->
-                                            <!--<span class="input-group-addon"><i class="fa fa-eur"></i>-->
-                                            <!--</span>-->
-                                            <!--<input type="text" class="form-control" placeholder="Font Awesome Icon">-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group input-group">-->
-                                            <!--<span class="input-group-addon">$</span>-->
-                                            <!--<input type="text" class="form-control">-->
-                                            <!--<span class="input-group-addon">.00</span>-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group input-group">-->
-                                            <!--<input type="text" class="form-control">-->
-                                            <!--<span class="input-group-btn">-->
-                                                <!--<button class="btn btn-default" type="button"><i class="fa fa-search"></i>-->
-                                                <!--</button>-->
-                                            <!--</span>-->
-                                        <!--</div>-->
-                                    <!--</form>-->
-                                <!--</div>-->
-                                <!-- /.col-lg-6 (nested) -->
+                    <form id="regForm" role="form" action="">
+                        <!-- One "tab" for each step in the form: -->
+                        <div class="tab" class="form-group">
+                            <h2>Datos del cliente</h2>
+                            <div class="form-group col-lg-4">
+                                <label>Nombre y Apellido</label>
+                                <input class="form-control" id="clientname">
                             </div>
-                            <!-- /.row (nested) -->
+                            <div class="form-group col-lg-4">
+                                <label>Hotel</label>
+                                <input class="form-control" id="hotel">
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label>Dirección</label>
+                                <input class="form-control" id="address">
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label>Habitación</label>
+                                <input class="form-control" id="room">
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label>Número de contacto</label>
+                                <input class="form-control" id="phonenumber">
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label>Email</label>
+                                <input class="form-control" id="email">
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label>Promotor</label>
+                                <select class="form-control" id="promotorsel">
+                                    <option>Promotor 1</option>
+                                    <option>Promotor 2</option>
+                                    <option>Promotor 3</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label>Vendedor</label>
+                                <select class="form-control" id="sellersel">
+                                    <option>Vendedor 1</option>
+                                    <option>Vendedor 2</option>
+                                    <option>Vendedor 3</option>
+                                </select>
+                            </div>
                         </div>
-                        <!-- /.panel-body -->
+
+                        <div class="tab"  class="form-group">
+                            <h2>Productos</h2>
+                            <div id="listOfProducts">
+                                <div id="product-1" class="productPanel col-lg-3">
+                                    <div class="panel panel-default" >
+                                        <div class="panel-heading">
+                                            Producto
+                                            <button type="button" class="close deleteProduct">×</button>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label>Proveedor</label>
+                                                <select class="form-control" id="providersel">
+                                                    <option>Proveedor 1</option>
+                                                    <option>Proveedor 2</option>
+                                                    <option>Proveedor 3</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Servicio</label>
+                                                <select class="form-control" id="servicesel">
+                                                    <option>Servicio 1</option>
+                                                    <option>Servicio 2</option>
+                                                    <option>Servicio 3</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Fecha</label>
+                                                <input class="form-control" id="date" type="number" name="quantity" min="1">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Traslado</label>
+                                                <select class="form-control" id="transfersel">
+                                                    <option>Sí</option>
+                                                    <option>No</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Adulto(s)</label>
+                                                <input id="adults" class="form-control" type="number" name="quantity" min="1">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Niño(s)</label>
+                                                <input id="children" class="form-control" type="number" name="quantity" min="0">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Bebé(s)</label>
+                                                <input id="babies" class="form-control" type="number" name="quantity" min="0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <button id="addProduct" type="button" class="btn btn-success btn-lg btn-block" style='height: 425px;font-size: 40px;'>
+                                    Agregar<br>producto<br><br>
+                                    <span class="glyphicon glyphicon-plus" style='font-size: 75px;'></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="tab" class="form-group">
+                            <h2>Confirmación</h2>
+                            <h4>Datos del cliente</h4>
+                            <div class="form-group col-lg-3">
+                                <label>Nombre y Apellido</label>
+                                <p id="clientnameconf" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Hotel</label>
+                                <p id="hotelconf" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Dirección</label>
+                                <p id="addressconf" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Habitación</label>
+                                <p id="roomconf" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Número de contacto</label>
+                                <p id="phonenumberconf" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Email</label>
+                                <p id="emailconf" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Promotor</label>
+                                <p id="promotorconf" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Vendedor</label>
+                                <p id="sellerconf" class="form-control-static"></p>
+                            </div>
+
+                            <h4>Productos</h4>
+                            <div class="table-responsive">
+                                <table class="table table-striped"id="productsconftable"></table>
+                            </div>
+                        </div>
+
+                        <div class="tab" class="form-group">Login Info:
+                            <p><input placeholder="Username..." oninput="this.className = ''"></p>
+                            <p><input placeholder="Password..." oninput="this.className = ''"></p>
+                        </div>
+
+                        <div class="col-lg-12" style="overflow:auto;">
+                            <div style="float:right;">
+                                <button type="button" class="btn btn-primary" id="prevBtn" onclick="nextPrev(-1)">Volver</button>
+                                <button type="button" class="btn btn-success" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
+                            </div>
+                        </div>
+
+                    <!-- Circles which indicates the steps of the form: -->
+                        <div class="col-lg-12" style="text-align:center;margin-top:40px;">
+                        <span class="step"></span>
+                        <span class="step"></span>
+                        <span class="step"></span>
+                        <span class="step"></span>
                     </div>
-                    <!-- /.panel -->
+
+                    </form>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
+            <div class="modal fade" id="noProductsModal" tabindex="-1" role="dialog" aria-labelledby="noProductsModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">No hay productos</h4>
+                        </div>
+                        <div class="modal-body">
+                            No se ha seleccionado ningún producto. Agregue uno para continuar con el siguiente paso.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!--<div class="col-lg-6">-->
+                    <!--<form role="form">-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Text Input</label>-->
+                            <!--<input class="form-control">-->
+                            <!--<p class="help-block">Example block-level help text here.</p>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Text Input with Placeholder</label>-->
+                            <!--<input class="form-control" placeholder="Enter text">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Static Control</label>-->
+                            <!--<p class="form-control-static">email@example.com</p>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>File input</label>-->
+                            <!--<input type="file">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Text area</label>-->
+                            <!--<textarea class="form-control" rows="3"></textarea>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Checkboxes</label>-->
+                            <!--<div class="checkbox">-->
+                                <!--<label>-->
+                                    <!--<input type="checkbox" value="">Checkbox 1-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<div class="checkbox">-->
+                                <!--<label>-->
+                                    <!--<input type="checkbox" value="">Checkbox 2-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<div class="checkbox">-->
+                                <!--<label>-->
+                                    <!--<input type="checkbox" value="">Checkbox 3-->
+                                <!--</label>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Inline Checkboxes</label>-->
+                            <!--<label class="checkbox-inline">-->
+                                <!--<input type="checkbox">1-->
+                            <!--</label>-->
+                            <!--<label class="checkbox-inline">-->
+                                <!--<input type="checkbox">2-->
+                            <!--</label>-->
+                            <!--<label class="checkbox-inline">-->
+                                <!--<input type="checkbox">3-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Radio Buttons</label>-->
+                            <!--<div class="radio">-->
+                                <!--<label>-->
+                                    <!--<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Radio 1-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<div class="radio">-->
+                                <!--<label>-->
+                                    <!--<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Radio 2-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<div class="radio">-->
+                                <!--<label>-->
+                                    <!--<input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">Radio 3-->
+                                <!--</label>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Inline Radio Buttons</label>-->
+                            <!--<label class="radio-inline">-->
+                                <!--<input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked>1-->
+                            <!--</label>-->
+                            <!--<label class="radio-inline">-->
+                                <!--<input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2">2-->
+                            <!--</label>-->
+                            <!--<label class="radio-inline">-->
+                                <!--<input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3">3-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Selects</label>-->
+                            <!--<select class="form-control">-->
+                                <!--<option>1</option>-->
+                                <!--<option>2</option>-->
+                                <!--<option>3</option>-->
+                                <!--<option>4</option>-->
+                                <!--<option>5</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Multiple Selects</label>-->
+                            <!--<select multiple class="form-control">-->
+                                <!--<option>1</option>-->
+                                <!--<option>2</option>-->
+                                <!--<option>3</option>-->
+                                <!--<option>4</option>-->
+                                <!--<option>5</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                        <!--<button type="submit" class="btn btn-default">Submit Button</button>-->
+                        <!--<button type="reset" class="btn btn-default">Reset Button</button>-->
+                    <!--</form>-->
+                <!--</div>-->
+                <!--/.col-lg-6 (nested) -->
+                <!--<div class="col-lg-6">-->
+                    <!--<h1>Disabled Form States</h1>-->
+                    <!--<form role="form">-->
+                        <!--<fieldset disabled>-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="disabledSelect">Disabled input</label>-->
+                                <!--<input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" disabled>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="disabledSelect">Disabled select menu</label>-->
+                                <!--<select id="disabledSelect" class="form-control">-->
+                                    <!--<option>Disabled select</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                            <!--<div class="checkbox">-->
+                                <!--<label>-->
+                                    <!--<input type="checkbox">Disabled Checkbox-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <!--<button type="submit" class="btn btn-primary">Disabled Button</button>-->
+                        <!--</fieldset>-->
+                    <!--</form>-->
+                    <!--<h1>Form Validation States</h1>-->
+                    <!--<form role="form">-->
+                        <!--<div class="form-group has-success">-->
+                            <!--<label class="control-label" for="inputSuccess">Input with success</label>-->
+                            <!--<input type="text" class="form-control" id="inputSuccess">-->
+                        <!--</div>-->
+                        <!--<div class="form-group has-warning">-->
+                            <!--<label class="control-label" for="inputWarning">Input with warning</label>-->
+                            <!--<input type="text" class="form-control" id="inputWarning">-->
+                        <!--</div>-->
+                        <!--<div class="form-group has-error">-->
+                            <!--<label class="control-label" for="inputError">Input with error</label>-->
+                            <!--<input type="text" class="form-control" id="inputError">-->
+                        <!--</div>-->
+                    <!--</form>-->
+                    <!--<h1>Input Groups</h1>-->
+                    <!--<form role="form">-->
+                        <!--<div class="form-group input-group">-->
+                            <!--<span class="input-group-addon">@</span>-->
+                            <!--<input type="text" class="form-control" placeholder="Username">-->
+                        <!--</div>-->
+                        <!--<div class="form-group input-group">-->
+                            <!--<input type="text" class="form-control">-->
+                            <!--<span class="input-group-addon">.00</span>-->
+                        <!--</div>-->
+                        <!--<div class="form-group input-group">-->
+                            <!--<span class="input-group-addon"><i class="fa fa-eur"></i>-->
+                            <!--</span>-->
+                            <!--<input type="text" class="form-control" placeholder="Font Awesome Icon">-->
+                        <!--</div>-->
+                        <!--<div class="form-group input-group">-->
+                            <!--<span class="input-group-addon">$</span>-->
+                            <!--<input type="text" class="form-control">-->
+                            <!--<span class="input-group-addon">.00</span>-->
+                        <!--</div>-->
+                        <!--<div class="form-group input-group">-->
+                            <!--<input type="text" class="form-control">-->
+                            <!--<span class="input-group-btn">-->
+                                <!--<button class="btn btn-default" type="button"><i class="fa fa-search"></i>-->
+                                <!--</button>-->
+                            <!--</span>-->
+                        <!--</div>-->
+                    <!--</form>-->
+                <!--</div>-->
+                <!-- /.col-lg-6 (nested) -->
         </div>
-        <!-- /#page-wrapper -->
-
+        <!-- /.row (nested) -->
     </div>
-    <!-- /#wrapper -->
-
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -829,12 +775,14 @@
                 return false;
             }
             // Otherwise, display the correct tab:
+            if(currentTab == 2)
+                loadConfirmationTab();
             showTab(currentTab);
         }
 
         function validateForm() {
             // This function deals with validation of the form fields
-            var x, y, i, valid = true;
+            var x, y, i, valid = true, productsList = true;
             x = document.getElementsByClassName("tab");
             y = x[currentTab].getElementsByTagName("input");
             // A loop that checks every input field in the current tab:
@@ -849,11 +797,16 @@
                     valid = false;
                 }
             }
+
+            if(1 == currentTab && $(".productPanel").length < 1) {
+                $('#noProductsModal').modal('show');
+                productsList = false;
+            }
             // If the valid status is true, mark the step as finished and valid:
-            if (valid) {
+            if (valid && productsList) {
                 document.getElementsByClassName("step")[currentTab].className += " finish";
             }
-            return valid; // return the valid status
+            return valid && productsList; // return the valid status
         }
 
         function fixStepIndicator(n) {
@@ -866,9 +819,60 @@
             x[n].className += " active";
         }
 
+        function loadConfirmationTab() {
+            $("#clientnameconf").text($("#clientname").val());
+            $("#hotelconf").text($("#hotel").val());
+            $("#addressconf").text($("#address").val());
+            $("#roomconf").text($("#room").val());
+            $("#phonenumberconf").text($("#phonenumber").val());
+            $("#emailconf").text($("#email").val());
+            $("#promotorconf").text($("#promotorsel").val());
+            $("#sellerconf").text($("#sellersel").val());
 
-        $("#deleteProduct").click(function(){
-            $("#deleteProduct").closest(".productPanel").remove();
+            loadProductsConfTable()
+        }
+
+        function loadProductsConfTable() {
+            var prodList = $(".productPanel");
+            var prodTable = $("#productsconftable");
+            prodTable.empty();
+            if(0 < prodList.length) {
+                loadProdTableHeader(prodTable);
+                prodList.each(function(index, el){
+                    loadProdTableRow($(el));
+                })
+            }
+        }
+
+        function loadProdTableHeader(prodTable) {
+            var th1 = $(document.createElement("th")).text("Proveedor");
+            var th2 = $(document.createElement("th")).text("Servicio");
+            var th3 = $(document.createElement("th")).text("Fecha");
+            var th4 = $(document.createElement("th")).text("Traslado");
+            var th5 = $(document.createElement("th")).text("Adulto(s)");
+            var th6 = $(document.createElement("th")).text("Niños(s)");
+            var th7 = $(document.createElement("th")).text("Bebé(s)");
+            var tr1 = $(document.createElement("tr")).append(th1).append(th2).append(th3).append(th4).append(th5).append(th6).append(th7);
+            var thd1 = $(document.createElement("thead")).append(tr1);
+            var tbody = $(document.createElement("tbody")).addClass("productConfTableBody");
+            prodTable.append(thd1).append(tbody);
+        }
+
+        function loadProdTableRow(product) {
+            var td1 = $(document.createElement("td")).text(product.find("#providersel").val());
+            var td2 = $(document.createElement("td")).text(product.find("#servicesel").val());
+            var td3 = $(document.createElement("td")).text(product.find("#date").val());
+            var td4 = $(document.createElement("td")).text(product.find("#transfersel").val());
+            var td5 = $(document.createElement("td")).text(product.find("#adults").val());
+            var td6 = $(document.createElement("td")).text(product.find("#children").val());
+            var td7 = $(document.createElement("td")).text(product.find("#babies").val());
+            var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7);
+            $(".productConfTableBody").append(tr1);
+        }
+
+
+        $(".deleteProduct").click(function(e){
+            $(e.target).closest(".productPanel").remove();
         });
 
         $("#addProduct").click(function(){
@@ -878,32 +882,32 @@
             var panelContainer = $(document.createElement('div')).addClass("col-lg-3 productPanel").attr("id","randomtimestamp");
             var panel = $(document.createElement('div')).addClass("panel panel-default");
             var panelHeader = $(document.createElement('div')).addClass("panel-heading").text("Producto");
-            var deleteButton = $(document.createElement('button')).attr("id","deleteProduct").attr("type","button").addClass("close").text("×").click(function(){
-                $("#deleteProduct").closest(".productPanel").remove();
+            var deleteButton = $(document.createElement('button')).attr("type","button").addClass("close deleteProduct").text("×").click(function(e){
+                $(e.target).closest(".productPanel").remove();
             });
             var panelBody = $(document.createElement('div')).addClass("panel-body");
             var lbl1 = $(document.createElement('label')).text("Proveedor");
-            var sel1 = $(document.createElement('select')).addClass("form-control");
+            var sel1 = $(document.createElement('select')).addClass("form-control").attr("id","providersel");
             var op11 = $(document.createElement('option')).text("Proveedor 1");
             var op12 = $(document.createElement('option')).text("Proveedor 2");
             var op13 = $(document.createElement('option')).text("Proveedor 3");
             var lbl2 = $(document.createElement('label')).text("Servicio");
-            var sel2 = $(document.createElement('select')).addClass("form-control");
+            var sel2 = $(document.createElement('select')).addClass("form-control").attr("id","servicesel");
             var op21 = $(document.createElement('option')).text("Servicio 1");
             var op22 = $(document.createElement('option')).text("Servicio 2");
             var op23 = $(document.createElement('option')).text("Servicio 3");
             var lbl3 = $(document.createElement('label')).text("Fecha");
-            var fec3 = $(document.createElement('div'));
+            var fec3 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","date");
             var lbl4 = $(document.createElement('label')).text("Traslado");
-            var sel4 = $(document.createElement('select')).addClass("form-control");
+            var sel4 = $(document.createElement('select')).addClass("form-control").attr("id","transfersel");
             var op41 = $(document.createElement('option')).text("Si");
             var op42 = $(document.createElement('option')).text("No");
             var lbl5 = $(document.createElement('label')).text("Adulto(s)");
-            var inp5 = $(document.createElement('input')).addClass("form-control").attr("type","number");
+            var inp5 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","adults");
             var lbl6 = $(document.createElement('label')).text("Niño(s)");
-            var inp6 = $(document.createElement('input')).addClass("form-control").attr("type","number");
+            var inp6 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","children");
             var lbl7 = $(document.createElement('label')).text("Bebé(s)");
-            var inp7 = $(document.createElement('input')).addClass("form-control").attr("type","number");
+            var inp7 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","babies");
 
             var for1 = $(document.createElement('div')).addClass("form-group");
             var for2 = $(document.createElement('div')).addClass("form-group");
