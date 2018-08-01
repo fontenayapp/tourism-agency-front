@@ -13,8 +13,8 @@
   "main": [
     "dist/css/sb-admin-2.css",
     "dist/css/sb-admin-2.min.css",
-    "dist/js/sb-admin-2.js",
-    "dist/js/sb-admin-2.min.js"
+    "dist/js/fontenay.js",
+    "dist/js/fontenay.min.js"
   ],
   "dependencies": {
     "datatables": "~1.10.4",

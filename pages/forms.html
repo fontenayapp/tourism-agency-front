@@ -735,7 +735,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.9/metisMenu.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="../dist/js/sb-admin-2.js"></script>
+    <script src="../dist/js/fontenay.js"></script>
     <script>
         var currentTab = 0; // Current tab is set to be the first tab (0)
         showTab(currentTab); // Display the current tab
@@ -777,6 +777,9 @@
             // Otherwise, display the correct tab:
             if(currentTab == 2)
                 loadConfirmationTab();
+            else if (currentTab == 3)
+                _createClient();
+
             showTab(currentTab);
         }
 
