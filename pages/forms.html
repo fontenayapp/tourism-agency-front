@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>Fontenay</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -311,7 +311,7 @@
                             <!--<a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>-->
                         <!--</li>-->
                         <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
+                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Nueva venta</a>
                         </li>
                         <!--<li>-->
                             <!--<a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>-->
@@ -338,13 +338,10 @@
                             <!--&lt;!&ndash; /.nav-second-level &ndash;&gt;-->
                         <!--</li>-->
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Más opciones<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-
-                                </li>
-                                <li>
-                                    <a href="login.html">Login Page</a>
+                                    <a href="login.html">Login</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -508,10 +505,48 @@
                             </div>
                         </div>
 
-                        <div class="tab" class="form-group">Login Info:
-                            <p><input placeholder="Username..." oninput="this.className = ''"></p>
-                            <p><input placeholder="Password..." oninput="this.className = ''"></p>
+                        <div class="tab" class="form-group">
+                            <h2>Venta realizada</h2>
+                            <h4>Datos del cliente</h4>
+                            <div class="form-group col-lg-3">
+                                <label>Nombre y Apellido</label>
+                                <p id="clientnamefinish" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Hotel</label>
+                                <p id="hotelfinish" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Dirección</label>
+                                <p id="addressfinish" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Habitación</label>
+                                <p id="roomfinish" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Número de contacto</label>
+                                <p id="phonenumberfinish" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Email</label>
+                                <p id="emailfinish" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Promotor</label>
+                                <p id="promotorfinish" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Vendedor</label>
+                                <p id="sellerfinish" class="form-control-static"></p>
+                            </div>
+
+                            <h4>Productos</h4>
+                            <div class="table-responsive">
+                                <table class="table table-striped"id="productsfinishtable"></table>
+                            </div>
                         </div>
+
 
                         <div class="col-lg-12" style="overflow:auto;">
                             <div style="float:right;">
@@ -751,7 +786,9 @@
                 document.getElementById("prevBtn").style.display = "inline";
             }
             if (n == (x.length - 1)) {
-                document.getElementById("nextBtn").innerHTML = "Guardar";
+                document.getElementById("nextBtn").innerHTML = "Imprimir";
+            } else if (n == (x.length - 2)) {
+                document.getElementById("nextBtn").innerHTML = "Confirmar";
             } else {
                 document.getElementById("nextBtn").innerHTML = "Siguiente";
             }
@@ -769,16 +806,19 @@
             // Increase or decrease the current tab by 1:
             currentTab = currentTab + n;
             // if you have reached the end of the form... :
-            if (currentTab >= x.length) {
+            if (currentTab - 1 >= x.length) {
                 //...the form gets submitted:
-                document.getElementById("regForm").submit();
+                //document.getElementById("regForm").submit();
+                console.log("SUBMIT");
                 return false;
             }
             // Otherwise, display the correct tab:
             if(currentTab == 2)
                 loadConfirmationTab();
-            else if (currentTab == 3)
+            else if (currentTab == 3) {
+                loadFinishTab();
                 _createClient();
+            }
 
             showTab(currentTab);
         }
@@ -823,31 +863,59 @@
         }
 
         function loadConfirmationTab() {
-            $("#clientnameconf").text($("#clientname").val());
-            $("#hotelconf").text($("#hotel").val());
-            $("#addressconf").text($("#address").val());
-            $("#roomconf").text($("#room").val());
-            $("#phonenumberconf").text($("#phonenumber").val());
-            $("#emailconf").text($("#email").val());
-            $("#promotorconf").text($("#promotorsel").val());
-            $("#sellerconf").text($("#sellersel").val());
+            loadTab(3);
+        }
+        function loadFinishTab() {
+            loadTab(4);
+        }
+        function loadTab(order) {
+            var clientname, hotel, address, room, phone, email, promotor, seller;
+            if(order === 3) {
+                clientname = $("#clientnameconf");
+                hotel = $("#hotelconf");
+                address = $("#addressconf");
+                room = $("#roomconf");
+                phone = $("#phonenumberconf");
+                email = $("#emailconf");
+                promotor = $("#promotorconf");
+                seller = $("#sellerconf");
+            } else if(order === 4) {
+                clientname = $("#clientnamefinish");
+                hotel = $("#hotelfinish");
+                address = $("#addressfinish");
+                room = $("#roomfinish");
+                phone = $("#phonenumberfinish");
+                email = $("#emailfinish");
+                promotor = $("#promotorfinish");
+                seller = $("#sellerfinish");
 
-            loadProductsConfTable()
+            }
+            clientname.text($("#clientname").val());
+            hotel.text($("#hotel").val());
+            address.text($("#address").val());
+            room.text($("#room").val());
+            phone.text($("#phonenumber").val());
+            email.text($("#email").val());
+            promotor.text($("#promotorsel").val());
+            seller.text($("#sellersel").val());
+
+            loadProductsTable(order);
         }
 
-        function loadProductsConfTable() {
+
+        function loadProductsTable(order) {
             var prodList = $(".productPanel");
-            var prodTable = $("#productsconftable");
+            var prodTable = order === 3? $("#productsconftable") : $("#productsfinishtable") ;
             prodTable.empty();
             if(0 < prodList.length) {
-                loadProdTableHeader(prodTable);
+                loadProdTableHeader(prodTable, order);
                 prodList.each(function(index, el){
-                    loadProdTableRow($(el));
+                    loadProdTableRow($(el), order);
                 })
             }
         }
 
-        function loadProdTableHeader(prodTable) {
+        function loadProdTableHeader(prodTable, o) {
             var th1 = $(document.createElement("th")).text("Proveedor");
             var th2 = $(document.createElement("th")).text("Servicio");
             var th3 = $(document.createElement("th")).text("Fecha");
@@ -857,11 +925,12 @@
             var th7 = $(document.createElement("th")).text("Bebé(s)");
             var tr1 = $(document.createElement("tr")).append(th1).append(th2).append(th3).append(th4).append(th5).append(th6).append(th7);
             var thd1 = $(document.createElement("thead")).append(tr1);
-            var tbody = $(document.createElement("tbody")).addClass("productConfTableBody");
+            var clss = o === 3? "productConfTableBody" : "productFinishTableBody";
+            var tbody = $(document.createElement("tbody")).addClass(clss);
             prodTable.append(thd1).append(tbody);
         }
 
-        function loadProdTableRow(product) {
+        function loadProdTableRow(product, o) {
             var td1 = $(document.createElement("td")).text(product.find("#providersel").val());
             var td2 = $(document.createElement("td")).text(product.find("#servicesel").val());
             var td3 = $(document.createElement("td")).text(product.find("#date").val());
@@ -870,7 +939,8 @@
             var td6 = $(document.createElement("td")).text(product.find("#children").val());
             var td7 = $(document.createElement("td")).text(product.find("#babies").val());
             var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7);
-            $(".productConfTableBody").append(tr1);
+            var clss = o === 3? ".productConfTableBody" : ".productFinishTableBody";
+            $(clss).append(tr1);
         }
 
 
