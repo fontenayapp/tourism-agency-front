@@ -48,49 +48,120 @@ $(function() {
 /**************************************************************************/
 /***************               MODELS            **************************/
 /**************************************************************************/
-/*FORCED LOGIN*/
-$.post("http://fontenay.herokuapp.com/login",
-    {
-        "email": "test@gmail.com",
-        "password": "abcxyz"
-    },
-    function(result){
-        console.log("SUCCESS", result);
-        setCookie("access_token", result.access_token, 1);
-        setCookie("refresh_token",result.refresh_token,1);
-    }
-);
+//var host = "http://fontenay.herokuapp.com";
+var host = "http://10.30.10.167:5000";
 
-$.ajaxSetup({
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + getCookie("access_token")
+
+/*FORCED LOGIN*/
+function _login() {
+    var username = $("#username").val(),
+        password = $("#password").val();
+
+    $.post(host+"/login",
+        {
+            "email": username,
+            "password": password
+        },
+        function (result, error) {
+            console.log("Login Success.");
+            setCookie("access_token", result.access_token, 1);
+            setCookie("refresh_token", result.refresh_token, 1);
+
+            _loadAjaxSetup();
+
+            window.location = '/pages/forms.html';
+    }).fail(function(error) {
+        if(error.status === 401) {
+            $("#loginUnauthorizedText").show();
+        }
+    })
+    //.always(function() {});
+}
+
+function _checkLogin() {
+}
+
+function _manageError(error) {
+    if(error.status === 401) {
+        alert("Credenciales erróneas. Inicie sesión nuevamente.");
+    } else if(error.status === 400) {
+        alert("Error al enviar el pedido de creación de cliente. Contacte al administrador del sistema.");
+    } else if(error.status === 503) {
+        alert("Error interno del servidor. Contacte al administrador del sistema.");
+    } else if(error.status === 422) {
+        alert("Error enviando datos.");
+    } else {
+        alert("Error desconocido: ", error.status);
     }
-});
+}
+
+function _loadAjaxSetup() {
+    $.ajaxSetup({
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("access_token")
+        }
+    });
+}
 
 function _createClient() {
     var email = $("#emailconf").text();
     var clientname = $("#clientnameconf").text();
-    var nationality = "Argentina";
+    var nationality = $("#nationalityconf").text();
     var hotel = $("#hotelconf").text();
-    var adults = 1;
-    var children = 0;
-    var babies = 0;
+    var room = $("#roomconf").text();
+    var address = $("#addressconf").text();
+    var passportid = $("#passportconf").text();
+    var phone = $("#phonenumberconf").text();
 
-    $.post("http://fontenay.herokuapp.com/client",
+    _loadAjaxSetup();
+    $.post("http://10.30.10.167:5000/client",
         JSON.stringify({
             email: email,
             name: clientname,
             nationality: nationality,
             hotel: hotel,
-            adults: adults,
-            children: children,
-            babies: babies
+            address: address,
+            room_number: room,
+            passport_number: passportid,
+            contact_number: phone
         }),
         function(result){
             _parseCreatedClientData(result);
         }
-    );
+    ).fail(function(error) {
+        _manageError(error);
+    });
+}
+
+function _createSale() {
+    var email = $("#emailconf").text();
+    var clientname = $("#clientnameconf").text();
+    var nationality = $("#nationalityconf").text();
+    var hotel = $("#hotelconf").text();
+    var room = $("#roomconf").text();
+    var address = $("#addressconf").text();
+    var passportid = $("#passportconf").text();
+    var phone = $("#phonenumberconf").text();
+
+    _loadAjaxSetup();
+    $.post(host+"/client",
+        JSON.stringify({
+            email: email,
+            name: clientname,
+            nationality: nationality,
+            hotel: hotel,
+            address: address,
+            room_number: room,
+            passport_number: passportid,
+            contact_number: phone
+        }),
+        function(result){
+            _parseCreatedClientData(result);
+        }
+    ).fail(function(error) {
+        _manageError(error);
+    });
 }
 
 function  _parseCreatedClientData(result) {
@@ -99,8 +170,7 @@ function  _parseCreatedClientData(result) {
     //Check if there's some error. Otherwise show the message.
     // else
     console.log(result);
-    alert(success);
-    //_getAllTravels();
+    _createSale(result);
 }
 
 /*

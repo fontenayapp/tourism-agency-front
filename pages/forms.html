@@ -338,13 +338,7 @@
                             <!--&lt;!&ndash; /.nav-second-level &ndash;&gt;-->
                         <!--</li>-->
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Más opciones<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="login.html">Login</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
+                            <a href="login.html"><i class="fa fa-files-o fa-fw"></i> Login</a>
                         </li>
                     </ul>
                 </div>
@@ -363,6 +357,14 @@
                             <div class="form-group col-lg-4">
                                 <label>Nombre y Apellido</label>
                                 <input class="form-control" id="clientname">
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label>Identificador</label>
+                                <input class="form-control" id="passport">
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label>Nacionalidad</label>
+                                <input class="form-control" id="nationality">
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Hotel</label>
@@ -471,6 +473,14 @@
                                 <p id="clientnameconf" class="form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
+                                <label>Identificador</label>
+                                <p  id="passportconf" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Nacionalidad</label>
+                                <p id="nationalityconf" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
                                 <label>Hotel</label>
                                 <p id="hotelconf" class="form-control-static"></p>
                             </div>
@@ -499,8 +509,8 @@
                                 <p id="sellerconf" class="form-control-static"></p>
                             </div>
 
-                            <h4>Productos</h4>
-                            <div class="table-responsive">
+                            <h4 class="col-lg-12">Productos</h4>
+                            <div class="table-responsive col-lg-12">
                                 <table class="table table-striped"id="productsconftable"></table>
                             </div>
                         </div>
@@ -541,8 +551,8 @@
                                 <p id="sellerfinish" class="form-control-static"></p>
                             </div>
 
-                            <h4>Productos</h4>
-                            <div class="table-responsive">
+                            <h4 class="col-lg-12">Productos</h4>
+                            <div class="table-responsive col-lg-12">
                                 <table class="table table-striped"id="productsfinishtable"></table>
                             </div>
                         </div>
@@ -772,6 +782,9 @@
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/fontenay.js"></script>
     <script>
+        $(document).ready(function() {
+            _checkLogin();
+        });
         var currentTab = 0; // Current tab is set to be the first tab (0)
         showTab(currentTab); // Display the current tab
 
@@ -869,9 +882,11 @@
             loadTab(4);
         }
         function loadTab(order) {
-            var clientname, hotel, address, room, phone, email, promotor, seller;
+            var clientname, passportid, nationality, hotel, address, room, phone, email, promotor, seller;
             if(order === 3) {
                 clientname = $("#clientnameconf");
+                passportid = $("#passportconf");
+                nationality = $("#nationalityconf");
                 hotel = $("#hotelconf");
                 address = $("#addressconf");
                 room = $("#roomconf");
@@ -881,6 +896,8 @@
                 seller = $("#sellerconf");
             } else if(order === 4) {
                 clientname = $("#clientnamefinish");
+                passportid = $("#passportfinish");
+                nationality = $("#nationalityfinish");
                 hotel = $("#hotelfinish");
                 address = $("#addressfinish");
                 room = $("#roomfinish");
@@ -891,6 +908,8 @@
 
             }
             clientname.text($("#clientname").val());
+            passportid.text($("#passport").val());
+            nationality.text($("#nationality").val());
             hotel.text($("#hotel").val());
             address.text($("#address").val());
             room.text($("#room").val());
