@@ -48,8 +48,8 @@ $(function() {
 /**************************************************************************/
 /***************               MODELS            **************************/
 /**************************************************************************/
-//var host = "http://fontenay.herokuapp.com";
-var host = "http://10.30.10.167:5000";
+var host = "http://fontenay.herokuapp.com";
+// var host = "http://10.30.10.167:5000";
 
 
 /*FORCED LOGIN*/
@@ -115,7 +115,7 @@ function _createClient() {
     var phone = $("#phonenumberconf").text();
 
     _loadAjaxSetup();
-    $.post("http://10.30.10.167:5000/client",
+    $.post(host+"/client",
         JSON.stringify({
             email: email,
             name: clientname,
