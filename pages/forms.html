@@ -1027,7 +1027,7 @@
             room.text($("#room").val());
             phone.text($("#phonenumber").val());
             email.text($("#email").val());
-            promotor.text($("#promotorsel").val());
+            promotor.text($("#promotorsel option:selected").text());
             /*seller.text($("#sellersel").val());*/
 
             loadProductsTable(order);
@@ -1062,10 +1062,10 @@
         }
 
         function loadProdTableRow(product, o) {
-            var td1 = $(document.createElement("td")).text(product.find("#providersel").val());
-            var td2 = $(document.createElement("td")).text(product.find("#servicesel").val());
+            var td1 = $(document.createElement("td")).text(product.find("#providersel option:selected").text());
+            var td2 = $(document.createElement("td")).text(product.find("#servicesel option:selected").text());
             var td3 = $(document.createElement("td")).text(product.find("#date").val());
-            var td4 = $(document.createElement("td")).text(product.find("#transfersel").val());
+            var td4 = $(document.createElement("td")).text(product.find("#transfersel option:selected").text());
             var td5 = $(document.createElement("td")).text(product.find("#adults").val());
             var td6 = $(document.createElement("td")).text(product.find("#children").val());
             var td7 = $(document.createElement("td")).text(product.find("#babies").val());
