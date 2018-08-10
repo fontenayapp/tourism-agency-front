@@ -955,15 +955,19 @@
 
         function _loadProvidersSelect(result) {
             Models["providers"] = result;
-            var provSel = $("#providersel");
-            result.forEach(function(element,index){
+            _refreshProvidersSelect($("#providersel"));
+            _loadProducts();
+        }
+
+        function _refreshProvidersSelect(select) {
+            var provSel = select ? select : $("#providersel");
+            Models["providers"].forEach(function(element, index){
                 var opt = $(document.createElement("option"));
                 opt.text(element.name);
-                opt.attr("value",element.provider_id);
+                opt.attr("value", element.provider_id);
                 provSel.append(opt);
             });
             provSel.change(_providerChanged);
-            _loadProducts();
         }
 
         function _loadProductsSelect(result) {
@@ -975,7 +979,6 @@
             var currT = $(event.currentTarget);
             var servSel = currT.closest(".productPanel").find("#servicesel");
             servSel.empty();
-
             _refreshProductsSelect(parseInt(currT.val()),servSel);
         }
 
@@ -1075,9 +1078,11 @@
         }
 
 
-        $(".deleteProduct").click(function(e){
+        $(".deleteProduct").click(_deleteProductPanel);
+
+        function _deleteProductPanel(e) {
             $(e.target).closest(".productPanel").remove();
-        });
+        }
 
         $("#addProduct").click(function(){
             //var = $("#listOfProducts").children().length;
@@ -1086,20 +1091,14 @@
             var panelContainer = $(document.createElement('div')).addClass("col-lg-3 productPanel").attr("id","randomtimestamp");
             var panel = $(document.createElement('div')).addClass("panel panel-default");
             var panelHeader = $(document.createElement('div')).addClass("panel-heading").text("Producto");
-            var deleteButton = $(document.createElement('button')).attr("type","button").addClass("close deleteProduct").text("×").click(function(e){
-                $(e.target).closest(".productPanel").remove();
-            });
+            var deleteButton = $(document.createElement('button')).attr("type","button").addClass("close deleteProduct").text("×").click(_deleteProductPanel);
             var panelBody = $(document.createElement('div')).addClass("panel-body");
             var lbl1 = $(document.createElement('label')).text("Proveedor");
             var sel1 = $(document.createElement('select')).addClass("form-control").attr("id","providersel");
-            var op11 = $(document.createElement('option')).text("Proveedor 1");
-            var op12 = $(document.createElement('option')).text("Proveedor 2");
-            var op13 = $(document.createElement('option')).text("Proveedor 3");
+            _refreshProvidersSelect(sel1);
             var lbl2 = $(document.createElement('label')).text("Servicio");
             var sel2 = $(document.createElement('select')).addClass("form-control").attr("id","servicesel");
-            var op21 = $(document.createElement('option')).text("Servicio 1");
-            var op22 = $(document.createElement('option')).text("Servicio 2");
-            var op23 = $(document.createElement('option')).text("Servicio 3");
+            _refreshProductsSelect(1,sel2);
             var lbl3 = $(document.createElement('label')).text("Fecha");
             var fec3 = $(document.createElement('input')).addClass("form-control").attr("type","date").attr("id","date").val(_getCurrentDate());
             var lbl4 = $(document.createElement('label')).text("Traslado");
@@ -1122,8 +1121,6 @@
             var for7 = $(document.createElement('div')).addClass("form-group");
 
             panelHeader.append(deleteButton);
-            sel1.append(op11).append(op12).append(op13);
-            sel2.append(op21).append(op22).append(op23);
             sel4.append(op41).append(op42);
 
             for1.append(lbl1).append(sel1);
