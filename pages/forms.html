@@ -442,6 +442,10 @@
                                                 <label>Bebé(s)</label>
                                                 <input id="babies" class="form-control" type="number" name="quantity" min="0">
                                             </div>
+                                            <div class="form-group">
+                                                <label>Precio</label>
+                                                <input id="uprice" class="form-control" type="number" name="quantity" min="0">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -778,6 +782,7 @@
             _loadPromotors();
             /*_loadSellers();*/
             _loadProviders();
+            $("#servicesel").change(_productChanged);
         });
 
         function _getCurrentDate(){
@@ -982,6 +987,21 @@
             _refreshProductsSelect(parseInt(currT.val()),servSel);
         }
 
+        function _productChanged(event) {
+            var currP = $(event.currentTarget);
+            _updatePrice(parseInt(currP.val()), currP);
+        }
+
+        function _updatePrice(productID, select) {
+            var prod = Models["products"].find(function(element){
+                if(element.product_id === productID)
+                    return element;
+            });
+
+            var prodPrice = select.closest(".productPanel").find("#uprice");
+            prodPrice.val(prod.selling_price);
+        }
+
         function _refreshProductsSelect(providerID, select) {
             var prodSel = select ? select : $("#servicesel");
             Models["products"].filter(function(element){
@@ -992,7 +1012,8 @@
                     opt.text(element.name);
                     opt.attr("value",element.product_id);
                     prodSel.append(opt);
-            })
+            });
+            _updatePrice(parseInt(prodSel.val()), prodSel);
         }
 
 
@@ -1057,7 +1078,8 @@
             var th5 = $(document.createElement("th")).text("Adulto(s)");
             var th6 = $(document.createElement("th")).text("Niños(s)");
             var th7 = $(document.createElement("th")).text("Bebé(s)");
-            var tr1 = $(document.createElement("tr")).append(th1).append(th2).append(th3).append(th4).append(th5).append(th6).append(th7);
+            var th8 = $(document.createElement("th")).text("Precio");
+            var tr1 = $(document.createElement("tr")).append(th1).append(th2).append(th3).append(th4).append(th5).append(th6).append(th7).append(th8);
             var thd1 = $(document.createElement("thead")).append(tr1);
             var clss = o === 3? "productConfTableBody" : "productFinishTableBody";
             var tbody = $(document.createElement("tbody")).addClass(clss);
@@ -1072,7 +1094,8 @@
             var td5 = $(document.createElement("td")).text(product.find("#adults").val());
             var td6 = $(document.createElement("td")).text(product.find("#children").val());
             var td7 = $(document.createElement("td")).text(product.find("#babies").val());
-            var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7);
+            var td8 = $(document.createElement("td")).text(product.find("#uprice").val());
+            var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7).append(td8);
             var clss = o === 3? ".productConfTableBody" : ".productFinishTableBody";
             $(clss).append(tr1);
         }
