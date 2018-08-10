@@ -1134,6 +1134,8 @@
             var inp6 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","children");
             var lbl7 = $(document.createElement('label')).text("Bebé(s)");
             var inp7 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","babies");
+            var lbl8 = $(document.createElement('label')).text("Precio");
+            var inp9 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","uprice");
 
             var for1 = $(document.createElement('div')).addClass("form-group");
             var for2 = $(document.createElement('div')).addClass("form-group");
@@ -1142,6 +1144,7 @@
             var for5 = $(document.createElement('div')).addClass("form-group");
             var for6 = $(document.createElement('div')).addClass("form-group");
             var for7 = $(document.createElement('div')).addClass("form-group");
+            var for8 = $(document.createElement('div')).addClass("form-group");
 
             panelHeader.append(deleteButton);
             sel4.append(op41).append(op42);
@@ -1153,7 +1156,8 @@
             for5.append(lbl5).append(inp5);
             for6.append(lbl6).append(inp6);
             for7.append(lbl7).append(inp7);
-            panelBody.append(for1).append(for2).append(for3).append(for4).append(for5).append(for6).append(for7);
+            for8.append(lbl8).append(inp8);
+            panelBody.append(for1).append(for2).append(for3).append(for4).append(for5).append(for6).append(for7).append(for8);
             panel.append(panelHeader).append(panelBody);
             panelContainer.append(panel);
             container.append(panelContainer);
