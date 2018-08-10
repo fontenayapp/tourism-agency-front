@@ -134,30 +134,27 @@ function _createClient() {
     });
 }
 
-function _createSale() {
-    var email = $("#emailconf").text();
-    var clientname = $("#clientnameconf").text();
-    var nationality = $("#nationalityconf").text();
-    var hotel = $("#hotelconf").text();
-    var room = $("#roomconf").text();
-    var address = $("#addressconf").text();
-    var passportid = $("#passportconf").text();
-    var phone = $("#phonenumberconf").text();
+function _createSale(clientObj) {
+    var clientid = clientObj.client_id;
+    var products = _loadJSONProducts();
+    var promoterid = 1;//$("#promotorsel").val();
+    var sellerid = $("#sellersel").val();
+    var promotercommission = _calcPromoterCommission();
+    var sellercommission = _calcSellerCommission();
 
     _loadAjaxSetup();
-    $.post(host+"/client",
+    $.post(host+"/sale",
         JSON.stringify({
-            email: email,
-            name: clientname,
-            nationality: nationality,
-            hotel: hotel,
-            address: address,
-            room_number: room,
-            passport_number: passportid,
-            contact_number: phone
+            client_id: clientid,
+            promoter_id: promoterid,
+            promoter_commission: promotercommission,
+            //seller_id: sellerid,
+            seller_commission: sellercommission,
+            products: products,
+            total: 123
         }),
         function(result){
-            _parseCreatedClientData(result);
+            _parseCreatedSaleData(result);
         }
     ).fail(function(error) {
         _manageError(error);
@@ -165,46 +162,44 @@ function _createSale() {
 }
 
 function  _parseCreatedClientData(result) {
-    //if(result is an an error) {abort}
-    // Show error modal. keep editing
-    //Check if there's some error. Otherwise show the message.
-    // else
     console.log(result);
     _createSale(result);
 }
 
-/*
+function  _parseCreatedSaleData(result) {
+    console.log(result);
+}
 
- "name": "/sale",
- "request": {
- "method": "POST",
- "header": [
- {
- "key": "Authorization",
- "value": "Bearer {{access_token}}"
- },
- {
- "key": "Content-Type",
- "value": "application/json"
- }
- ],
- "body": {
- "mode": "raw",
- "raw": "{  \n   \"products\":[  \n      {  \n         \"product_id\":1,\n         \"price\":1000\n      },\n      {  \n         \"product_id\":2,\n         \"price\":1000\n      },\n      {  \n         \"product_id\":3,\n         \"price\":1000\n      }\n   ],\n   \"client_id\":5,\n   \"total\":4000\n}"
- },
- "url": {
- "raw": "{{url}}/sale",
- "host": [
- "{{url}}"
- ],
- "path": [
- "sale"
- ]
- },
- "description": ""
- },
 
- */
+function _calcPromoterCommission(promoterid) {
+    return 1001;
+}
+
+function _calcSellerCommission(sellerid) {
+    return 2002;
+}
+
+function  _loadJSONProducts(result) {
+    var list = [];
+    var prodList = $(".productPanel");
+    if(0 < prodList.length) {
+        prodList.each(function(index, el){
+            var prod = {
+                product_id: 1,
+                date: "2018-12-12 23:00:48",//$(el).find("#date").val(),
+                transfer: true,//$(el).find("#transfersel").val(),
+                price: 234324,
+                adults: $(el).find("#adults").val(),
+                children: $(el).find("#children").val(),
+                babies: $(el).find("#babies").val()
+            };
+            list.push(prod);
+        })
+    }
+    return list;
+}
+
+
 /*-----------------------------------------------------------------------------*/
 function _getUser(FBID) {
     $("body").LoadingOverlay('show');
