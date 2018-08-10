@@ -389,18 +389,15 @@
                             <div class="form-group col-lg-4">
                                 <label>Promotor</label>
                                 <select class="form-control" id="promotorsel">
-                                    <option>Promotor 1</option>
-                                    <option>Promotor 2</option>
-                                    <option>Promotor 3</option>
                                 </select>
                             </div>
                             <div class="form-group col-lg-4">
-                                <label>Vendedor</label>
+                                <!--<label>Vendedor</label>
                                 <select class="form-control" id="sellersel">
                                     <option>Vendedor 1</option>
                                     <option>Vendedor 2</option>
                                     <option>Vendedor 3</option>
-                                </select>
+                                </select>-->
                             </div>
                         </div>
 
@@ -416,29 +413,21 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <label>Proveedor</label>
-                                                <select class="form-control" id="providersel">
-                                                    <option>Proveedor 1</option>
-                                                    <option>Proveedor 2</option>
-                                                    <option>Proveedor 3</option>
-                                                </select>
+                                                <select class="form-control" id="providersel"></select>
                                             </div>
                                             <div class="form-group">
                                                 <label>Servicio</label>
-                                                <select class="form-control" id="servicesel">
-                                                    <option>Servicio 1</option>
-                                                    <option>Servicio 2</option>
-                                                    <option>Servicio 3</option>
-                                                </select>
+                                                <select class="form-control" id="servicesel"></select>
                                             </div>
                                             <div class="form-group">
                                                 <label>Fecha</label>
-                                                <input class="form-control" id="date" type="number" name="quantity" min="1">
+                                                <input class="form-control" id="date" type="date" value="">
                                             </div>
                                             <div class="form-group">
                                                 <label>Traslado</label>
                                                 <select class="form-control" id="transfersel">
-                                                    <option>Sí</option>
-                                                    <option>No</option>
+                                                    <option value="true">Sí</option>
+                                                    <option value="false">No</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -504,10 +493,10 @@
                                 <label>Promotor</label>
                                 <p id="promotorconf" class="form-control-static"></p>
                             </div>
-                            <div class="form-group col-lg-3">
-                                <label>Vendedor</label>
-                                <p id="sellerconf" class="form-control-static"></p>
-                            </div>
+                            <!--<div class="form-group col-lg-3">-->
+                                <!--<label>Vendedor</label>-->
+                                <!--<p id="sellerconf" class="form-control-static"></p>-->
+                            <!--</div>-->
 
                             <h4 class="col-lg-12">Productos</h4>
                             <div class="table-responsive col-lg-12">
@@ -546,10 +535,10 @@
                                 <label>Promotor</label>
                                 <p id="promotorfinish" class="form-control-static"></p>
                             </div>
-                            <div class="form-group col-lg-3">
-                                <label>Vendedor</label>
-                                <p id="sellerfinish" class="form-control-static"></p>
-                            </div>
+                            <!--<div class="form-group col-lg-3">-->
+                                <!--<label>Vendedor</label>-->
+                                <!--<p id="sellerfinish" class="form-control-static"></p>-->
+                            <!--</div>-->
 
                             <h4 class="col-lg-12">Productos</h4>
                             <div class="table-responsive col-lg-12">
@@ -782,9 +771,22 @@
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/fontenay.js"></script>
     <script>
+        var Models = [];
         $(document).ready(function() {
             _checkLogin();
+            $("#date").val(_getCurrentDate())
+            _loadPromotors();
+            /*_loadSellers();*/
+            _loadProviders();
         });
+
+        function _getCurrentDate(){
+            var t = new Date();
+            var month = t.getMonth()+1;
+            month = month > 9 ? month : "0"+month;
+            return t.getFullYear()+"-"+month+"-"+t.getDate();
+        }
+
         var currentTab = 0; // Current tab is set to be the first tab (0)
         showTab(currentTab); // Display the current tab
 
@@ -878,11 +880,121 @@
         function loadConfirmationTab() {
             loadTab(3);
         }
+
         function loadFinishTab() {
             loadTab(4);
         }
+
+        function _loadPromotors() {
+            var promotorsPromise = new Promise(
+                function (resolve, reject) {
+                    _getPromotors(resolve, reject);
+                }
+            );
+
+            var load = function() {
+                promotorsPromise
+                .then(function (result) {
+                    _loadPromotorsSelect(result);
+                })
+                .catch(function (error) {
+                    console.log(error.message);
+                });
+            };
+            load();
+        }
+
+        function _loadProviders() {
+            var providersPromise = new Promise(
+                function (resolve, reject) {
+                    _getProviders(resolve, reject);
+                }
+            );
+
+            var load = function() {
+                providersPromise
+                    .then(function (result) {
+                        _loadProvidersSelect(result);
+                    })
+                    .catch(function (error) {
+                        console.log(error.message);
+                    });
+            };
+            load();
+        }
+
+        function _loadProducts() {
+            var productsPromise = new Promise(
+                function (resolve, reject) {
+                    _getProducts(resolve, reject);
+                }
+            );
+
+            var load = function() {
+                productsPromise
+                    .then(function (result) {
+                        _loadProductsSelect(result);
+                    })
+                    .catch(function (error) {
+                        console.log(error.message);
+                    });
+            };
+            load();
+        }
+
+        function _loadPromotorsSelect(result) {
+            Models["promoters"] = result;
+            var promSel = $("#promotorsel");
+            result.forEach(function(element,index){
+                var opt = $(document.createElement("option"));
+                opt.text(element.first_name + " "+ element.last_name);
+                opt.attr("value",element.promoter_id);
+                promSel.append(opt);
+            })
+        }
+
+        function _loadProvidersSelect(result) {
+            Models["providers"] = result;
+            var provSel = $("#providersel");
+            result.forEach(function(element,index){
+                var opt = $(document.createElement("option"));
+                opt.text(element.name);
+                opt.attr("value",element.provider_id);
+                provSel.append(opt);
+            });
+            provSel.change(_providerChanged);
+            _loadProducts();
+        }
+
+        function _loadProductsSelect(result) {
+            Models["products"] = result;
+            _refreshProductsSelect(1);
+        }
+
+        function _providerChanged(event) {
+            var currT = $(event.currentTarget);
+            var servSel = currT.closest(".productPanel").find("#servicesel");
+            servSel.empty();
+
+            _refreshProductsSelect(parseInt(currT.val()),servSel);
+        }
+
+        function _refreshProductsSelect(providerID, select) {
+            var prodSel = select ? select : $("#servicesel");
+            Models["products"].filter(function(element){
+                if(element.provider_id === providerID)
+                    return element;})
+                .forEach(function(element){
+                    var opt = $(document.createElement("option"));
+                    opt.text(element.name);
+                    opt.attr("value",element.product_id);
+                    prodSel.append(opt);
+            })
+        }
+
+
         function loadTab(order) {
-            var clientname, passportid, nationality, hotel, address, room, phone, email, promotor, seller;
+            var clientname, passportid, nationality, hotel, address, room, phone, email, promotor/*, seller*/;
             if(order === 3) {
                 clientname = $("#clientnameconf");
                 passportid = $("#passportconf");
@@ -893,7 +1005,7 @@
                 phone = $("#phonenumberconf");
                 email = $("#emailconf");
                 promotor = $("#promotorconf");
-                seller = $("#sellerconf");
+                /*seller = $("#sellerconf");*/
             } else if(order === 4) {
                 clientname = $("#clientnamefinish");
                 passportid = $("#passportfinish");
@@ -904,7 +1016,7 @@
                 phone = $("#phonenumberfinish");
                 email = $("#emailfinish");
                 promotor = $("#promotorfinish");
-                seller = $("#sellerfinish");
+                /*seller = $("#sellerfinish");*/
 
             }
             clientname.text($("#clientname").val());
@@ -916,7 +1028,7 @@
             phone.text($("#phonenumber").val());
             email.text($("#email").val());
             promotor.text($("#promotorsel").val());
-            seller.text($("#sellersel").val());
+            /*seller.text($("#sellersel").val());*/
 
             loadProductsTable(order);
         }
@@ -989,11 +1101,11 @@
             var op22 = $(document.createElement('option')).text("Servicio 2");
             var op23 = $(document.createElement('option')).text("Servicio 3");
             var lbl3 = $(document.createElement('label')).text("Fecha");
-            var fec3 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","date");
+            var fec3 = $(document.createElement('input')).addClass("form-control").attr("type","date").attr("id","date").val(_getCurrentDate());
             var lbl4 = $(document.createElement('label')).text("Traslado");
             var sel4 = $(document.createElement('select')).addClass("form-control").attr("id","transfersel");
-            var op41 = $(document.createElement('option')).text("Si");
-            var op42 = $(document.createElement('option')).text("No");
+            var op41 = $(document.createElement('option')).text("Si").attr("value",true);
+            var op42 = $(document.createElement('option')).text("No").attr("value",false);
             var lbl5 = $(document.createElement('label')).text("Adulto(s)");
             var inp5 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","adults");
             var lbl6 = $(document.createElement('label')).text("Niño(s)");

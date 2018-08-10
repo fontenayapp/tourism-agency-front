@@ -63,7 +63,6 @@ function _login() {
             "password": password
         },
         function (result, error) {
-            console.log("Login Success.");
             setCookie("access_token", result.access_token, 1);
             setCookie("refresh_token", result.refresh_token, 1);
 
@@ -83,7 +82,7 @@ function _checkLogin() {
 
 function _manageError(error) {
     if(error.status === 401) {
-        alert("Credenciales erróneas. Inicie sesión nuevamente.");
+        window.location = "/pages/login.html";
     } else if(error.status === 400) {
         alert("Error al enviar el pedido de creación de cliente. Contacte al administrador del sistema.");
     } else if(error.status === 503) {
@@ -137,8 +136,8 @@ function _createClient() {
 function _createSale(clientObj) {
     var clientid = clientObj.client_id;
     var products = _loadJSONProducts();
-    var promoterid = 1;//$("#promotorsel").val();
-    var sellerid = $("#sellersel").val();
+    var promoterid = $("#promotorsel").val();
+    // var sellerid = $("#sellersel").val();
     var promotercommission = _calcPromoterCommission();
     var sellercommission = _calcSellerCommission();
 
@@ -161,6 +160,57 @@ function _createSale(clientObj) {
     });
 }
 
+
+
+/*----------------------------------------------------------------------*/
+/*------------------------ GET -----------------------------------------*/
+/*----------------------------------------------------------------------*/
+function _getPromotors(res, rej) {
+    _loadAjaxSetup();
+
+    $.get(host+"/promoters",
+        function (result, error) {
+            res(result);
+        }).fail(function(error) {
+        if(error.status === 401) {
+            window.location = "/pages/login.html";
+        }
+        rej(error);
+    })
+}
+
+function _getProviders(res, rej) {
+    _loadAjaxSetup();
+
+    $.get(host+"/providers",
+        function (result, error) {
+            res(result);
+        }).fail(function(error) {
+        if(error.status === 401) {
+            window.location = "/pages/login.html";
+        }
+        rej(error);
+    })
+}
+
+function _getProducts(res, rej) {
+    _loadAjaxSetup();
+
+    $.get(host+"/products",
+        function (result, error) {
+            res(result);
+        }).fail(function(error) {
+        if(error.status === 401) {
+            window.location = "/pages/login.html";
+        }
+        rej(error);
+    })
+}
+
+
+/*----------------------------------------------------------------------*/
+/*------------------------ PARSERS -------------------------------------*/
+/*----------------------------------------------------------------------*/
 function  _parseCreatedClientData(result) {
     console.log(result);
     _createSale(result);
@@ -184,14 +234,15 @@ function  _loadJSONProducts(result) {
     var prodList = $(".productPanel");
     if(0 < prodList.length) {
         prodList.each(function(index, el){
+            var elem = $(el);
             var prod = {
-                product_id: 1,
-                date: "2018-12-12 23:00:48",//$(el).find("#date").val(),
-                transfer: true,//$(el).find("#transfersel").val(),
+                product_id: elem.find("#servicesel").val(),
+                date: elem.find("#date").val() + " 00:00:00",
+                transfer: elem.find("#transfersel").val(),
                 price: 234324,
-                adults: $(el).find("#adults").val(),
-                children: $(el).find("#children").val(),
-                babies: $(el).find("#babies").val()
+                adults: elem.find("#adults").val(),
+                children: elem.find("#children").val(),
+                babies: elem.find("#babies").val()
             };
             list.push(prod);
         })
