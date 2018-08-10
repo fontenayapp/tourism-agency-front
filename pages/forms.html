@@ -1118,10 +1118,8 @@
             var panelBody = $(document.createElement('div')).addClass("panel-body");
             var lbl1 = $(document.createElement('label')).text("Proveedor");
             var sel1 = $(document.createElement('select')).addClass("form-control").attr("id","providersel");
-            _refreshProvidersSelect(sel1);
             var lbl2 = $(document.createElement('label')).text("Servicio");
             var sel2 = $(document.createElement('select')).addClass("form-control").attr("id","servicesel");
-            _refreshProductsSelect(1,sel2);
             var lbl3 = $(document.createElement('label')).text("Fecha");
             var fec3 = $(document.createElement('input')).addClass("form-control").attr("type","date").attr("id","date").val(_getCurrentDate());
             var lbl4 = $(document.createElement('label')).text("Traslado");
@@ -1135,7 +1133,7 @@
             var lbl7 = $(document.createElement('label')).text("Bebé(s)");
             var inp7 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","babies");
             var lbl8 = $(document.createElement('label')).text("Precio");
-            var inp9 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","uprice");
+            var inp8 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","uprice");
 
             var for1 = $(document.createElement('div')).addClass("form-group");
             var for2 = $(document.createElement('div')).addClass("form-group");
@@ -1161,6 +1159,8 @@
             panel.append(panelHeader).append(panelBody);
             panelContainer.append(panel);
             container.append(panelContainer);
+            _refreshProvidersSelect(sel1);
+            _refreshProductsSelect(1,sel2);
         })
 
     </script>
