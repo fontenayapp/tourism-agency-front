@@ -81,14 +81,12 @@ function _checkLogin() {
 }
 
 function _manageError(error) {
-    if(error.status === 401) {
+    if(error.status === 401 || error.status === 422) {
         window.location = "/pages/login.html";
     } else if(error.status === 400) {
         alert("Error al enviar el pedido de creación de cliente. Contacte al administrador del sistema.");
     } else if(error.status === 503) {
         alert("Error interno del servidor. Contacte al administrador del sistema.");
-    } else if(error.status === 422) {
-        alert("Error enviando datos.");
     } else {
         alert("Error desconocido: ", error.status);
     }
@@ -173,7 +171,7 @@ function _getPromotors(res, rej) {
         function (result, error) {
             res(result);
         }).fail(function(error) {
-        if(error.status === 401) {
+        if(error.status === 401 || error.status === 422) {
             window.location = "/pages/login.html";
         }
         rej(error);
@@ -187,7 +185,7 @@ function _getProviders(res, rej) {
         function (result, error) {
             res(result);
         }).fail(function(error) {
-        if(error.status === 401) {
+        if(error.status === 401 || error.status === 422) {
             window.location = "/pages/login.html";
         }
         rej(error);
@@ -201,7 +199,7 @@ function _getProducts(res, rej) {
         function (result, error) {
             res(result);
         }).fail(function(error) {
-        if(error.status === 401) {
+        if(error.status === 401 || error.status === 422) {
             window.location = "/pages/login.html";
         }
         rej(error);
