@@ -138,8 +138,9 @@ function _createSale(clientObj) {
     var products = _loadJSONProducts();
     var promoterid = $("#promotorsel").val();
     // var sellerid = $("#sellersel").val();
-    var promotercommission = _calcPromoterCommission();
-    var sellercommission = _calcSellerCommission();
+    var total = parseInt($("#productconftotal").text()) - parseInt($("#discountconf").val());
+    var promotercommission = total*0.1;
+    var sellercommission = (total*0.9 - parseInt($("#productstockprice").val()))*0.1625;
 
     _loadAjaxSetup();
     $.post(host+"/sale",
@@ -150,7 +151,7 @@ function _createSale(clientObj) {
             //seller_id: sellerid,
             seller_commission: sellercommission,
             products: products,
-            total: 123
+            total: total
         }),
         function(result){
             _parseCreatedSaleData(result);
@@ -220,15 +221,6 @@ function  _parseCreatedSaleData(result) {
     console.log(result);
 }
 
-
-function _calcPromoterCommission(promoterid) {
-    return 1001;
-}
-
-function _calcSellerCommission(sellerid) {
-    return 2002;
-}
-
 function  _loadJSONProducts(result) {
     var list = [];
     var prodList = $(".productPanel");
@@ -239,7 +231,7 @@ function  _loadJSONProducts(result) {
                 product_id: elem.find("#servicesel").val(),
                 date: elem.find("#date").val() + " 00:00:00",
                 transfer: elem.find("#transfersel").val(),
-                price: 234324,
+                price: elem.find("#uprice").val(),
                 adults: elem.find("#adults").val(),
                 children: elem.find("#children").val(),
                 babies: elem.find("#babies").val()

@@ -444,8 +444,13 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Precio</label>
-                                                <input id="uprice" class="form-control" type="number" name="quantity" min="0">
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">$</span>
+                                                    <input id="uprice" class="form-control" type="number" name="quantity" min="0">
+                                                    <span class="input-group-addon">.00</span>
+                                                </div>
                                             </div>
+                                            <input id="stockprice" class="form-control-static" type="number" style="display: none">
                                         </div>
                                     </div>
                                 </div>
@@ -497,6 +502,21 @@
                                 <label>Promotor</label>
                                 <p id="promotorconf" class="form-control-static"></p>
                             </div>
+                            <div class="form-group col-lg-3">
+                                <label>Subtotal</label>
+                                <p class="form-control-static">$</p>
+                                <p id="productconftotal" class="form-control-static"></p>
+                                <p class="form-control-static">.00</p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Descuento</label>
+                                <div class=" input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input id="discountconf" class="form-control-static" type="number" name="quantity" min="0">
+                                    <span class="input-group-addon">.00</span>
+                                </div>
+                            </div>
+                            <input id="productstockprice" class="form-control-static" type="number" style="display:none">
                             <!--<div class="form-group col-lg-3">-->
                                 <!--<label>Vendedor</label>-->
                                 <!--<p id="sellerconf" class="form-control-static"></p>-->
@@ -538,6 +558,10 @@
                             <div class="form-group col-lg-3">
                                 <label>Promotor</label>
                                 <p id="promotorfinish" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Total</label>
+                                <p id="productfinishtotal" class="form-control-static"></p>
                             </div>
                             <!--<div class="form-group col-lg-3">-->
                                 <!--<label>Vendedor</label>-->
@@ -999,7 +1023,9 @@
             });
 
             var prodPrice = select.closest(".productPanel").find("#uprice");
+            var stockPrice = select.closest(".productPanel").find("#stockprice");
             prodPrice.val(prod.selling_price);
+            stockPrice.val(prod.stock_price);
         }
 
         function _refreshProductsSelect(providerID, select) {
@@ -1057,16 +1083,37 @@
             loadProductsTable(order);
         }
 
+        function _getTotal() {}
 
         function loadProductsTable(order) {
             var prodList = $(".productPanel");
-            var prodTable = order === 3? $("#productsconftable") : $("#productsfinishtable") ;
+            var prodTable;
+            var totalElem;
+            var stockPrice = $("#productstockprice");
+            var total = 0, cost = 0;
+
+            if(order === 3) {
+                prodTable = $("#productsconftable");
+                totalElem = $("#productconftotal");
+            } else {
+                prodTable = $("#productsfinishtable");
+                totalElem = $("#productfinishtotal");
+            }
+
             prodTable.empty();
+
             if(0 < prodList.length) {
                 loadProdTableHeader(prodTable, order);
                 prodList.each(function(index, el){
-                    loadProdTableRow($(el), order);
-                })
+                    var elem = $(el);
+                    total += parseInt(elem.find("#uprice").val());
+                    cost += parseInt(elem.find("#stockprice").val());
+                    loadProdTableRow(elem, order);
+                });
+
+                var finaltotal = order === 4? total - parseInt($("#discountconf").val()): total;
+                totalElem.text(finaltotal);
+                stockPrice.val(cost);
             }
         }
 
@@ -1133,7 +1180,11 @@
             var lbl7 = $(document.createElement('label')).text("Bebé(s)");
             var inp7 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","babies");
             var lbl8 = $(document.createElement('label')).text("Precio");
+            var spn81 = $(document.createElement('span')).addClass("input-group-addon").text("$");
+            var spn82 = $(document.createElement('span')).addClass("input-group-addon").text(".00");
+            var ig8 = $(document.createElement('div')).addClass("input-group");
             var inp8 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","uprice");
+            var inp9 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","stockprice").css("display","none");
 
             var for1 = $(document.createElement('div')).addClass("form-group");
             var for2 = $(document.createElement('div')).addClass("form-group");
@@ -1154,13 +1205,15 @@
             for5.append(lbl5).append(inp5);
             for6.append(lbl6).append(inp6);
             for7.append(lbl7).append(inp7);
-            for8.append(lbl8).append(inp8);
-            panelBody.append(for1).append(for2).append(for3).append(for4).append(for5).append(for6).append(for7).append(for8);
+            ig8.append(spn81).append(inp8).append(spn82);
+            for8.append(lbl8).append(ig8);
+            panelBody.append(for1).append(for2).append(for3).append(for4).append(for5).append(for6).append(for7).append(for8).append(inp9);
             panel.append(panelHeader).append(panelBody);
             panelContainer.append(panel);
             container.append(panelContainer);
             _refreshProvidersSelect(sel1);
             _refreshProductsSelect(1,sel2);
+            sel2.change(_productChanged);
         })
 
     </script>
