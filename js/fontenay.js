@@ -206,6 +206,20 @@ function _getProducts(res, rej) {
     })
 }
 
+function _getTransactions(res, rej) {
+    _loadAjaxSetup();
+
+    $.get(host+"/transactions",
+        function (result, error) {
+            res(result);
+        }).fail(function(error) {
+        if(error.status === 401 || error.status === 422) {
+            window.location = "/pages/login.html";
+        }
+        rej(error);
+    })
+}
+
 
 /*----------------------------------------------------------------------*/
 /*------------------------ PARSERS -------------------------------------*/
