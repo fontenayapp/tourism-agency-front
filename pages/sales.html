@@ -349,18 +349,19 @@
         var load = function() {
             salesPromise
                 .then(function (result) {
-                    var listado = _fixFormat(result);
+                    var listado = _fixSalesFormat(result);
                     $('#dataTables-example').DataTable({
                         responsive: true,
                         data: listado,
                         columns: [
-                            { title: "ID", data: "transaction_id" },
-                            { title: "Monto",data: "amount" },
-                            { title: "Descripción",data: "description" },
+                            { title: "ID", data: "id"},
+                            { title: "Cliente",data: "clientname" },
+                            { title: "Pasaporte",data: "passport" },
                             { title: "Fecha",data: "date" },
-                            { title: "Categoría",data: "category_id" },
-                            { title: "¿Es gasto?",data: "is_expense" },
-                            { title: "ID de venta",data: "sale_id" }
+                            { title: "Vendedor",data: "seller" },
+                            { title: "Promotor",data: "promoter" },
+                            { title: "Moneda",data: "currency" },
+                            { title: "Monto",data: "total" }
                         ],
                         language: {
                             "emptyTable": "No hay datos",

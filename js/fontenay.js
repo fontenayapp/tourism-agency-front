@@ -283,6 +283,25 @@ function _fixFormat(result) {
     return list;
 }
 
+
+function _fixSalesFormat(result) {
+    var list = [];
+    result.forEach(function(e) {
+        var elem = {};
+        elem.id = e.sale_id;
+        elem.clientname = e.client.name;
+        elem.passport = e.client.passport_number;
+        elem.date = _getFormatDate(new Date(e.date));
+        elem.seller = e.user.first_name + ' ' + e.user.last_name;
+        elem.promoter = e.promoter.first_name + ' ' + e.promoter.last_name;
+        elem.currency = e.currency || "N/A";
+        elem.total = e.total;
+        list.push(elem);
+    });
+    return list;
+}
+
+
 function _getFormatDate(dat){
     var month = dat.getMonth()+1;
     month = month > 9 ? month : "0"+month;
