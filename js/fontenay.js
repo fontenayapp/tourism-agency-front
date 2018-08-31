@@ -1,3 +1,5 @@
+Models = [];
+
 $(function() {
     $('#side-menu').metisMenu();
 });
@@ -169,6 +171,7 @@ function _getPromotors(res, rej) {
 
     $.get(host+"/promoters",
         function (result, error) {
+            Models["promoters"] = result;
             res(result);
         }).fail(function(error) {
         if(error.status === 401 || error.status === 422) {
@@ -183,6 +186,7 @@ function _getProviders(res, rej) {
 
     $.get(host+"/providers",
         function (result, error) {
+            Models["providers"] = result;
             res(result);
         }).fail(function(error) {
         if(error.status === 401 || error.status === 422) {
@@ -197,6 +201,7 @@ function _getProducts(res, rej) {
 
     $.get(host+"/products",
         function (result, error) {
+            Models["products"] = result;
             res(result);
         }).fail(function(error) {
         if(error.status === 401 || error.status === 422) {
@@ -225,6 +230,7 @@ function _getSales(res, rej) {
 
     $.get(host+"/sales",
         function (result, error) {
+            Models["sales"] = result;
             res(result);
         }).fail(function(error) {
         if(error.status === 401 || error.status === 422) {

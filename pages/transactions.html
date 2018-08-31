@@ -350,6 +350,9 @@
             productsPromise
                 .then(function (result) {
                     var listado = _fixFormat(result);
+                    var buttonsHTML = '<button type="button" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
+                        +'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
+                        +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
                     $('#dataTables-example').DataTable({
                         responsive: true,
                         data: listado,
@@ -360,7 +363,8 @@
                             { title: "Fecha",data: "date" },
                             { title: "Categoría",data: "category_id" },
                             { title: "¿Es gasto?",data: "is_expense" },
-                            { title: "ID de venta",data: "sale_id" }
+                            { title: "ID de venta",data: "sale_id" },
+                            { title: "Acciones",data: null }
                         ],
                         language: {
                             "emptyTable": "No hay datos",
@@ -384,7 +388,19 @@
                                 "sortAscending":  ": activar para ordenar ascendentemente",
                                 "sortDescending": ": activar para ordenar descendentemente"
                             }
-                        }
+                        },
+                        columnDefs: [
+                            {
+                                width: '7%',
+                                targets: 0  //la primer columna tendra una anchura del  20% de la tabla
+                            },
+                            {
+                                targets: -1, //-1 es la ultima columna y 0 la primera
+                                data: null,
+                                defaultContent: buttonsHTML
+                            },
+                            { orderable: false, searchable: false, targets: -1 } //Ultima columna no ordenable para botones
+                        ]
                     });
                 })
                 .catch(function (error) {

@@ -765,7 +765,6 @@
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/fontenay.js"></script>
     <script>
-        var Models = [];
         $(document).ready(function() {
             _checkLogin();
             $("#date").val(_getCurrentDate())
@@ -938,7 +937,6 @@
         }
 
         function _loadPromotorsSelect(result) {
-            Models["promoters"] = result;
             var promSel = $("#promotorsel");
             result.forEach(function(element,index){
                 var opt = $(document.createElement("option"));
@@ -949,7 +947,6 @@
         }
 
         function _loadProvidersSelect(result) {
-            Models["providers"] = result;
             _refreshProvidersSelect($("#providersel"));
             _loadProducts();
         }
@@ -966,7 +963,6 @@
         }
 
         function _loadProductsSelect(result) {
-            Models["products"] = result;
             _refreshProductsSelect(1);
         }
 
