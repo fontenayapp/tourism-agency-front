@@ -396,7 +396,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Adulto(s)</label>
-                                                <input id="adults" class="form-control" type="number" name="quantity" value="2" min="1">
+                                                <input id="adults" class="form-control" type="number" name="quantity" value="2" min="0">
                                             </div>
                                             <div class="form-group">
                                                 <label>Niño(s)</label>
@@ -866,7 +866,7 @@
                     valid = false;
                 } else if(1 === currentTab && (y.length === (i+1))) {
                     var totalPeople = _numberOfPeople(elem.closest(".productPanel"));
-                    if(totalPeople === 0) {
+                    if(totalPeople <= 0) {
                         $('#noPeopleModal').modal('show');
                         peopleNumber = false;
                     }
@@ -1175,11 +1175,11 @@
             var op41 = $(document.createElement('option')).text("Si").attr("value",true);
             var op42 = $(document.createElement('option')).text("No").attr("value",false);
             var lbl5 = $(document.createElement('label')).text("Adulto(s)");
-            var inp5 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","adults").attr("value","2");
+            var inp5 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","adults").attr("value","2").attr("min","0");
             var lbl6 = $(document.createElement('label')).text("Niño(s)");
-            var inp6 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","children").attr("value","0");
+            var inp6 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","children").attr("value","0").attr("min","0");
             var lbl7 = $(document.createElement('label')).text("Bebé(s)");
-            var inp7 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","babies").attr("value","0");
+            var inp7 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","babies").attr("value","0").attr("min","0");
             var lbl8 = $(document.createElement('label')).text("Precio");
             var spn81 = $(document.createElement('span')).addClass("input-group-addon").text("$");
             var spn82 = $(document.createElement('span')).addClass("input-group-addon").text(".00");
