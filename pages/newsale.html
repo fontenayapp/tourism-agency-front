@@ -320,35 +320,35 @@
                             <h2>Datos del cliente</h2>
                             <div class="form-group col-lg-4">
                                 <label>Nombre y Apellido</label>
-                                <input class="form-control" id="clientname">
+                                <input class="form-control" id="clientname" value="Nombrecliente">
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Identificador</label>
-                                <input class="form-control" id="passport">
+                                <input class="form-control" id="passport" value="Pasaportecliente" >
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Nacionalidad</label>
-                                <input class="form-control" id="nationality">
+                                <input class="form-control" id="nationality" value="Nacionalidadcliente">
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Hotel</label>
-                                <input class="form-control" id="hotel">
+                                <input class="form-control" id="hotel" value="Hotelcliente">
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Dirección</label>
-                                <input class="form-control" id="address">
+                                <input class="form-control" id="address" value="Direccioncliente">
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Habitación</label>
-                                <input class="form-control" id="room">
+                                <input class="form-control" id="room" value="Habitacioncliente">
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Número de contacto</label>
-                                <input class="form-control" id="phonenumber">
+                                <input class="form-control" id="phonenumber" value="Telefonocliente">
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Email</label>
-                                <input class="form-control" id="email">
+                                <input class="form-control" id="email" value="Emailcliente">
                             </div>
                             <div class="form-group col-lg-4">
                                 <label>Promotor</label>
@@ -783,12 +783,14 @@
     <script>
         $(document).ready(function() {
             _checkLogin();
-            $("#date").val(_getCurrentDate())
+            $("#date").val(_getCurrentDate());
             _loadPromotors();
             /*_loadSellers();*/
             _loadProviders();
             $("#servicesel").change(_productChanged);
             $("#adults, #children, #babies").change(_peopleChanged);
+            //DELETE
+            $("#nextBtn").focus();
         });
 
         function _getCurrentDate(){
