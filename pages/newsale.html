@@ -396,21 +396,21 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Adulto(s)</label>
-                                                <input id="adults" class="form-control" type="number" name="quantity" min="1">
+                                                <input id="adults" class="form-control" type="number" name="quantity" value="2" min="1">
                                             </div>
                                             <div class="form-group">
                                                 <label>Niño(s)</label>
-                                                <input id="children" class="form-control" type="number" name="quantity" min="0">
+                                                <input id="children" class="form-control" type="number" name="quantity" value="0" min="0">
                                             </div>
                                             <div class="form-group">
                                                 <label>Bebé(s)</label>
-                                                <input id="babies" class="form-control" type="number" name="quantity" min="0">
+                                                <input id="babies" class="form-control" type="number" name="quantity" value="0" min="0">
                                             </div>
                                             <div class="form-group">
                                                 <label>Precio</label>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">$</span>
-                                                    <input id="uprice" class="form-control" type="number" name="quantity" min="0">
+                                                    <input id="uprice" class="form-control" type="number" name="quantity" min="0" disabled>
                                                     <span class="input-group-addon">.00</span>
                                                 </div>
                                             </div>
@@ -564,10 +564,26 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">No hay productos</h4>
+                            <h4 class="modal-title" id="noProductsModalTitle">No hay productos</h4>
                         </div>
                         <div class="modal-body">
                             No se ha seleccionado ningún producto. Agregue uno para continuar con el siguiente paso.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="noPeopleModal" tabindex="-1" role="dialog" aria-labelledby="noPeopleModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="noPeopleModalTitle">Error en producto</h4>
+                        </div>
+                        <div class="modal-body">
+                            No se ha seleccionado ninguna persona (adulto, niño, bebé) en al menos uno de los formularios. Agregue al menos uno en cada producto para continuar con el siguiente paso.
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
@@ -772,6 +788,7 @@
             /*_loadSellers();*/
             _loadProviders();
             $("#servicesel").change(_productChanged);
+            $("#adults, #children, #babies").change(_peopleChanged);
         });
 
         function _getCurrentDate(){
@@ -834,7 +851,7 @@
 
         function validateForm() {
             // This function deals with validation of the form fields
-            var x, y, i, valid = true, productsList = true;
+            var x, y, i, valid = true, productsList = true, peopleNumber = true;
             x = document.getElementsByClassName("tab");
             y = x[currentTab].getElementsByTagName("input");
             // A loop that checks every input field in the current tab:
@@ -842,23 +859,29 @@
                 // If a field is empty...
                 var elem = $(y[i]);
                 elem.removeClass("invalid").parent().removeClass("has-error");
-                if ("" == elem[0].value) {
+                if ("" === elem[0].value) {
                     // add an "invalid" class to the field:
                     elem.addClass("invalid").parent().addClass("has-error");
                     // and set the current valid status to false:
                     valid = false;
+                } else if(1 === currentTab && (y.length === (i+1))) {
+                    var totalPeople = _numberOfPeople(elem.closest(".productPanel"));
+                    if(totalPeople === 0) {
+                        $('#noPeopleModal').modal('show');
+                        peopleNumber = false;
+                    }
                 }
             }
 
-            if(1 == currentTab && $(".productPanel").length < 1) {
+            if(1 === currentTab && $(".productPanel").length < 1) {
                 $('#noProductsModal').modal('show');
                 productsList = false;
             }
             // If the valid status is true, mark the step as finished and valid:
-            if (valid && productsList) {
+            if (valid && productsList && peopleNumber) {
                 document.getElementsByClassName("step")[currentTab].className += " finish";
             }
-            return valid && productsList; // return the valid status
+            return valid && productsList && peopleNumber; // return the valid status
         }
 
         function fixStepIndicator(n) {
@@ -978,16 +1001,32 @@
             _updatePrice(parseInt(currP.val()), currP);
         }
 
+        function _peopleChanged(event) {
+            var currP = $(event.target).closest(".productPanel").find("#servicesel");
+            _updatePrice(parseInt(currP.val()), currP);
+        }
+
         function _updatePrice(productID, select) {
             var prod = Models["products"].find(function(element){
                 if(element.product_id === productID)
                     return element;
             });
 
-            var prodPrice = select.closest(".productPanel").find("#uprice");
-            var stockPrice = select.closest(".productPanel").find("#stockprice");
-            prodPrice.val(prod.selling_price);
-            stockPrice.val(prod.stock_price);
+            var prodPanel = select.closest(".productPanel");
+            var prodPrice = prodPanel.find("#uprice");
+            var stockPrice = prodPanel.find("#stockprice");
+
+            var numberOfPeople = _numberOfPeople(prodPanel);
+            
+            prodPrice.val(prod.selling_price * (numberOfPeople));
+            stockPrice.val(prod.stock_price * (numberOfPeople));
+        }
+
+        function _numberOfPeople(panel) {
+            var numberAdults = parseInt(panel.find("#adults").val());
+            var numberChildren= parseInt(panel.find("#children").val());
+            var numberBabies = parseInt(panel.find("#babies").val());
+            return numberAdults + numberChildren + numberBabies;
         }
 
         function _refreshProductsSelect(providerID, select) {
@@ -1136,16 +1175,16 @@
             var op41 = $(document.createElement('option')).text("Si").attr("value",true);
             var op42 = $(document.createElement('option')).text("No").attr("value",false);
             var lbl5 = $(document.createElement('label')).text("Adulto(s)");
-            var inp5 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","adults");
+            var inp5 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","adults").attr("value","2");
             var lbl6 = $(document.createElement('label')).text("Niño(s)");
-            var inp6 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","children");
+            var inp6 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","children").attr("value","0");
             var lbl7 = $(document.createElement('label')).text("Bebé(s)");
-            var inp7 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","babies");
+            var inp7 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","babies").attr("value","0");
             var lbl8 = $(document.createElement('label')).text("Precio");
             var spn81 = $(document.createElement('span')).addClass("input-group-addon").text("$");
             var spn82 = $(document.createElement('span')).addClass("input-group-addon").text(".00");
             var ig8 = $(document.createElement('div')).addClass("input-group");
-            var inp8 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","uprice");
+            var inp8 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","uprice").attr("disabled","disabled");
             var inp9 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","stockprice").css("display","none");
 
             var for1 = $(document.createElement('div')).addClass("form-group");
@@ -1176,6 +1215,9 @@
             _refreshProvidersSelect(sel1);
             _refreshProductsSelect(1,sel2);
             sel2.change(_productChanged);
+            inp5.change(_peopleChanged);
+            inp6.change(_peopleChanged);
+            inp7.change(_peopleChanged);
         })
 
     </script>
