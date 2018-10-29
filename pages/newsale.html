@@ -365,7 +365,7 @@
                             </div>
                         </div>
 
-                        <div class="tab"  class="form-group">
+                        <div class="tab" class="form-group">
                             <h2>Productos</h2>
                             <div id="listOfProducts">
                                 <div id="product-1" class="productPanel col-lg-3">
@@ -484,13 +484,71 @@
                             </div>
                             <input id="productstockprice" class="form-control-static" type="number" style="display:none">
                             <!--<div class="form-group col-lg-3">-->
-                                <!--<label>Vendedor</label>-->
-                                <!--<p id="sellerconf" class="form-control-static"></p>-->
+                            <!--<label>Vendedor</label>-->
+                            <!--<p id="sellerconf" class="form-control-static"></p>-->
                             <!--</div>-->
 
                             <h4 class="col-lg-12">Productos</h4>
                             <div class="table-responsive col-lg-12">
                                 <table class="table table-striped"id="productsconftable"></table>
+                            </div>
+                        </div>
+
+                        <div class="tab"  id="paymenttab" class="form-group">
+                            <h2>Pago</h2>
+                            <h4>Conversión de valores</h4>
+                            <div class="form-group col-lg-3">
+                                <label>Total a pagar</label>
+                                <div class="form-control-static">
+                                    <div style="float: left;">$ </div>
+                                    <div id="totalAmountPayment" style="float: left;"></div>
+                                    <div>.00</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Pesos</label>
+                                <div class=" input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input id="amountPesos" class="form-control" type="number" name="quantity" min="0">
+                                    <span class="input-group-addon">.00</span>
+                                </div>
+                                <p id="exchangePesos" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Reales</label>
+                                <div class=" input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input id="amountReales" class="form-control" type="number" name="quantity" min="0">
+                                    <span class="input-group-addon">.00</span>
+                                </div>
+                                <p  id="exchangeReales" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Reales (transferencia)</label>
+                                <div class=" input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input id="amountRealesTransf" class="form-control" type="number" name="quantity" min="0">
+                                    <span class="input-group-addon">.00</span>
+                                </div>
+                                <p id="exchangeRealesTransf" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Dólares</label>
+                                <div class=" input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input id="amountDollars" class="form-control" type="number" name="quantity" min="0">
+                                    <span class="input-group-addon">.00</span>
+                                </div>
+                                <p id="exchangeDollars" class="form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Euros</label>
+                                <div class=" input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input id="amountEuros" class="form-control" type="number" name="quantity" min="0">
+                                    <span class="input-group-addon">.00</span>
+                                </div>
+                                <p id="exchangeEuros" class="form-control-static"></p>
                             </div>
                         </div>
 
