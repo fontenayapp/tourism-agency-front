@@ -410,7 +410,7 @@
                                                 <label>Precio lista</label>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">$</span>
-                                                    <input id="uprice" class="form-control" type="number" name="quantity" min="0">
+                                                    <input id="uprice" class="form-control" type="number" name="quantity" min="0" disabled>
                                                     <span class="input-group-addon">.00</span>
                                                 </div>
                                             </div>
@@ -1244,7 +1244,7 @@
             var spn81 = $(document.createElement('span')).addClass("input-group-addon").text("$");
             var spn82 = $(document.createElement('span')).addClass("input-group-addon").text(".00");
             var ig8 = $(document.createElement('div')).addClass("input-group");
-            var inp8 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","uprice");
+            var inp8 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","uprice").attr("disabled","disabled");
             var inp9 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","stockprice").css("display","none");
 
             var for1 = $(document.createElement('div')).addClass("form-group");
