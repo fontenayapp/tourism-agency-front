@@ -462,24 +462,16 @@
                                 <label>Email</label>
                                 <p id="emailconf" class="form-control-static"></p>
                             </div>
-                            <div class="form-group col-lg-3">
+                            <div class="form-group col-lg-12">
                                 <label>Promotor</label>
                                 <p id="promotorconf" class="form-control-static"></p>
                             </div>
-                            <div class="form-group col-lg-3">
+                            <div class="form-group col-lg-1">
                                 <label>Subtotal</label>
                                 <div class="form-control-static">
-                                    <div style="float: left;">$ </div>
+                                    <div style="float: left;">AR$</div>
                                     <div id="productconftotal" style="float: left;"></div>
                                     <div>.00</div>
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-3">
-                                <label>Descuento</label>
-                                <div class=" input-group">
-                                    <span class="input-group-addon">$</span>
-                                    <input id="discountconf" class="form-control" type="number" name="quantity" min="0">
-                                    <span class="input-group-addon">.00</span>
                                 </div>
                             </div>
                             <input id="productstockprice" class="form-control-static" type="number" style="display:none">
@@ -487,7 +479,123 @@
                             <!--<label>Vendedor</label>-->
                             <!--<p id="sellerconf" class="form-control-static"></p>-->
                             <!--</div>-->
-
+                            <div class="table-responsive col-lg-7">
+                                <table class="table" id="discountstable">
+                                    <thead>
+                                        <tr><th>Moneda</th><th>Cotización</th><th>Subtotal convertido</th><th>Descuento</th><th>Total a cobrar</th></tr>
+                                    </thead>
+                                    <tbody class="discountTableBody">
+                                        <tr>
+                                            <td>Dólares</td>
+                                            <td>
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">AR$</span>
+                                                    <input id="exchangeRateDollar" value="38.50" class="form-control" type="number" name="quantity" min="0">
+                                                </div>
+                                            </td>
+                                            <td class="dollarsSubtotalColumn">
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">US$</span>
+                                                    <input id="subtotalDollarDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    </div>
+                                            </td>
+                                            <td>
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">US$</span>
+                                                    <input id="dollarDiscount" class="form-control" type="number" name="quantity" min="0">
+                                                    </div>
+                                            </td>
+                                            <td class="dollarsTotalColumn">
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">US$</span>
+                                                    <input id="totalDollarDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Reales</td>
+                                            <td>
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">AR$</span>
+                                                    <input id="exchangeRateReal" class="form-control" value="10" type="number" name="quantity" min="0" >
+                                                </div>
+                                            </td>
+                                            <td class="realsSubtotalColumn">
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">&nbsp;R$</span>
+                                                    <input id="subtotalRealDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    </div>
+                                            </td>
+                                            <td>
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">&nbsp;R$</span>
+                                                    <input id="realDiscount" class="form-control" type="number" name="quantity" min="0">
+                                                    </div>
+                                            </td>
+                                            <td class="realsTotalColumn">
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">&nbsp;R$</span>
+                                                    <input id="totalRealDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Euros</td>
+                                            <td>
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">AR$</span>
+                                                    <input id="exchangeRateEuro" class="form-control" type="number" value="43.50" name="quantity" min="0">
+                                                </div>
+                                            </td>
+                                            <td class="eurosSubtotalColumn">
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">&nbsp;€&nbsp;</span>
+                                                    <input id="subtotalEuroDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    </div>
+                                            </td>
+                                            <td>
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">&nbsp;€&nbsp;</span>
+                                                    <input id="euroDiscount" class="form-control" type="number" name="quantity" min="0">
+                                                    </div>
+                                            </td>
+                                            <td class="eurosTotalColumn">
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">&nbsp;€&nbsp;</span>
+                                                    <input id="totalEuroDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pesos</td>
+                                            <td>
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">AR$</span>
+                                                    <input id="exchangeRatePesos" class="form-control" type="number" name="quantity" min="0" value="1" disabled="">
+                                                </div>
+                                            </td>
+                                            <td class="pesosSubtotalColumn">
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">AR$</span>
+                                                    <input id="subtotalPesoDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    </div>
+                                            </td>
+                                            <td>
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">AR$</span>
+                                                    <input id="pesosDiscount" class="form-control" type="number" name="quantity" min="0">
+                                                    </div>
+                                            </td>
+                                            <td class="pesosTotalColumn">
+                                                <div class=" input-group">
+                                                    <span class="input-group-addon">AR$</span>
+                                                    <input id="totalPesosDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <h4 class="col-lg-12">Productos</h4>
                             <div class="table-responsive col-lg-12">
                                 <table class="table table-striped"id="productsconftable"></table>
@@ -1117,6 +1225,10 @@
                 email = $("#emailconf");
                 promotor = $("#promotorconf");
                 /*seller = $("#sellerconf");*/
+                loadCurrencyValues();
+                loadSubtotal();
+                loadDiscount();
+                loadTotal();
             } else if(order === 4) {
                 clientname = $("#clientnamefinish");
                 passportid = $("#passportfinish");
@@ -1145,6 +1257,38 @@
         }
 
         function _getTotal() {}
+
+        function loadCurrencyValues() {
+            var exchangeRates = Models.exchangerates ? Models.exchangerates : Models.default.exchangerates;
+            $("#exchangeRateDollar").val(exchangeRates[0].dollar);
+            $("#exchangeRateReal").val(exchangeRates[1].real);
+            $("#exchangeRateEuro").val(exchangeRates[2].euro);
+        }
+
+        function loadSubtotal() {
+            var prodList = $(".productPanel");
+            var subTotal = 0;
+
+            prodList.each(function(index, el){
+                var elem = $(el);
+                subTotal += parseInt(elem.find("#uprice").val());
+            });
+
+            var exchangeRates = Models.exchangerates ? Models.exchangerates : Models.default.exchangerates;
+            $("#subtotalDollarDiscount").val(subTotal/exchangeRates[0].dollar);
+            $("#subtotalRealDiscount").val(subTotal/exchangeRates[1].real);
+            $("#subtotalEuroDiscount").val(subTotal/exchangeRates[2].euro);
+            $("#subtotalPesoDiscount").val(subTotal/1);
+        }
+
+        function loadDiscount() {
+
+        }
+
+        function loadTotal() {
+
+        }
+
 
         function loadProductsTable(order) {
             var prodList = $(".productPanel");

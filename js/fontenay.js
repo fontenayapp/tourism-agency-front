@@ -1,4 +1,5 @@
 Models = [];
+Models["default"] = {exchangerates : [{"dollar" : 40}, {"real": 10}, {"euro": 45}]};
 
 $(function() {
     $('#side-menu').metisMenu();
