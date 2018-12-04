@@ -1354,11 +1354,11 @@
 
         function loadSubtotal() {
             var subTotal = calculateSubTotal() ;
-
             var exchangeRates = Models.exchangerates ? Models.exchangerates : Models.default.exchangerates;
-            $("#subtotalDollarDiscount").val((subTotal/exchangeRates[0].dollar).toFixed(2));
-            $("#subtotalRealDiscount").val((subTotal/exchangeRates[1].real).toFixed(2));
-            $("#subtotalEuroDiscount").val((subTotal/exchangeRates[2].euro).toFixed(2));
+
+            $("#subtotalDollarDiscount").val((subTotal/(exchangeRates.find(function(el){return el.code === "USD"})).exchange).toFixed(2));
+            $("#subtotalRealDiscount").val((subTotal/(exchangeRates.find(function(el){return el.code === "BRL"})).exchange).toFixed(2));
+            $("#subtotalEuroDiscount").val((subTotal/(exchangeRates.find(function(el){return el.code === "EUR"})).exchange).toFixed(2));
             $("#subtotalPesoDiscount").val((subTotal).toFixed(2));
         }
 
