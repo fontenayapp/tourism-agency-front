@@ -510,13 +510,13 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">US$</span>
-                                                    <input id="dollarDiscount" class="form-control discount" step=".01" type="number" name="quantity" min="0">
+                                                    <input id="dollarDiscount" class="form-control discount" value="0" step=".01" type="number" name="quantity" min="0">
                                                     </div>
                                             </td>
                                             <td class="totalColumn">
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">US$</span>
-                                                    <input id="totalDollarDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    <input id="totalDollarDiscount" class="form-control" value="0" type="number" name="quantity" min="0" disabled>
                                                     </div>
                                             </td>
                                         </tr>
@@ -536,13 +536,13 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">&nbsp;R$</span>
-                                                    <input id="realDiscount" class="form-control discount" step=".01" type="number" name="quantity" min="0">
+                                                    <input id="realDiscount" class="form-control discount" value="0" step=".01" type="number" name="quantity" min="0">
                                                     </div>
                                             </td>
                                             <td class="totalColumn">
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">&nbsp;R$</span>
-                                                    <input id="totalRealDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    <input id="totalRealDiscount" class="form-control" value="0" type="number" name="quantity" min="0" disabled>
                                                     </div>
                                             </td>
                                         </tr>
@@ -562,13 +562,13 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">&nbsp;€&nbsp;</span>
-                                                    <input id="euroDiscount" class="form-control discount" step=".01" type="number" name="quantity" min="0">
+                                                    <input id="euroDiscount" class="form-control discount" value="0" step=".01" type="number" name="quantity" min="0">
                                                     </div>
                                             </td>
                                             <td class="totalColumn">
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">&nbsp;€&nbsp;</span>
-                                                    <input id="totalEuroDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    <input id="totalEuroDiscount" class="form-control" value="0" type="number" name="quantity" min="0" disabled>
                                                     </div>
                                             </td>
                                         </tr>
@@ -588,13 +588,13 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="pesosDiscount" class="form-control discount" step=".01" type="number" name="quantity" min="0">
+                                                    <input id="pesosDiscount" class="form-control discount" value="0" step=".01" type="number" name="quantity" min="0">
                                                     </div>
                                             </td>
                                             <td class="totalColumn">
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="totalPesosDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    <input id="totalPesosDiscount" class="form-control" value="0" type="number" name="quantity" min="0" disabled>
                                                     </div>
                                             </td>
                                         </tr>
@@ -613,9 +613,8 @@
                             <div class="form-group col-lg-3">
                                 <label>Total a pagar</label>
                                 <div class="form-control-static">
-                                    <div style="float: left;">$ </div>
+                                    <div style="float: left;">AR$&nbsp;</div>
                                     <div id="totalAmountPayment" style="float: left;"></div>
-                                    <div>.00</div>
                                 </div>
                             </div>
                             <div class="form-group col-lg-3">
@@ -958,6 +957,7 @@
             _loadPromotors();
             /*_loadSellers();*/
             _loadProviders();
+            _loadCurrencies();
             $("#servicesel").change(_productChanged);
             $("#discountcurrencysel").change(_currencyChanged);
             $(".exchangeRate").blur(_calculateSubtotalAmount);
@@ -1025,6 +1025,8 @@
             if(currentTab == 2)
                 loadConfirmationTab();
             else if (currentTab == 3) {
+                loadPaymentTab();
+            } else if (currentTab == 4) {
                 loadFinishTab();
                 _createClient();
             }
@@ -1081,8 +1083,17 @@
             loadTab(3);
         }
 
+        function loadPaymentTab() {
+            var currSel = $("#" + $("#discountcurrencysel").val());
+            var total = Number(currSel.find(".totalColumn input").val());
+            var excRate = Number(currSel.find(".exchangeRate").val());
+            var totalAR = (Number(total * excRate)).toFixed(2);
+
+            $("#totalAmountPayment").text(totalAR);
+        }
+
         function loadFinishTab() {
-            loadTab(4);
+            loadTab(5);
         }
 
         function _loadPromotors() {
@@ -1134,6 +1145,25 @@
                 productsPromise
                     .then(function (result) {
                         _loadProductsSelect(result);
+                    })
+                    .catch(function (error) {
+                        console.log(error.message);
+                    });
+            };
+            load();
+        }
+
+        function _loadCurrencies() {
+            var currenciesPromise = new Promise(
+                function (resolve, reject) {
+                    _getExchangeRates(resolve, reject);
+                }
+            );
+
+            var load = function() {
+                currenciesPromise
+                    .then(function (result) {
+                        console.log("CURRENCIES: ", result);
                     })
                     .catch(function (error) {
                         console.log(error.message);
@@ -1277,9 +1307,8 @@
                 /*seller = $("#sellerconf");*/
                 loadCurrencyValues();
                 loadSubtotal();
-                loadDiscount();
                 loadTotal();
-            } else if(order === 4) {
+            } else if(order === 5) {
                 clientname = $("#clientnamefinish");
                 passportid = $("#passportfinish");
                 nationality = $("#nationalityfinish");
@@ -1289,8 +1318,6 @@
                 phone = $("#phonenumberfinish");
                 email = $("#emailfinish");
                 promotor = $("#promotorfinish");
-                /*seller = $("#sellerfinish");*/
-
             }
             clientname.text($("#clientname").val());
             passportid.text($("#passport").val());
@@ -1335,12 +1362,10 @@
             $("#subtotalPesoDiscount").val((subTotal).toFixed(2));
         }
 
-        function loadDiscount() {
-
-        }
-
         function loadTotal() {
-
+            $(".currtr").each(function(i, e) {
+                _assignTotalAmount($(e));
+            });
         }
 
         function loadProductsTable(order) {

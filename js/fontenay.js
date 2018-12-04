@@ -241,6 +241,21 @@ function _getSales(res, rej) {
     })
 }
 
+function _getExchangeRates(res, rej) {
+    _loadAjaxSetup();
+
+    $.get(host+"/currencies",
+        function (result, error) {
+            Models["exchangerates"] = result;
+            res(result);
+        }).fail(function(error) {
+        if(error.status === 401 || error.status === 422) {
+            window.location = "/pages/login.html";
+        }
+        rej(error);
+    })
+}
+
 
 /*----------------------------------------------------------------------*/
 /*------------------------ PARSERS -------------------------------------*/
