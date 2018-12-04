@@ -960,10 +960,17 @@
         });
 
         function _getCurrentDate(){
-            var t = new Date();
-            var month = t.getMonth()+1;
-            month = month > 9 ? month : "0"+month;
-            return t.getFullYear()+"-"+month+"-"+t.getDate();
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            return yyyy+"-"+mm+"-"+dd;
         }
 
         var currentTab = 0; // Current tab is set to be the first tab (0)
