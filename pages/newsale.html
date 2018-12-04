@@ -498,7 +498,7 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="exchangeRateDollar" value="38.50" class="form-control" type="number" name="quantity" min="0">
+                                                    <input id="exchangeRateDollar" class="form-control exchangeRate" step="0.01" type="number" name="quantity" min="0">
                                                 </div>
                                             </td>
                                             <td class="subtotalColumn">
@@ -524,7 +524,7 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="exchangeRateReal" class="form-control" value="10" type="number" name="quantity" min="0" >
+                                                    <input id="exchangeRateReal" class=" exchangeRate" step="0.01" value="10" type="number" name="quantity" min="0" >
                                                 </div>
                                             </td>
                                             <td class="subtotalColumn">
@@ -539,7 +539,7 @@
                                                     <input id="realDiscount" class="form-control discount" step=".01" type="number" name="quantity" min="0">
                                                     </div>
                                             </td>
-                                            <td class=totalColumn">
+                                            <td class="totalColumn">
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">&nbsp;R$</span>
                                                     <input id="totalRealDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
@@ -550,7 +550,7 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="exchangeRateEuro" class="form-control" type="number" value="43.50" name="quantity" min="0">
+                                                    <input id="exchangeRateEuro exchangeRate" step="0.01" class="form-control" type="number" value="43.50" name="quantity" min="0">
                                                 </div>
                                             </td>
                                             <td class="subtotalColumn">
@@ -576,7 +576,7 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="exchangeRatePesos" class="form-control" type="number" name="quantity" min="0" value="1" disabled="">
+                                                    <input id="exchangeRatePesos" class="form-control exchangeRate" step="0.01" type="number" name="quantity" min="0" value="1" disabled="">
                                                 </div>
                                             </td>
                                             <td class="subtotalColumn">
@@ -960,6 +960,7 @@
             _loadProviders();
             $("#servicesel").change(_productChanged);
             $("#discountcurrencysel").change(_currencyChanged);
+            $(".exchangeRate").blur(_calculateSubtotalAmount);
             $(".discount").blur(_calculateTotalAmount);
             $("#adults, #children, #babies").change(_peopleChanged);
             //DELETE
@@ -1189,20 +1190,34 @@
             $("#"+selected).show();
         }
 
+
+        function _calculateSubtotalAmount(event) {
+            var target = $(event.target);
+            var currentTR = target.closest(".currtr");
+            var subtotal = (calculateSubTotal()/Number(target.val())).toFixed(2);
+
+            currentTR.find(".subtotalColumn").find("input").val(subtotal);
+
+            _assignTotalAmount(currentTR);
+        }
+
         function _calculateTotalAmount(event) {
             var target = $(event.target);
-            var discount = target.val();
             var currentTR = target.closest(".currtr");
-            var subtotal = currentTR.find(".subtotalColumn").find("input").val();
+            _assignTotalAmount(currentTR);
+        }
 
-            var total = Number(subtotal) - Number(discount);
+        function _assignTotalAmount(currentTR) {
+            var discount = currentTR.find(".discount").val();
+            var subtotal = currentTR.find(".subtotalColumn").find("input").val();
+            var total = Number((Number(subtotal) - Number(discount)).toFixed(2));
             if(total > 0) {
                 currentTR.find(".totalColumn").find("input").val(total);
             }
             else
                 1;//ERROR
-
         }
+
 
         function _peopleChanged(event) {
             var currP = $(event.target).closest(".productPanel").find("#servicesel");
@@ -1300,14 +1315,18 @@
             $("#exchangeRateEuro").val(exchangeRates[2].euro);
         }
 
-        function loadSubtotal() {
+        function calculateSubTotal() {
             var prodList = $(".productPanel");
             var subTotal = 0;
-
             prodList.each(function(index, el){
                 var elem = $(el);
                 subTotal += parseInt(elem.find("#uprice").val());
             });
+            return subTotal;
+        }
+
+        function loadSubtotal() {
+            var subTotal = calculateSubTotal() ;
 
             var exchangeRates = Models.exchangerates ? Models.exchangerates : Models.default.exchangerates;
             $("#subtotalDollarDiscount").val((subTotal/exchangeRates[0].dollar).toFixed(2));
@@ -1323,7 +1342,6 @@
         function loadTotal() {
 
         }
-
 
         function loadProductsTable(order) {
             var prodList = $(".productPanel");
