@@ -479,114 +479,119 @@
                             <!--<label>Vendedor</label>-->
                             <!--<p id="sellerconf" class="form-control-static"></p>-->
                             <!--</div>-->
+                            <div class="form-group col-lg-1">
+                                <label>Moneda descuento</label>
+                                <select class="form-control" id="discountcurrencysel">
+                                    <option value="dollarstr">Dólares</option>
+                                    <option value="realstr">Reales</option>
+                                    <option value="eurostr">Euros</option>
+                                    <option value="pesostr">Pesos</option>
+                                </select>
+                            </div>
                             <div class="table-responsive col-lg-7">
                                 <table class="table" id="discountstable">
                                     <thead>
-                                        <tr><th>Moneda</th><th>Cotización</th><th>Subtotal convertido</th><th>Descuento</th><th>Total a cobrar</th></tr>
+                                        <tr><th>Cotización</th><th>Subtotal convertido</th><th>Descuento</th><th>Total a cobrar</th></tr>
                                     </thead>
                                     <tbody class="discountTableBody">
-                                        <tr>
-                                            <td>Dólares</td>
+                                        <tr id="dollarstr" class="currtr">
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
                                                     <input id="exchangeRateDollar" value="38.50" class="form-control" type="number" name="quantity" min="0">
                                                 </div>
                                             </td>
-                                            <td class="dollarsSubtotalColumn">
+                                            <td class="subtotalColumn">
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">US$</span>
-                                                    <input id="subtotalDollarDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    <input id="subtotalDollarDiscount" class="form-control" type="number" name="quantity" min="0" step=".01" disabled>
                                                     </div>
                                             </td>
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">US$</span>
-                                                    <input id="dollarDiscount" class="form-control" type="number" name="quantity" min="0">
+                                                    <input id="dollarDiscount" class="form-control discount" step=".01" type="number" name="quantity" min="0">
                                                     </div>
                                             </td>
-                                            <td class="dollarsTotalColumn">
+                                            <td class="totalColumn">
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">US$</span>
                                                     <input id="totalDollarDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
                                                     </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Reales</td>
+                                        <tr id="realstr" style="display: none;" class="currtr">
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
                                                     <input id="exchangeRateReal" class="form-control" value="10" type="number" name="quantity" min="0" >
                                                 </div>
                                             </td>
-                                            <td class="realsSubtotalColumn">
+                                            <td class="subtotalColumn">
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">&nbsp;R$</span>
-                                                    <input id="subtotalRealDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    <input id="subtotalRealDiscount" step=".01" class="form-control" type="number" name="quantity" min="0" disabled>
                                                     </div>
                                             </td>
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">&nbsp;R$</span>
-                                                    <input id="realDiscount" class="form-control" type="number" name="quantity" min="0">
+                                                    <input id="realDiscount" class="form-control discount" step=".01" type="number" name="quantity" min="0">
                                                     </div>
                                             </td>
-                                            <td class="realsTotalColumn">
+                                            <td class=totalColumn">
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">&nbsp;R$</span>
                                                     <input id="totalRealDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
                                                     </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Euros</td>
+                                        <tr id="eurostr" style="display: none;" class="currtr">
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
                                                     <input id="exchangeRateEuro" class="form-control" type="number" value="43.50" name="quantity" min="0">
                                                 </div>
                                             </td>
-                                            <td class="eurosSubtotalColumn">
+                                            <td class="subtotalColumn">
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">&nbsp;€&nbsp;</span>
-                                                    <input id="subtotalEuroDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    <input id="subtotalEuroDiscount" step=".01" class="form-control" type="number" name="quantity" min="0" disabled>
                                                     </div>
                                             </td>
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">&nbsp;€&nbsp;</span>
-                                                    <input id="euroDiscount" class="form-control" type="number" name="quantity" min="0">
+                                                    <input id="euroDiscount" class="form-control discount" step=".01" type="number" name="quantity" min="0">
                                                     </div>
                                             </td>
-                                            <td class="eurosTotalColumn">
+                                            <td class="totalColumn">
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">&nbsp;€&nbsp;</span>
                                                     <input id="totalEuroDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
                                                     </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Pesos</td>
+                                        <tr id="pesostr" style="display: none;" class="currtr">
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
                                                     <input id="exchangeRatePesos" class="form-control" type="number" name="quantity" min="0" value="1" disabled="">
                                                 </div>
                                             </td>
-                                            <td class="pesosSubtotalColumn">
+                                            <td class="subtotalColumn">
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="subtotalPesoDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                                    <input id="subtotalPesoDiscount" step=".01" class="form-control" type="number" name="quantity" min="0" disabled>
                                                     </div>
                                             </td>
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="pesosDiscount" class="form-control" type="number" name="quantity" min="0">
+                                                    <input id="pesosDiscount" class="form-control discount" step=".01" type="number" name="quantity" min="0">
                                                     </div>
                                             </td>
-                                            <td class="pesosTotalColumn">
+                                            <td class="totalColumn">
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
                                                     <input id="totalPesosDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
@@ -954,6 +959,8 @@
             /*_loadSellers();*/
             _loadProviders();
             $("#servicesel").change(_productChanged);
+            $("#discountcurrencysel").change(_currencyChanged);
+            $(".discount").blur(_calculateTotalAmount);
             $("#adults, #children, #babies").change(_peopleChanged);
             //DELETE
             $("#nextBtn").focus();
@@ -1176,6 +1183,27 @@
             _updatePrice(parseInt(currP.val()), currP);
         }
 
+        function _currencyChanged(event) {
+            var selected = $(event.currentTarget).val();
+            $(".currtr").hide();
+            $("#"+selected).show();
+        }
+
+        function _calculateTotalAmount(event) {
+            var target = $(event.target);
+            var discount = target.val();
+            var currentTR = target.closest(".currtr");
+            var subtotal = currentTR.find(".subtotalColumn").find("input").val();
+
+            var total = Number(subtotal) - Number(discount);
+            if(total > 0) {
+                currentTR.find(".totalColumn").find("input").val(total);
+            }
+            else
+                1;//ERROR
+
+        }
+
         function _peopleChanged(event) {
             var currP = $(event.target).closest(".productPanel").find("#servicesel");
             _updatePrice(parseInt(currP.val()), currP);
@@ -1282,10 +1310,10 @@
             });
 
             var exchangeRates = Models.exchangerates ? Models.exchangerates : Models.default.exchangerates;
-            $("#subtotalDollarDiscount").val(subTotal/exchangeRates[0].dollar);
-            $("#subtotalRealDiscount").val(subTotal/exchangeRates[1].real);
-            $("#subtotalEuroDiscount").val(subTotal/exchangeRates[2].euro);
-            $("#subtotalPesoDiscount").val(subTotal/1);
+            $("#subtotalDollarDiscount").val((subTotal/exchangeRates[0].dollar).toFixed(2));
+            $("#subtotalRealDiscount").val((subTotal/exchangeRates[1].real).toFixed(2));
+            $("#subtotalEuroDiscount").val((subTotal/exchangeRates[2].euro).toFixed(2));
+            $("#subtotalPesoDiscount").val((subTotal).toFixed(2));
         }
 
         function loadDiscount() {
