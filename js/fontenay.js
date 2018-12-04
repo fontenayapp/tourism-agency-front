@@ -1,5 +1,5 @@
 Models = [];
-Models["default"] = {exchangerates : [{"dollar" : 40}, {"real": 10}, {"euro": 45}]};
+Models["default"] = {exchangerates : [{"currency_id": 1000000, "code": "BRL", "date": "2018-12-01 00:00:00", "exchange": 10.0}, {"currency_id": 1000001, "code": "EUR", "date": "2018-12-01 00:00:00", "exchange": 45.5}, {"currency_id": 1000003, "code": "USD", "date": "2018-12-01 00:00:00", "exchange": 39.5}]};
 
 $(function() {
     $('#side-menu').metisMenu();

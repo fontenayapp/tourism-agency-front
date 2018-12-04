@@ -524,7 +524,7 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="exchangeRateReal" class=" exchangeRate" step="0.01" value="10" type="number" name="quantity" min="0" >
+                                                    <input id="exchangeRateReal" class="form-control exchangeRate" step="0.01" value="10" type="number" name="quantity" min="0" >
                                                 </div>
                                             </td>
                                             <td class="subtotalColumn">
@@ -550,7 +550,7 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="exchangeRateEuro exchangeRate" step="0.01" class="form-control" type="number" value="43.50" name="quantity" min="0">
+                                                    <input id="exchangeRateEuro" step="0.01" class="form-control exchangeRate" type="number" name="quantity" min="0">
                                                 </div>
                                             </td>
                                             <td class="subtotalColumn">
@@ -1337,9 +1337,9 @@
 
         function loadCurrencyValues() {
             var exchangeRates = Models.exchangerates ? Models.exchangerates : Models.default.exchangerates;
-            $("#exchangeRateDollar").val(exchangeRates[0].dollar);
-            $("#exchangeRateReal").val(exchangeRates[1].real);
-            $("#exchangeRateEuro").val(exchangeRates[2].euro);
+            $("#exchangeRateDollar").val((exchangeRates.find(function(el){return el.code === "USD"})).exchange);
+            $("#exchangeRateReal").val((exchangeRates.find(function(el){return el.code === "BRL"})).exchange);
+            $("#exchangeRateEuro").val((exchangeRates.find(function(el){return el.code === "EUR"})).exchange);
         }
 
         function calculateSubTotal() {
