@@ -617,50 +617,44 @@
                                     <div id="totalAmountPayment" style="float: left;"></div>
                                 </div>
                             </div>
-                            <div class="form-group col-lg-3">
-                                <label>Pesos</label>
-                                <div class=" input-group">
-                                    <span class="input-group-addon">$</span>
-                                    <input id="amountPesos" class="form-control" type="number" name="quantity" min="0">
-                                    <span class="input-group-addon">.00</span>
+                            <div class="col-lg-12">
+                                <div class="form-group col-lg-2">
+                                    <label>Método de pago</label>
+                                    <select class="form-control" id="paymentMethod">
+                                        <option value="cashP">Efectivo</option>
+                                        <option value="transferP">Transferencia</option>
+                                        <option value="cardP">Tarjeta</option>
+                                    </select>
                                 </div>
-                                <p id="exchangePesos" class="form-control-static"></p>
+                                <div class="form-group col-lg-2">
+                                    <label>Moneda</label>
+                                    <select class="form-control" id="paymentCurrency">
+                                        <option value="dollarP">Dólar</option>
+                                        <option value="realP">Real</option>
+                                        <option value="euroP">Euro</option>
+                                        <option value="pesoP">Peso</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-2">
+                                    <label>Monto</label>
+                                    <div class=" input-group">
+                                        <span class="input-group-addon">$</span>
+                                        <input id="paymentAmountToAdd" class="form-control" step="0.01" type="number" min="0">
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-2">
+                                    <button type="button" class="btn btn-success" id="addPaymentRow" onclick="_addPaymentRow(event)">Agregar</button>
+                                </div>
                             </div>
-                            <div class="form-group col-lg-3">
-                                <label>Reales</label>
-                                <div class=" input-group">
-                                    <span class="input-group-addon">$</span>
-                                    <input id="amountReales" class="form-control" type="number" name="quantity" min="0">
-                                    <span class="input-group-addon">.00</span>
-                                </div>
-                                <p  id="exchangeReales" class="form-control-static"></p>
-                            </div>
-                            <div class="form-group col-lg-3">
-                                <label>Reales (transferencia)</label>
-                                <div class=" input-group">
-                                    <span class="input-group-addon">$</span>
-                                    <input id="amountRealesTransf" class="form-control" type="number" name="quantity" min="0">
-                                    <span class="input-group-addon">.00</span>
-                                </div>
-                                <p id="exchangeRealesTransf" class="form-control-static"></p>
-                            </div>
-                            <div class="form-group col-lg-3">
-                                <label>Dólares</label>
-                                <div class=" input-group">
-                                    <span class="input-group-addon">$</span>
-                                    <input id="amountDollars" class="form-control" type="number" name="quantity" min="0">
-                                    <span class="input-group-addon">.00</span>
-                                </div>
-                                <p id="exchangeDollars" class="form-control-static"></p>
-                            </div>
-                            <div class="form-group col-lg-3">
-                                <label>Euros</label>
-                                <div class=" input-group">
-                                    <span class="input-group-addon">$</span>
-                                    <input id="amountEuros" class="form-control" type="number" name="quantity" min="0">
-                                    <span class="input-group-addon">.00</span>
-                                </div>
-                                <p id="exchangeEuros" class="form-control-static"></p>
+
+                            <div class="table-responsive col-lg-7">
+                                <table class="table table-striped" id="paymentTable">
+                                    <thead class="paymentTableHead">
+                                        <tr><th>Modalidad</th><th>Moneda</th><th>Subtotal</th><th>Subtotal AR$</th><th>Eliminar</th></tr>
+                                    </thead>
+                                    <tbody class="paymentTableBody">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
@@ -1500,7 +1494,25 @@
             inp5.change(_peopleChanged);
             inp6.change(_peopleChanged);
             inp7.change(_peopleChanged);
-        })
+        });
+
+
+
+        function _addPaymentRow(e) {
+            console.log(e);
+            var td1 = $(document.createElement("td")).text($($.find("#paymentMethod option:selected")).text());
+            var td2 = $(document.createElement("td")).text($($.find("#paymentCurrency option:selected")).text());
+            var td3 = $(document.createElement("td")).text($($.find("#paymentAmountToAdd")).val());
+            var td4 = $(document.createElement("td")).addClass("totalARRow").text($($.find("#paymentAmountToAdd")).val()*123);
+            var i   = $(document.createElement("i")).addClass("fa fa-trash-o");
+            var btn = $(document.createElement("button")).attr("type","button").addClass("btn btn-danger btn-circle").append(i);
+            var td5 = $(document.createElement("td")).append(btn);
+            var tr1 = $(document.createElement("tr")).addClass("paymentRow").append(td1).append(td2).append(td3).append(td4).append(td5);
+            $(".paymentTableBody").append(tr1);
+            $(btn).click(function(){
+                $(btn).closest(".paymentRow").remove();
+            });
+        }
 
     </script>
 </body>
