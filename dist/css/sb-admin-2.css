@@ -397,6 +397,11 @@ table.dataTable thead .sorting:after {
 .timeline-body > p + p {
   margin-top: 5px;
 }
+/*----------------CUSTOM CSS-----------------------*/
+#addPaymentRow {
+  margin-top: 25px;
+}
+/*--------------END CUSTOM CSS---------------------*/
 @media (max-width: 767px) {
   ul.timeline:before {
     left: 40px;

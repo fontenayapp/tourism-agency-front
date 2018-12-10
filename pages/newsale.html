@@ -617,7 +617,7 @@
                                     <div id="totalAmountPayment" style="float: left;"></div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 addPaymentControl">
                                 <div class="form-group col-lg-2">
                                     <label>Método de pago</label>
                                     <select class="form-control" id="paymentMethod">
@@ -629,10 +629,10 @@
                                 <div class="form-group col-lg-2">
                                     <label>Moneda</label>
                                     <select class="form-control" id="paymentCurrency">
-                                        <option value="dollarP">Dólar</option>
-                                        <option value="realP">Real</option>
-                                        <option value="euroP">Euro</option>
-                                        <option value="pesoP">Peso</option>
+                                        <option value="USD">Dólar</option>
+                                        <option value="BRL">Real</option>
+                                        <option value="EUR">Euro</option>
+                                        <option value="ARS">Peso</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-2">
@@ -655,6 +655,13 @@
                                     <tbody class="paymentTableBody">
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="col-lg-2 col-lg-offset-5">
+                                <label style="">Sumatoria parcial</label>
+                                <div class="input-group" style="">
+                                    <span class="input-group-addon">AR$</span>
+                                    <input id="totalSum" class="form-control" value="0" type="number" name="quantity" min="0" disabled="">
+                                </div>
                             </div>
                         </div>
 
@@ -957,6 +964,7 @@
             $(".exchangeRate").blur(_calculateSubtotalAmount);
             $(".discount").blur(_calculateTotalAmount);
             $("#adults, #children, #babies").change(_peopleChanged);
+            paymentRows = [];
             //DELETE
             $("#nextBtn").focus();
         });
@@ -1157,7 +1165,7 @@
             var load = function() {
                 currenciesPromise
                     .then(function (result) {
-                        console.log("CURRENCIES: ", result);
+                        //console.log("CURRENCIES: ", result);
                     })
                     .catch(function (error) {
                         console.log(error.message);
@@ -1330,10 +1338,9 @@
         function _getTotal() {}
 
         function loadCurrencyValues() {
-            var exchangeRates = Models.exchangerates ? Models.exchangerates : Models.default.exchangerates;
-            $("#exchangeRateDollar").val((exchangeRates.find(function(el){return el.code === "USD"})).exchange);
-            $("#exchangeRateReal").val((exchangeRates.find(function(el){return el.code === "BRL"})).exchange);
-            $("#exchangeRateEuro").val((exchangeRates.find(function(el){return el.code === "EUR"})).exchange);
+            $("#exchangeRateDollar").val(_getExchangeRate("USD"));
+            $("#exchangeRateReal").val(_getExchangeRate("BRL"));
+            $("#exchangeRateEuro").val(_getExchangeRate("EUR"));
         }
 
         function calculateSubTotal() {
@@ -1348,11 +1355,10 @@
 
         function loadSubtotal() {
             var subTotal = calculateSubTotal() ;
-            var exchangeRates = Models.exchangerates ? Models.exchangerates : Models.default.exchangerates;
 
-            $("#subtotalDollarDiscount").val((subTotal/(exchangeRates.find(function(el){return el.code === "USD"})).exchange).toFixed(2));
-            $("#subtotalRealDiscount").val((subTotal/(exchangeRates.find(function(el){return el.code === "BRL"})).exchange).toFixed(2));
-            $("#subtotalEuroDiscount").val((subTotal/(exchangeRates.find(function(el){return el.code === "EUR"})).exchange).toFixed(2));
+            $("#subtotalDollarDiscount").val((subTotal/_getExchangeRate("USD")).toFixed(2));
+            $("#subtotalRealDiscount").val((subTotal/_getExchangeRate("BRL")).toFixed(2));
+            $("#subtotalEuroDiscount").val((subTotal/_getExchangeRate("EUR")).toFixed(2));
             $("#subtotalPesoDiscount").val((subTotal).toFixed(2));
         }
 
@@ -1499,19 +1505,54 @@
 
 
         function _addPaymentRow(e) {
-            console.log(e);
-            var td1 = $(document.createElement("td")).text($($.find("#paymentMethod option:selected")).text());
-            var td2 = $(document.createElement("td")).text($($.find("#paymentCurrency option:selected")).text());
-            var td3 = $(document.createElement("td")).text($($.find("#paymentAmountToAdd")).val());
-            var td4 = $(document.createElement("td")).addClass("totalARRow").text($($.find("#paymentAmountToAdd")).val()*123);
-            var i   = $(document.createElement("i")).addClass("fa fa-trash-o");
-            var btn = $(document.createElement("button")).attr("type","button").addClass("btn btn-danger btn-circle").append(i);
-            var td5 = $(document.createElement("td")).append(btn);
-            var tr1 = $(document.createElement("tr")).addClass("paymentRow").append(td1).append(td2).append(td3).append(td4).append(td5);
-            $(".paymentTableBody").append(tr1);
-            $(btn).click(function(){
-                $(btn).closest(".paymentRow").remove();
-            });
+            var elem = $(".addPaymentControl");
+            var paymentMethodOpt = elem.find("#paymentMethod option:selected");
+            var paymentCurrencyOpt = elem.find("#paymentCurrency option:selected");
+            var paymentAmountToAdd = elem.find("#paymentAmountToAdd").val();
+            var id = paymentMethodOpt.val() + paymentCurrencyOpt.val();
+            var paymentAmountARSToAdd = paymentAmountToAdd * _getExchangeRate(paymentCurrencyOpt.val());
+
+            if(_addPayment(id, paymentAmountToAdd, paymentAmountARSToAdd)) {
+                var td1 = $(document.createElement("td")).text(paymentMethodOpt.text());
+                var td2 = $(document.createElement("td")).text(paymentCurrencyOpt.text());
+                var td3 = $(document.createElement("td")).text(paymentAmountToAdd);
+                var td4 = $(document.createElement("td")).addClass("totalARRow").text(paymentAmountARSToAdd);
+                var i   = $(document.createElement("i")).addClass("fa fa-trash-o");
+                var btn = $(document.createElement("button")).attr("type","button").addClass("btn btn-danger btn-circle").append(i);
+                var td5 = $(document.createElement("td")).append(btn);
+                var tr1 = $(document.createElement("tr")).attr("id",id).addClass("paymentRow").append(td1).append(td2).append(td3).append(td4).append(td5);
+                $(".paymentTableBody").append(tr1);
+                $(btn).click(function(){
+                    _removePayment(id);
+                    $(btn).closest(".paymentRow").remove();
+                });
+            } else {
+                console.log("POPUP ERROR");
+            }
+        }
+
+
+        function _addPayment(id, val, arVal) {
+            var status = false;
+            if(!paymentRows[id] || paymentRows[id].length < 2) {
+                paymentRows[id] = [val, arVal];
+                _calculateTotalSum();
+                status = true;
+            }
+            return status;
+        }
+
+        function _removePayment(id) {
+            paymentRows[id] = [];
+            _calculateTotalSum();
+        }
+
+        function _calculateTotalSum() {
+            var partialSum = 0;
+            for (const key in paymentRows) {
+                partialSum += paymentRows[key][1] ? Number(paymentRows[key][1]) : 0;
+            }
+            $("#totalSum").val(partialSum);
         }
 
     </script>

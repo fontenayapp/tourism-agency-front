@@ -292,7 +292,6 @@ function  _loadJSONProducts(result) {
 
 
 
-
 /*----------------------------------------------------------------------*/
 /*------------------------ HELPERS -------------------------------------*/
 /*----------------------------------------------------------------------*/
@@ -329,6 +328,19 @@ function _getFormatDate(dat){
     month = month > 9 ? month : "0"+month;
     return dat.getDate()+"-"+month+"-"+dat.getFullYear();
 }
+
+
+function _getExchangeRate(currency) {
+    var exchRate = 1;
+    if("ARS" === currency)
+        exchRate = 1;
+    else {
+        var exchangeRates = Models.exchangerates ? Models.exchangerates : Models.default.exchangerates;
+        exchRate = exchangeRates.find(function(el){return el.code === currency}).exchange;
+    }
+    return exchRate;
+}
+
 /*------------------COOKIES----------------------------------*/
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
