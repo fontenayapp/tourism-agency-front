@@ -104,6 +104,10 @@ function _loadAjaxSetup() {
     });
 }
 
+
+/*----------------------------------------------------------------------*/
+/*------------------------ POST ----------------------------------------*/
+/*----------------------------------------------------------------------*/
 function _createClient() {
     var email = $("#emailconf").text();
     var clientname = $("#clientnameconf").text();
@@ -156,6 +160,26 @@ function _createSale(clientObj) {
         }),
         function(result){
             _parseCreatedSaleData(result);
+        }
+    ).fail(function(error) {
+        _manageError(error);
+    });
+}
+
+function _saveExchangeRate(code, value) {
+    var currencyCode = code;
+    var exchangeRate = value;
+    var currDate = _getLongCurrentDate();
+
+    _loadAjaxSetup();
+        $.post(host+"/currency",
+        JSON.stringify({
+            code: currencyCode,
+            exchange: exchangeRate,
+            date: currDate
+        }),
+        function(result){
+            _parseCreatedCurrExchangeData(result);
         }
     ).fail(function(error) {
         _manageError(error);
@@ -269,6 +293,10 @@ function  _parseCreatedSaleData(result) {
     console.log(result);
 }
 
+function  _parseCreatedCurrExchangeData(result) {
+    _refreshCurrenciesForm(result);
+}
+
 function  _loadJSONProducts(result) {
     var list = [];
     var prodList = $(".productPanel");
@@ -339,6 +367,34 @@ function _getExchangeRate(currency) {
         exchRate = exchangeRates.find(function(el){return el.code === currency}).exchange;
     }
     return exchRate;
+}
+
+
+function _getCurrentDate(){
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    return yyyy+"-"+mm+"-"+dd;
+}
+
+function _getLongCurrentDate(){
+    function addZero(i) {
+        if (i < 10)
+            i = "0" + i;
+        return i;
+    }
+    var d = new Date();
+    var h = addZero(d.getHours());
+    var m = addZero(d.getMinutes());
+    var s = addZero(d.getSeconds());
+    return _getCurrentDate() + " " + h + ":" + m + ":" + s;
 }
 
 /*------------------COOKIES----------------------------------*/

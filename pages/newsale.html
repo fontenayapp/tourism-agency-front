@@ -302,6 +302,17 @@
                             <a href="newsale.html"><i class="fa fa-edit fa-fw"></i> Nueva venta</a>
                         </li>
                         <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Configuración<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                    <a href="exchange-rate.html">Cotización divisas</a>
+                                </li>
+                                <li>
+                                    <a href="products.html">Productos</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
                             <a href="login.html"><i class="fa fa-files-o fa-fw"></i> Login</a>
                         </li>
                     </ul>
@@ -972,20 +983,6 @@
             $("#nextBtn").focus();
         });
 
-        function _getCurrentDate(){
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1; //January is 0!
-            var yyyy = today.getFullYear();
-            if (dd < 10) {
-                dd = '0' + dd;
-            }
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
-            return yyyy+"-"+mm+"-"+dd;
-        }
-
         var currentTab = 0; // Current tab is set to be the first tab (0)
         showTab(currentTab); // Display the current tab
 
@@ -1169,7 +1166,6 @@
             var load = function() {
                 currenciesPromise
                     .then(function (result) {
-                        //console.log("CURRENCIES: ", result);
                     })
                     .catch(function (error) {
                         console.log(error.message);
