@@ -713,19 +713,22 @@
 
 
                         <div class="col-lg-12" style="overflow:auto;">
-                            <div style="float:right;">
+                            <div id="saleActionBtns" style="float:right;">
                                 <button type="button" class="btn btn-primary" id="prevBtn" onclick="nextPrev(-1)">Volver</button>
                                 <button type="button" class="btn btn-success" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
+                                <button type="button" class="btn btn-primary" id="printVoucherBtn" onclick="_printVoucher()" style="display: none">Voucher</button>
+                                <button type="button" class="btn btn-primary" id="printReceiptBtn" onclick="_printReceipt()" style="display: none">Recibo</button>
                             </div>
                         </div>
 
                     <!-- Circles which indicates the steps of the form: -->
                         <div class="col-lg-12" style="text-align:center;margin-top:40px;">
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                        <span class="step"></span>
-                    </div>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                        </div>
 
                     </form>
                 </div>
@@ -991,14 +994,15 @@
             var x = document.getElementsByClassName("tab");
             x[n].style.display = "block";
             // ... and fix the Previous/Next buttons:
-            if (n == 0) {
+            if (n === 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } if (n === 4) {
                 document.getElementById("prevBtn").style.display = "none";
             } else {
                 document.getElementById("prevBtn").style.display = "inline";
             }
-            if (n == (x.length - 1)) {
-                document.getElementById("nextBtn").innerHTML = "Imprimir";
-            } else if (n == (x.length - 2)) {
+
+            if (n === (x.length - 2)) {
                 document.getElementById("nextBtn").innerHTML = "Confirmar";
             } else {
                 document.getElementById("nextBtn").innerHTML = "Siguiente";
@@ -1222,7 +1226,6 @@
             $("#"+selected).show();
         }
 
-
         function _calculateSubtotalAmount(event) {
             var target = $(event.target);
             var currentTR = target.closest(".currtr");
@@ -1249,7 +1252,6 @@
             else
                 1;//ERROR
         }
-
 
         function _peopleChanged(event) {
             var currP = $(event.target).closest(".productPanel").find("#servicesel");
@@ -1293,7 +1295,6 @@
             _updatePrice(parseInt(prodSel.val()), prodSel);
         }
 
-
         function loadTab(order) {
             var clientname, passportid, nationality, hotel, address, room, phone, email, promotor/*, seller*/;
             if(order === 3) {
@@ -1320,6 +1321,7 @@
                 phone = $("#phonenumberfinish");
                 email = $("#emailfinish");
                 promotor = $("#promotorfinish");
+                _enablePrintBtns();
             }
             clientname.text($("#clientname").val());
             passportid.text($("#passport").val());
@@ -1335,7 +1337,22 @@
             loadProductsTable(order);
         }
 
-        function _getTotal() {}
+        function _enablePrintBtns() {
+            $("#prevBtn").hide();
+            $("#nextBtn").hide();
+            $("#printVoucherBtn").show();
+            $("#printReceiptBtn").show();
+        }
+
+        function _printVoucher() {
+            var win = window.open("", "_blank");
+            win.focus();
+        }
+
+        function _printReceipt() {
+            var win = window.open("", "_blank");
+            win.focus();
+        }
 
         function loadCurrencyValues() {
             $("#exchangeRateDollar").val(_getExchangeRate("USD"));
@@ -1430,7 +1447,6 @@
             $(clss).append(tr1);
         }
 
-
         $(".deleteProduct").click(_deleteProductPanel);
 
         function _deleteProductPanel(e) {
@@ -1502,8 +1518,6 @@
             inp7.change(_peopleChanged);
         });
 
-
-
         function _addPaymentRow(e) {
             var elem = $(".addPaymentControl");
             var paymentMethodOpt = elem.find("#paymentMethod option:selected");
@@ -1530,7 +1544,6 @@
                 console.log("POPUP ERROR");
             }
         }
-
 
         function _addPayment(id, val, arVal) {
             var status = false;
