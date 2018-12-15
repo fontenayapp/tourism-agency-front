@@ -108,42 +108,25 @@ function _loadAjaxSetup() {
 /*----------------------------------------------------------------------*/
 /*------------------------ POST ----------------------------------------*/
 /*----------------------------------------------------------------------*/
-function _createClient() {
-    var email = $("#emailconf").text();
-    var clientname = $("#clientnameconf").text();
-    var nationality = $("#nationalityconf").text();
-    var hotel = $("#hotelconf").text();
-    var room = $("#roomconf").text();
-    var address = $("#addressconf").text();
-    var passportid = $("#passportconf").text();
-    var phone = $("#phonenumberconf").text();
-
+function _createClient(sale) {
     _loadAjaxSetup();
     $.post(host+"/client",
-        JSON.stringify({
-            email: email,
-            name: clientname,
-            nationality: nationality,
-            hotel: hotel,
-            address: address,
-            room_number: room,
-            passport_number: passportid,
-            contact_number: phone
-        }),
+        JSON.stringify(sale.client),
         function(result){
-            _parseCreatedClientData(result);
+            _parseCreatedClientData(result, sale);
         }
     ).fail(function(error) {
         _manageError(error);
     });
 }
 
-function _createSale(clientObj) {
-    var clientid = clientObj.client_id;
-    var products = _loadJSONProducts();
-    var promoterid = $("#promotorsel").val();
-    // var sellerid = $("#sellersel").val();
-    var total = parseInt($("#productconftotal").text()) - parseInt($("#discountconf").val());
+function _createSale(client, sale) {
+    var clientid = client.client_id;
+    var products = sale.products;
+    var promoterid = sale.promoter.promoter_id;
+
+    var total = sale.total;
+
     var promotercommission = total*0.1;
     var sellercommission = (total*0.9 - parseInt($("#productstockprice").val()))*0.1625;
 
@@ -284,9 +267,9 @@ function _getExchangeRates(res, rej) {
 /*----------------------------------------------------------------------*/
 /*------------------------ PARSERS -------------------------------------*/
 /*----------------------------------------------------------------------*/
-function  _parseCreatedClientData(result) {
+function  _parseCreatedClientData(result, sale) {
     console.log(result);
-    _createSale(result);
+    _createSale(result, sale);
 }
 
 function  _parseCreatedSaleData(result) {
@@ -296,29 +279,6 @@ function  _parseCreatedSaleData(result) {
 function  _parseCreatedCurrExchangeData(result) {
     _refreshCurrenciesForm(result);
 }
-
-function  _loadJSONProducts(result) {
-    var list = [];
-    var prodList = $(".productPanel");
-    if(0 < prodList.length) {
-        prodList.each(function(index, el){
-            var elem = $(el);
-            var prod = {
-                product_id: elem.find("#servicesel").val(),
-                date: elem.find("#date").val() + " 00:00:00",
-                transfer: elem.find("#transfersel").val(),
-                price: elem.find("#uprice").val(),
-                adults: elem.find("#adults").val(),
-                children: elem.find("#children").val(),
-                babies: elem.find("#babies").val()
-            };
-            list.push(prod);
-        })
-    }
-    return list;
-}
-
-
 
 /*----------------------------------------------------------------------*/
 /*------------------------ HELPERS -------------------------------------*/
@@ -384,6 +344,7 @@ function _getCurrentDate(){
     return yyyy+"-"+mm+"-"+dd;
 }
 
+
 function _getLongCurrentDate(){
     function addZero(i) {
         if (i < 10)
@@ -397,7 +358,74 @@ function _getLongCurrentDate(){
     return _getCurrentDate() + " " + h + ":" + m + ":" + s;
 }
 
+
+function _enableEdit(e) {
+    $(".panel").removeClass("panel-green").addClass("panel-default");
+    $(e.target).closest(".input-group").find("input")[0].disabled = false;
+    $("form button.btn-success")[0].disabled = false;
+}
+
+
+function  _loadSaleProducts() {
+    var list = [];
+    var prodList = $(".productPanel");
+    if(0 < prodList.length) {
+        prodList.each(function(index, el){
+            var elem = $(el);
+            var prodID = Number(elem.find("#servicesel").val());
+            var product = _findProduct(prodID);
+            var provider = _findProvider(product.provider_id);
+
+            var prod = {
+                product_id: prodID,
+                product: product,
+                provider: provider,
+                date: elem.find("#date").val() + " 00:00:00",
+                transfer: elem.find("#transfersel").val(),
+                price: Number(elem.find("#uprice").val()),
+                adults: Number(elem.find("#adults").val()),
+                children: Number(elem.find("#children").val()),
+                babies: Number(elem.find("#babies").val()),
+                stock_price: Number(Number(elem.find("#stockprice").val()))
+            };
+            list.push(prod);
+        })
+    }
+    return list;
+}
+
+
+function _calculateProductsSubtotal(sale) {
+    var subtotal = 0;
+    var totalStock = 0;
+    sale.products.forEach(function(e) {
+        subtotal += e.price;
+        totalStock += e.stock_price;
+    });
+    sale.subtotalAR = subtotal;
+    sale.totalStockAR = totalStock;
+}
+
+
+function _findPromoter(id) {
+    return Models.promoters.find(function(el){return el.promoter_id === Number(id)});
+}
+
+
+function _findProduct(id) {
+    return Models.products.find(function(el){return el.product_id === Number(id)});
+}
+
+
+function _findProvider(id) {
+    return Models.providers.find(function(el){return el.provider_id === Number(id)});
+}
+
+
+
+/*----------------------------------------------------------*/
 /*------------------COOKIES----------------------------------*/
+/*----------------------------------------------------------*/
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));

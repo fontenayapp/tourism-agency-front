@@ -158,13 +158,6 @@
             $("#USD").val(_getExchangeRate("USD"));
             $("#BRL").val(_getExchangeRate("BRL"));
             $("#EUR").val(_getExchangeRate("EUR"));
-
-        }
-
-        function _enableEdit(e) {
-            $(".panel").removeClass("panel-green").addClass("panel-default");
-            $(e.target).closest(".input-group").find("input")[0].disabled = false;
-            $("form button.btn-success")[0].disabled = false;
         }
 
         function _saveCurrencyExchange() {

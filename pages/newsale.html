@@ -443,49 +443,48 @@
                             <h4>Datos del cliente</h4>
                             <div class="form-group col-lg-3">
                                 <label>Nombre y Apellido</label>
-                                <p id="clientnameconf" class="form-control-static"></p>
+                                <p class="clientnamelabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Identificador</label>
-                                <p  id="passportconf" class="form-control-static"></p>
+                                <p class="passportlabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Nacionalidad</label>
-                                <p id="nationalityconf" class="form-control-static"></p>
+                                <p class="nationalitylabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Hotel</label>
-                                <p id="hotelconf" class="form-control-static"></p>
+                                <p class="hotellabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Dirección</label>
-                                <p id="addressconf" class="form-control-static"></p>
+                                <p class="addresslabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Habitación</label>
-                                <p id="roomconf" class="form-control-static"></p>
+                                <p class="roomlabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Número de contacto</label>
-                                <p id="phonenumberconf" class="form-control-static"></p>
+                                <p class="phonelabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Email</label>
-                                <p id="emailconf" class="form-control-static"></p>
+                                <p class="emaillabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-12">
                                 <label>Promotor</label>
-                                <p id="promotorconf" class="form-control-static"></p>
+                                <p class="promoterlabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-1">
                                 <label>Subtotal</label>
                                 <div class="form-control-static">
                                     <div style="float: left;">AR$</div>
-                                    <div id="productconftotal" style="float: left;"></div>
+                                    <div class="productTotal" style="float: left;"></div>
                                     <div>.00</div>
                                 </div>
                             </div>
-                            <input id="productstockprice" class="form-control-static" type="number" style="display:none">
                             <!--<div class="form-group col-lg-3">-->
                             <!--<label>Vendedor</label>-->
                             <!--<p id="sellerconf" class="form-control-static"></p>-->
@@ -493,10 +492,10 @@
                             <div class="form-group col-lg-1">
                                 <label>Moneda descuento</label>
                                 <select class="form-control" id="discountcurrencysel">
-                                    <option value="dollarstr">Dólares</option>
-                                    <option value="realstr">Reales</option>
-                                    <option value="eurostr">Euros</option>
-                                    <option value="pesostr">Pesos</option>
+                                    <option value="dollarstr" curr="USD">Dólar</option>
+                                    <option value="realstr" curr="BRL">Real</option>
+                                    <option value="eurostr" curr="EUR">Euro</option>
+                                    <option value="pesostr" curr="ARS">Peso</option>
                                 </select>
                             </div>
                             <div class="table-responsive col-lg-7">
@@ -509,7 +508,10 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="exchangeRateDollar" class="form-control exchangeRate" step="0.01" type="number" name="quantity" min="0">
+                                                    <input id="exchangeRateDollar" class="form-control exchangeRate" step="0.01" type="number" name="quantity" min="0" disabled="">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                                    </span>
                                                 </div>
                                             </td>
                                             <td class="subtotalColumn">
@@ -521,8 +523,11 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">US$</span>
-                                                    <input id="dollarDiscount" class="form-control discount" value="0" step=".01" type="number" name="quantity" min="0">
-                                                    </div>
+                                                    <input id="dollarDiscount" class="form-control discount" disabled value="0" step=".01" type="number" name="quantity" min="0">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                                    </span>
+                                                </div>
                                             </td>
                                             <td class="totalColumn">
                                                 <div class=" input-group">
@@ -535,7 +540,10 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="exchangeRateReal" class="form-control exchangeRate" step="0.01" value="10" type="number" name="quantity" min="0" >
+                                                    <input id="exchangeRateReal" class="form-control exchangeRate" step="0.01" value="10" type="number" name="quantity" min="0" disabled="">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                                    </span>
                                                 </div>
                                             </td>
                                             <td class="subtotalColumn">
@@ -547,8 +555,11 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">&nbsp;R$</span>
-                                                    <input id="realDiscount" class="form-control discount" value="0" step=".01" type="number" name="quantity" min="0">
-                                                    </div>
+                                                    <input id="realDiscount" class="form-control discount" disabled value="0" step=".01" type="number" name="quantity" min="0">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                                    </span>
+                                                </div>
                                             </td>
                                             <td class="totalColumn">
                                                 <div class=" input-group">
@@ -561,7 +572,10 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="exchangeRateEuro" step="0.01" class="form-control exchangeRate" type="number" name="quantity" min="0">
+                                                    <input id="exchangeRateEuro" step="0.01" class="form-control exchangeRate" type="number" name="quantity" min="0" disabled="">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                                    </span>
                                                 </div>
                                             </td>
                                             <td class="subtotalColumn">
@@ -573,8 +587,11 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">&nbsp;€&nbsp;</span>
-                                                    <input id="euroDiscount" class="form-control discount" value="0" step=".01" type="number" name="quantity" min="0">
-                                                    </div>
+                                                    <input id="euroDiscount" class="form-control discount" disabled value="0" step=".01" type="number" name="quantity" min="0">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                                    </span>
+                                                </div>
                                             </td>
                                             <td class="totalColumn">
                                                 <div class=" input-group">
@@ -599,8 +616,11 @@
                                             <td>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">AR$</span>
-                                                    <input id="pesosDiscount" class="form-control discount" value="0" step=".01" type="number" name="quantity" min="0">
-                                                    </div>
+                                                    <input id="pesosDiscount" class="form-control discount" disabled value="0" step=".01" type="number" name="quantity" min="0">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                                    </span>
+                                                </div>
                                             </td>
                                             <td class="totalColumn">
                                                 <div class=" input-group">
@@ -668,10 +688,10 @@
                                 </table>
                             </div>
                             <div class="col-lg-2 col-lg-offset-5">
-                                <label style="">Sumatoria parcial</label>
+                                <label style="">Faltan pagar</label>
                                 <div class="input-group" style="">
                                     <span class="input-group-addon">AR$</span>
-                                    <input id="totalSum" class="form-control" value="0" type="number" name="quantity" min="0" disabled="">
+                                    <input id="remainingAmount" class="form-control" value="0" type="number" name="quantity" min="0" disabled="">
                                 </div>
                             </div>
                         </div>
@@ -681,41 +701,44 @@
                             <h4>Datos del cliente</h4>
                             <div class="form-group col-lg-3">
                                 <label>Nombre y Apellido</label>
-                                <p id="clientnamefinish" class="form-control-static"></p>
+                                <p class="clientnamelabel form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Identificador</label>
+                                <p class="passportlabel form-control-static"></p>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label>Nacionalidad</label>
+                                <p class="nationalitylabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Hotel</label>
-                                <p id="hotelfinish" class="form-control-static"></p>
+                                <p class="hotellabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Dirección</label>
-                                <p id="addressfinish" class="form-control-static"></p>
+                                <p class="addresslabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Habitación</label>
-                                <p id="roomfinish" class="form-control-static"></p>
+                                <p class="roomlabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Número de contacto</label>
-                                <p id="phonenumberfinish" class="form-control-static"></p>
+                                <p class="phonelabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Email</label>
-                                <p id="emailfinish" class="form-control-static"></p>
+                                <p class="emaillabel form-control-static"></p>
                             </div>
-                            <div class="form-group col-lg-3">
+                            <div class="form-group col-lg-12">
                                 <label>Promotor</label>
-                                <p id="promotorfinish" class="form-control-static"></p>
+                                <p class="promoterlabel form-control-static"></p>
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Total</label>
-                                <p id="productfinishtotal" class="form-control-static"></p>
+                                <p class="productTotal form-control-static"></p>
                             </div>
-                            <!--<div class="form-group col-lg-3">-->
-                                <!--<label>Vendedor</label>-->
-                                <!--<p id="sellerfinish" class="form-control-static"></p>-->
-                            <!--</div>-->
-
                             <h4 class="col-lg-12">Productos</h4>
                             <div class="table-responsive col-lg-12">
                                 <table class="table table-striped"id="productsfinishtable"></table>
@@ -776,183 +799,7 @@
                     </div>
                 </div>
             </div>
-                <!--<div class="col-lg-6">-->
-                    <!--<form role="form">-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Text Input</label>-->
-                            <!--<input class="form-control">-->
-                            <!--<p class="help-block">Example block-level help text here.</p>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Text Input with Placeholder</label>-->
-                            <!--<input class="form-control" placeholder="Enter text">-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Static Control</label>-->
-                            <!--<p class="form-control-static">email@example.com</p>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>File input</label>-->
-                            <!--<input type="file">-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Text area</label>-->
-                            <!--<textarea class="form-control" rows="3"></textarea>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Checkboxes</label>-->
-                            <!--<div class="checkbox">-->
-                                <!--<label>-->
-                                    <!--<input type="checkbox" value="">Checkbox 1-->
-                                <!--</label>-->
-                            <!--</div>-->
-                            <!--<div class="checkbox">-->
-                                <!--<label>-->
-                                    <!--<input type="checkbox" value="">Checkbox 2-->
-                                <!--</label>-->
-                            <!--</div>-->
-                            <!--<div class="checkbox">-->
-                                <!--<label>-->
-                                    <!--<input type="checkbox" value="">Checkbox 3-->
-                                <!--</label>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Inline Checkboxes</label>-->
-                            <!--<label class="checkbox-inline">-->
-                                <!--<input type="checkbox">1-->
-                            <!--</label>-->
-                            <!--<label class="checkbox-inline">-->
-                                <!--<input type="checkbox">2-->
-                            <!--</label>-->
-                            <!--<label class="checkbox-inline">-->
-                                <!--<input type="checkbox">3-->
-                            <!--</label>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Radio Buttons</label>-->
-                            <!--<div class="radio">-->
-                                <!--<label>-->
-                                    <!--<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Radio 1-->
-                                <!--</label>-->
-                            <!--</div>-->
-                            <!--<div class="radio">-->
-                                <!--<label>-->
-                                    <!--<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Radio 2-->
-                                <!--</label>-->
-                            <!--</div>-->
-                            <!--<div class="radio">-->
-                                <!--<label>-->
-                                    <!--<input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">Radio 3-->
-                                <!--</label>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Inline Radio Buttons</label>-->
-                            <!--<label class="radio-inline">-->
-                                <!--<input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked>1-->
-                            <!--</label>-->
-                            <!--<label class="radio-inline">-->
-                                <!--<input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2">2-->
-                            <!--</label>-->
-                            <!--<label class="radio-inline">-->
-                                <!--<input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3">3-->
-                            <!--</label>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Selects</label>-->
-                            <!--<select class="form-control">-->
-                                <!--<option>1</option>-->
-                                <!--<option>2</option>-->
-                                <!--<option>3</option>-->
-                                <!--<option>4</option>-->
-                                <!--<option>5</option>-->
-                            <!--</select>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Multiple Selects</label>-->
-                            <!--<select multiple class="form-control">-->
-                                <!--<option>1</option>-->
-                                <!--<option>2</option>-->
-                                <!--<option>3</option>-->
-                                <!--<option>4</option>-->
-                                <!--<option>5</option>-->
-                            <!--</select>-->
-                        <!--</div>-->
-                        <!--<button type="submit" class="btn btn-default">Submit Button</button>-->
-                        <!--<button type="reset" class="btn btn-default">Reset Button</button>-->
-                    <!--</form>-->
-                <!--</div>-->
-                <!--/.col-lg-6 (nested) -->
-                <!--<div class="col-lg-6">-->
-                    <!--<h1>Disabled Form States</h1>-->
-                    <!--<form role="form">-->
-                        <!--<fieldset disabled>-->
-                            <!--<div class="form-group">-->
-                                <!--<label for="disabledSelect">Disabled input</label>-->
-                                <!--<input class="form-control" id="disabledInput" type="text" placeholder="Disabled input" disabled>-->
-                            <!--</div>-->
-                            <!--<div class="form-group">-->
-                                <!--<label for="disabledSelect">Disabled select menu</label>-->
-                                <!--<select id="disabledSelect" class="form-control">-->
-                                    <!--<option>Disabled select</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                            <!--<div class="checkbox">-->
-                                <!--<label>-->
-                                    <!--<input type="checkbox">Disabled Checkbox-->
-                                <!--</label>-->
-                            <!--</div>-->
-                            <!--<button type="submit" class="btn btn-primary">Disabled Button</button>-->
-                        <!--</fieldset>-->
-                    <!--</form>-->
-                    <!--<h1>Form Validation States</h1>-->
-                    <!--<form role="form">-->
-                        <!--<div class="form-group has-success">-->
-                            <!--<label class="control-label" for="inputSuccess">Input with success</label>-->
-                            <!--<input type="text" class="form-control" id="inputSuccess">-->
-                        <!--</div>-->
-                        <!--<div class="form-group has-warning">-->
-                            <!--<label class="control-label" for="inputWarning">Input with warning</label>-->
-                            <!--<input type="text" class="form-control" id="inputWarning">-->
-                        <!--</div>-->
-                        <!--<div class="form-group has-error">-->
-                            <!--<label class="control-label" for="inputError">Input with error</label>-->
-                            <!--<input type="text" class="form-control" id="inputError">-->
-                        <!--</div>-->
-                    <!--</form>-->
-                    <!--<h1>Input Groups</h1>-->
-                    <!--<form role="form">-->
-                        <!--<div class="form-group input-group">-->
-                            <!--<span class="input-group-addon">@</span>-->
-                            <!--<input type="text" class="form-control" placeholder="Username">-->
-                        <!--</div>-->
-                        <!--<div class="form-group input-group">-->
-                            <!--<input type="text" class="form-control">-->
-                            <!--<span class="input-group-addon">.00</span>-->
-                        <!--</div>-->
-                        <!--<div class="form-group input-group">-->
-                            <!--<span class="input-group-addon"><i class="fa fa-eur"></i>-->
-                            <!--</span>-->
-                            <!--<input type="text" class="form-control" placeholder="Font Awesome Icon">-->
-                        <!--</div>-->
-                        <!--<div class="form-group input-group">-->
-                            <!--<span class="input-group-addon">$</span>-->
-                            <!--<input type="text" class="form-control">-->
-                            <!--<span class="input-group-addon">.00</span>-->
-                        <!--</div>-->
-                        <!--<div class="form-group input-group">-->
-                            <!--<input type="text" class="form-control">-->
-                            <!--<span class="input-group-btn">-->
-                                <!--<button class="btn btn-default" type="button"><i class="fa fa-search"></i>-->
-                                <!--</button>-->
-                            <!--</span>-->
-                        <!--</div>-->
-                    <!--</form>-->
-                <!--</div>-->
-                <!-- /.col-lg-6 (nested) -->
         </div>
-        <!-- /.row (nested) -->
     </div>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -970,7 +817,6 @@
             _checkLogin();
             $("#date").val(_getCurrentDate());
             _loadPromotors();
-            /*_loadSellers();*/
             _loadProviders();
             _loadCurrencies();
             $("#servicesel").change(_productChanged);
@@ -978,7 +824,17 @@
             $(".exchangeRate").blur(_calculateSubtotalAmount);
             $(".discount").blur(_calculateTotalAmount);
             $("#adults, #children, #babies").change(_peopleChanged);
-            paymentRows = [];
+            sale = {
+                client: {},
+                products: [],
+                subtotalAR: 0,
+                totalStockAR: 0,
+                discountCurrency: "",
+                customExchangeRate: 0,
+                discount: 0,
+                totalAR: 0,
+                paymentRows: []
+            };
             //DELETE
             $("#nextBtn").focus();
         });
@@ -991,9 +847,7 @@
             var x = document.getElementsByClassName("tab");
             x[n].style.display = "block";
             // ... and fix the Previous/Next buttons:
-            if (n === 0) {
-                document.getElementById("prevBtn").style.display = "none";
-            } if (n === 4) {
+            if (n === 0 || n === 4) {
                 document.getElementById("prevBtn").style.display = "none";
             } else {
                 document.getElementById("prevBtn").style.display = "inline";
@@ -1012,26 +866,26 @@
             // This function will figure out which tab to display
             var x = document.getElementsByClassName("tab");
             // Exit the function if any field in the current tab is invalid:
-            if (n == 1 && !validateForm()) return false;
+            if (n === 1 && !validateForm()) return false;
             // Hide the current tab:
             x[currentTab].style.display = "none";
             // Increase or decrease the current tab by 1:
             currentTab = currentTab + n;
             // if you have reached the end of the form... :
             if (currentTab - 1 >= x.length) {
-                //...the form gets submitted:
-                //document.getElementById("regForm").submit();
                 console.log("SUBMIT");
                 return false;
             }
             // Otherwise, display the correct tab:
-            if(currentTab == 2)
+            if(currentTab === 1)
+                loadProductsTab();
+            else if(currentTab === 2)
                 loadConfirmationTab();
-            else if (currentTab == 3) {
+            else if (currentTab === 3) {
                 loadPaymentTab();
-            } else if (currentTab == 4) {
+            } else if (currentTab === 4) {
                 loadFinishTab();
-                _createClient();
+                _createClient(sale);
             }
 
             showTab(currentTab);
@@ -1082,21 +936,63 @@
             x[n].className += " active";
         }
 
+        function loadProductsTab() {
+            sale.client = {
+                name: $("#clientname").val(),
+                email: $("#email").val(),
+                nationality: $("#nationality").val(),
+                hotel: $("#hotel").val(),
+                address: $("#address").val(),
+                room_number: $("#room").val(),
+                passport_number: $("#passport").val(),
+                contact_number: $("#phonenumber").val()
+            };
+            sale.promoter = _findPromoter($("#promotorsel").val());
+        }
+
         function loadConfirmationTab() {
-            loadTab(3);
+            loadTabLabels();
+            sale.products = _loadSaleProducts();
+            _calculateProductsSubtotal(sale);
+            $(".productTotal").text(sale.subtotalAR);
+            loadProductsTable(3);
+            loadCurrencyValues();
+            calculateSubtotals();
+            loadTotal();
         }
 
         function loadPaymentTab() {
-            var currSel = $("#" + $("#discountcurrencysel").val());
-            var total = Number(currSel.find(".totalColumn input").val());
-            var excRate = Number(currSel.find(".exchangeRate").val());
-            var totalAR = (Number(total * excRate)).toFixed(2);
+            var discountCurrencySel = $("#discountcurrencysel");
+            var currRowSel = $("#" + discountCurrencySel.val());
+            var discInput = currRowSel.find(".discount");
+            sale.discountCurrency = discountCurrencySel.find("option:selected").attr("curr");
+            var exchInput = currRowSel.find(".exchangeRate");
+            var customExcRate = Number(exchInput.val());
+            sale.discount = Number(discInput.val());
+            var excRate = _getExchangeRate(sale.discountCurrency);
+            sale.totalAR = sale.subtotalAR; //Find total en pesos sin modificar
+            $(".paymentTableBody").empty();
+            sale.paymentRows = [];
+            
+            if(exchInput[0].disabled !== true && customExcRate !== excRate) {
+                excRate = customExcRate;
+            }
 
-            $("#totalAmountPayment").text(totalAR);
+            sale.customExchangeRate = excRate;
+
+            if(discInput[0].disabled !== true && sale.discount > 0) {
+                sale.totalAR -= (sale.discount*sale.customExchangeRate).toFixed(2);
+            }
+
+            $("#totalAmountPayment").text(sale.totalAR);
+            $("#remainingAmount").val(sale.totalAR);
+            $("#paymentCurrency").val(sale.discountCurrency);
         }
 
         function loadFinishTab() {
-            loadTab(5);
+            $(".productTotal").text(sale.totalAR);
+            loadProductsTable(5);
+            _enablePrintBtns();
         }
 
         function _loadPromotors() {
@@ -1225,7 +1121,7 @@
         function _calculateSubtotalAmount(event) {
             var target = $(event.target);
             var currentTR = target.closest(".currtr");
-            var subtotal = (calculateSubTotal()/Number(target.val())).toFixed(2);
+            var subtotal = (sale.subtotalAR/Number(target.val())).toFixed(2);
 
             currentTR.find(".subtotalColumn").find("input").val(subtotal);
 
@@ -1291,46 +1187,16 @@
             _updatePrice(parseInt(prodSel.val()), prodSel);
         }
 
-        function loadTab(order) {
-            var clientname, passportid, nationality, hotel, address, room, phone, email, promotor/*, seller*/;
-            if(order === 3) {
-                clientname = $("#clientnameconf");
-                passportid = $("#passportconf");
-                nationality = $("#nationalityconf");
-                hotel = $("#hotelconf");
-                address = $("#addressconf");
-                room = $("#roomconf");
-                phone = $("#phonenumberconf");
-                email = $("#emailconf");
-                promotor = $("#promotorconf");
-                /*seller = $("#sellerconf");*/
-                loadCurrencyValues();
-                loadSubtotal();
-                loadTotal();
-            } else if(order === 5) {
-                clientname = $("#clientnamefinish");
-                passportid = $("#passportfinish");
-                nationality = $("#nationalityfinish");
-                hotel = $("#hotelfinish");
-                address = $("#addressfinish");
-                room = $("#roomfinish");
-                phone = $("#phonenumberfinish");
-                email = $("#emailfinish");
-                promotor = $("#promotorfinish");
-                _enablePrintBtns();
-            }
-            clientname.text($("#clientname").val());
-            passportid.text($("#passport").val());
-            nationality.text($("#nationality").val());
-            hotel.text($("#hotel").val());
-            address.text($("#address").val());
-            room.text($("#room").val());
-            phone.text($("#phonenumber").val());
-            email.text($("#email").val());
-            promotor.text($("#promotorsel option:selected").text());
-            /*seller.text($("#sellersel").val());*/
-
-            loadProductsTable(order);
+        function loadTabLabels() {
+            $(".clientnamelabel").text(sale.client.name);
+            $(".passportlabel").text(sale.client.passport_number);
+            $(".nationalitylabel").text(sale.client.nationality);
+            $(".hotellabel").text(sale.client.hotel);
+            $(".addresslabel").text(sale.client.address);
+            $(".roomlabel").text(sale.client.room_number);
+            $(".phonelabel").text(sale.client.contact_number);
+            $(".emaillabel").text(sale.client.email);
+            $(".promoterlabel").text(sale.promoter.first_name + " " + sale.promoter.last_name);
         }
 
         function _enablePrintBtns() {
@@ -1351,23 +1217,21 @@
         }
 
         function loadCurrencyValues() {
-            $("#exchangeRateDollar").val(_getExchangeRate("USD"));
-            $("#exchangeRateReal").val(_getExchangeRate("BRL"));
-            $("#exchangeRateEuro").val(_getExchangeRate("EUR"));
+            var exchRateUSD = _getExchangeRate("USD");
+            var exchRateBRL = _getExchangeRate("BRL");
+            var exchRateEUR =_getExchangeRate("EUR");
+
+            exchRateUSD = sale.discountCurrency === "USD" && sale.customExchangeRate !== exchRateUSD ? sale.customExchangeRate : exchRateUSD;
+            exchRateBRL = sale.discountCurrency === "BRL" && sale.customExchangeRate !== exchRateBRL ? sale.customExchangeRate : exchRateBRL;
+            exchRateEUR = sale.discountCurrency === "EUR" && sale.customExchangeRate !== exchRateEUR ? sale.customExchangeRate : exchRateEUR;
+
+            $("#exchangeRateDollar").val(exchRateUSD);
+            $("#exchangeRateReal").val(exchRateBRL);
+            $("#exchangeRateEuro").val(exchRateEUR);
         }
 
-        function calculateSubTotal() {
-            var prodList = $(".productPanel");
-            var subTotal = 0;
-            prodList.each(function(index, el){
-                var elem = $(el);
-                subTotal += parseInt(elem.find("#uprice").val());
-            });
-            return subTotal;
-        }
-
-        function loadSubtotal() {
-            var subTotal = calculateSubTotal() ;
+        function calculateSubtotals() {
+            var subTotal = sale.subtotalAR ;
 
             $("#subtotalDollarDiscount").val((subTotal/_getExchangeRate("USD")).toFixed(2));
             $("#subtotalRealDiscount").val((subTotal/_getExchangeRate("BRL")).toFixed(2));
@@ -1382,35 +1246,19 @@
         }
 
         function loadProductsTable(order) {
-            var prodList = $(".productPanel");
             var prodTable;
-            var totalElem;
-            var stockPrice = $("#productstockprice");
-            var total = 0, cost = 0;
-
             if(order === 3) {
                 prodTable = $("#productsconftable");
-                totalElem = $("#productconftotal");
             } else {
                 prodTable = $("#productsfinishtable");
-                totalElem = $("#productfinishtotal");
             }
 
             prodTable.empty();
+            loadProdTableHeader(prodTable, order);
 
-            if(0 < prodList.length) {
-                loadProdTableHeader(prodTable, order);
-                prodList.each(function(index, el){
-                    var elem = $(el);
-                    total += parseInt(elem.find("#uprice").val());
-                    cost += parseInt(elem.find("#stockprice").val());
-                    loadProdTableRow(elem, order);
-                });
-
-                var finaltotal = order === 4? total - parseInt($("#discountconf").val()): total;
-                totalElem.text(finaltotal);
-                stockPrice.val(cost);
-            }
+            sale.products.forEach(function(el){
+                loadProdTableRow(el, order);
+            });
         }
 
         function loadProdTableHeader(prodTable, o) {
@@ -1430,14 +1278,14 @@
         }
 
         function loadProdTableRow(product, o) {
-            var td1 = $(document.createElement("td")).text(product.find("#providersel option:selected").text());
-            var td2 = $(document.createElement("td")).text(product.find("#servicesel option:selected").text());
-            var td3 = $(document.createElement("td")).text(product.find("#date").val());
-            var td4 = $(document.createElement("td")).text(product.find("#transfersel option:selected").text());
-            var td5 = $(document.createElement("td")).text(product.find("#adults").val());
-            var td6 = $(document.createElement("td")).text(product.find("#children").val());
-            var td7 = $(document.createElement("td")).text(product.find("#babies").val());
-            var td8 = $(document.createElement("td")).text(product.find("#uprice").val());
+            var td1 = $(document.createElement("td")).text(product.provider.name);
+            var td2 = $(document.createElement("td")).text(product.product.name);
+            var td3 = $(document.createElement("td")).text(product.date);
+            var td4 = $(document.createElement("td")).text(product.transfer ? "Sí" : "No");
+            var td5 = $(document.createElement("td")).text(product.adults);
+            var td6 = $(document.createElement("td")).text(product.children);
+            var td7 = $(document.createElement("td")).text(product.babies);
+            var td8 = $(document.createElement("td")).text(product.price);
             var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7).append(td8);
             var clss = o === 3? ".productConfTableBody" : ".productFinishTableBody";
             $(clss).append(tr1);
@@ -1519,8 +1367,15 @@
             var paymentMethodOpt = elem.find("#paymentMethod option:selected");
             var paymentCurrencyOpt = elem.find("#paymentCurrency option:selected");
             var paymentAmountToAdd = elem.find("#paymentAmountToAdd").val();
-            var id = paymentMethodOpt.val() + paymentCurrencyOpt.val();
-            var paymentAmountARSToAdd = paymentAmountToAdd * _getExchangeRate(paymentCurrencyOpt.val());
+            var currency = paymentCurrencyOpt.val();
+            var id = paymentMethodOpt.val() + currency;
+            var exchRate = _getExchangeRate(currency);
+
+            if(sale.discountCurrency === currency) {
+                exchRate = sale.customExchangeRate;
+            }
+
+            var paymentAmountARSToAdd = paymentAmountToAdd * exchRate;
 
             if(_addPayment(id, paymentAmountToAdd, paymentAmountARSToAdd)) {
                 var td1 = $(document.createElement("td")).text(paymentMethodOpt.text());
@@ -1538,30 +1393,31 @@
                 });
             } else {
                 console.log("POPUP ERROR");
+                alert("El método de pago y la moneda seleccionada ya fueron agregados. Borre el registro existente e intente nuevamente.");
             }
         }
 
         function _addPayment(id, val, arVal) {
             var status = false;
-            if(!paymentRows[id] || paymentRows[id].length < 2) {
-                paymentRows[id] = [val, arVal];
-                _calculateTotalSum();
+            if(!sale.paymentRows[id] || sale.paymentRows[id].length < 2) {
+                sale.paymentRows[id] = [val, arVal];
+                _calculateremainingAmount();
                 status = true;
             }
             return status;
         }
 
         function _removePayment(id) {
-            paymentRows[id] = [];
-            _calculateTotalSum();
+            sale.paymentRows[id] = [];
+            _calculateremainingAmount();
         }
 
-        function _calculateTotalSum() {
-            var partialSum = 0;
-            for (const key in paymentRows) {
-                partialSum += paymentRows[key][1] ? Number(paymentRows[key][1]) : 0;
+        function _calculateremainingAmount() {
+            var remainingAmount = sale.totalAR;
+            for (const key in sale.paymentRows) {
+                remainingAmount -= sale.paymentRows[key][1] ? Number(sale.paymentRows[key][1]) : 0;
             }
-            $("#totalSum").val(partialSum);
+            $("#remainingAmount").val(remainingAmount);
         }
 
     </script>
