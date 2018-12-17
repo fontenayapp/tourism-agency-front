@@ -1043,7 +1043,8 @@
         }
 
         function loadFinishTab() {
-            $(".productTotal").text(sale.totalAR);
+            sale.cardCharges = $("#remainingAmount").val();
+            $(".productTotal").text(sale.totalAR + sale.cardCharges);
             loadProductsTable(5);
             _enablePrintBtns();
         }
@@ -1422,6 +1423,7 @@
         });
 
         function _addPaymentRow(e) {
+            _removeBorders();
             var elem = $(".addPaymentControl");
             var paymentMethodOpt = elem.find("#paymentMethod option:selected");
             var paymentCurrencyOpt = elem.find("#paymentCurrency option:selected");
@@ -1478,10 +1480,15 @@
         }
 
         function _removePayment(id) {
+            _removeBorders();
             sale.paymentRows[id] = [];
             _calculateRemainingAmount(0);
             _calculateTotalCardCharge();
             _calculateTotalWithCharge();
+        }
+
+        function _removeBorders() {
+            $(".paymentRow").css("border","none");
         }
 
         function _calculateRemainingAmount(arAmount) {
