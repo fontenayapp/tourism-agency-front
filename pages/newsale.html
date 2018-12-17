@@ -955,8 +955,7 @@
                         peopleNumber = false;
                     }
                 } else if(3 === currentTab) {
-                    var remainingAmount = Number($("#remainingAmount").val());
-                    if(remainingAmount !== 0) {
+                    if(Number($("#remainingAmount").val()) !== 0) {
                         $('#wrongAmountModal').modal('show');
                         remainingAmount = false;
                     }
