@@ -1467,6 +1467,7 @@
             if(!sale.paymentRows[id] || sale.paymentRows[id].length < 2) {
                 status = _calculateRemainingAmount(arVal);
             } else {
+                $("#"+id).css("border","3px solid red");
                 alert("- El método de pago y la moneda seleccionada ya fueron agregados. Borre el registro existente e intente nuevamente.");
             }
             if(status) {
