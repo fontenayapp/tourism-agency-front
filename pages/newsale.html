@@ -677,21 +677,48 @@
                                     <button type="button" class="btn btn-success" id="addPaymentRow" onclick="_addPaymentRow(event)">Agregar</button>
                                 </div>
                             </div>
-
+                            <div class="col-lg-12">
+                                <div class="form-group col-lg-2">
+                                    <label>Recargo tarjeta</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">%</span>
+                                        <input id="cardCharge" class="form-control" value="21" step="1" type="number" name="quantity" min="1" max="100" disabled="">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="table-responsive col-lg-7">
                                 <table class="table table-striped" id="paymentTable">
                                     <thead class="paymentTableHead">
-                                        <tr><th>Modalidad</th><th>Moneda</th><th>Subtotal</th><th>Subtotal AR$</th><th>Eliminar</th></tr>
+                                        <tr><th>Modalidad</th><th>Moneda</th><th>Subtotal</th><th>Subtotal AR$</th><th>Recargo tarjeta AR$</th><th>Eliminar</th></tr>
                                     </thead>
                                     <tbody class="paymentTableBody">
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-lg-2 col-lg-offset-5">
-                                <label style="">Faltan pagar</label>
-                                <div class="input-group" style="">
-                                    <span class="input-group-addon">AR$</span>
-                                    <input id="remainingAmount" class="form-control" value="0" type="number" name="quantity" min="0" disabled="">
+                            <div class="col-lg-12">
+                                <div class="col-lg-2 col-lg-offset-3">
+                                    <label style="">Suma recargo tarjeta</label>
+                                    <div class="input-group" style="">
+                                        <span class="input-group-addon">AR$</span>
+                                        <input id="sumCardCharge" class="form-control" value="0" type="number" name="quantity" min="0" disabled="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label style="">Faltan pagar</label>
+                                    <div class="input-group" style="">
+                                        <span class="input-group-addon">AR$</span>
+                                        <input id="remainingAmount" class="form-control" value="0" type="number" name="quantity" min="0" disabled="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label style="">Total con recargo</label>
+                                    <div class="input-group" style="">
+                                        <span class="input-group-addon">AR$</span>
+                                        <input id="totalWithCharges" class="form-control" value="0" type="number" name="quantity" min="0" disabled="">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -799,6 +826,22 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="wrongAmountModal" tabindex="-1" role="dialog" aria-labelledby="wrongAmountModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="wrongAmountModalTitle">Error en la suma</h4>
+                        </div>
+                        <div class="modal-body">
+                            El "Total a pagar" no es igual a la suma de los subtotales (AR$) de todas las filas seleccionadas. Verifique que el valor de "Faltan pagar" sea cero.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- jQuery -->
@@ -873,7 +916,6 @@
             currentTab = currentTab + n;
             // if you have reached the end of the form... :
             if (currentTab - 1 >= x.length) {
-                console.log("SUBMIT");
                 return false;
             }
             // Otherwise, display the correct tab:
@@ -893,7 +935,7 @@
 
         function validateForm() {
             // This function deals with validation of the form fields
-            var x, y, i, valid = true, productsList = true, peopleNumber = true;
+            var x, y, i, valid = true, productsList = true, peopleNumber = true, remainingAmount = true;
             x = document.getElementsByClassName("tab");
             y = x[currentTab].getElementsByTagName("input");
             // A loop that checks every input field in the current tab:
@@ -912,6 +954,12 @@
                         $('#noPeopleModal').modal('show');
                         peopleNumber = false;
                     }
+                } else if(3 === currentTab) {
+                    var remainingAmount = Number($("#remainingAmount").val());
+                    if(remainingAmount !== 0) {
+                        $('#wrongAmountModal').modal('show');
+                        remainingAmount = false;
+                    }
                 }
             }
 
@@ -923,7 +971,7 @@
             if (valid && productsList && peopleNumber) {
                 document.getElementsByClassName("step")[currentTab].className += " finish";
             }
-            return valid && productsList && peopleNumber; // return the valid status
+            return valid && productsList && peopleNumber && remainingAmount; // return the valid status
         }
 
         function fixStepIndicator(n) {
@@ -972,8 +1020,12 @@
             var excRate = _getExchangeRate(sale.discountCurrency);
             sale.totalAR = sale.subtotalAR; //Find total en pesos sin modificar
             $(".paymentTableBody").empty();
+            $("#paymentAmountToAdd").val(0);
             sale.paymentRows = [];
-            
+
+            var totalInput = currRowSel.find(".exchangeRate");
+            var totalCurrency = 0;
+
             if(exchInput[0].disabled !== true && customExcRate !== excRate) {
                 excRate = customExcRate;
             }
@@ -986,7 +1038,9 @@
 
             $("#totalAmountPayment").text(sale.totalAR);
             $("#remainingAmount").val(sale.totalAR);
+            $("#totalWithCharges").val(sale.totalAR);
             $("#paymentCurrency").val(sale.discountCurrency);
+            $("#paymentAmountToAdd").val(currRowSel.find(".totalColumn input").val());
         }
 
         function loadFinishTab() {
@@ -1142,7 +1196,7 @@
                 currentTR.find(".totalColumn").find("input").val(total);
             }
             else
-                1;//ERROR
+                alert("El total no debe ser menor a 0.01");//ERROR
         }
 
         function _peopleChanged(event) {
@@ -1216,7 +1270,7 @@
             win.focus();
         }
 
-        function loadCurrencyValues() {
+        function getCustomExchangeRates() {
             var exchRateUSD = _getExchangeRate("USD");
             var exchRateBRL = _getExchangeRate("BRL");
             var exchRateEUR =_getExchangeRate("EUR");
@@ -1225,17 +1279,23 @@
             exchRateBRL = sale.discountCurrency === "BRL" && sale.customExchangeRate !== exchRateBRL ? sale.customExchangeRate : exchRateBRL;
             exchRateEUR = sale.discountCurrency === "EUR" && sale.customExchangeRate !== exchRateEUR ? sale.customExchangeRate : exchRateEUR;
 
-            $("#exchangeRateDollar").val(exchRateUSD);
-            $("#exchangeRateReal").val(exchRateBRL);
-            $("#exchangeRateEuro").val(exchRateEUR);
+            return [exchRateUSD, exchRateBRL, exchRateEUR];
+        }
+
+        function loadCurrencyValues() {
+            var rates = getCustomExchangeRates();
+            $("#exchangeRateDollar").val(rates[0]);
+            $("#exchangeRateReal").val(rates[1]);
+            $("#exchangeRateEuro").val(rates[2]);
         }
 
         function calculateSubtotals() {
             var subTotal = sale.subtotalAR ;
+            var rates = getCustomExchangeRates();
 
-            $("#subtotalDollarDiscount").val((subTotal/_getExchangeRate("USD")).toFixed(2));
-            $("#subtotalRealDiscount").val((subTotal/_getExchangeRate("BRL")).toFixed(2));
-            $("#subtotalEuroDiscount").val((subTotal/_getExchangeRate("EUR")).toFixed(2));
+            $("#subtotalDollarDiscount").val((subTotal/rates[0]).toFixed(2));
+            $("#subtotalRealDiscount").val((subTotal/rates[1]).toFixed(2));
+            $("#subtotalEuroDiscount").val((subTotal/rates[2]).toFixed(2));
             $("#subtotalPesoDiscount").val((subTotal).toFixed(2));
         }
 
@@ -1367,57 +1427,90 @@
             var paymentMethodOpt = elem.find("#paymentMethod option:selected");
             var paymentCurrencyOpt = elem.find("#paymentCurrency option:selected");
             var paymentAmountToAdd = elem.find("#paymentAmountToAdd").val();
+            var cardChargePercentage = Number((Number($("#cardCharge").val())/100).toFixed(2));
             var currency = paymentCurrencyOpt.val();
             var id = paymentMethodOpt.val() + currency;
             var exchRate = _getExchangeRate(currency);
+            var cardCharge = 0;
 
             if(sale.discountCurrency === currency) {
                 exchRate = sale.customExchangeRate;
             }
 
-            var paymentAmountARSToAdd = paymentAmountToAdd * exchRate;
+            if(paymentMethodOpt.val() === "cardP") {
+                cardCharge = (Number(Number(paymentAmountToAdd) * exchRate * cardChargePercentage).toFixed(2));
+            }
 
-            if(_addPayment(id, paymentAmountToAdd, paymentAmountARSToAdd)) {
+            var paymentAmountARSToAdd = (Number(Number(paymentAmountToAdd) * exchRate).toFixed(2));
+
+            if(_addPayment(id, paymentAmountToAdd, paymentAmountARSToAdd, cardCharge)) {
                 var td1 = $(document.createElement("td")).text(paymentMethodOpt.text());
                 var td2 = $(document.createElement("td")).text(paymentCurrencyOpt.text());
                 var td3 = $(document.createElement("td")).text(paymentAmountToAdd);
                 var td4 = $(document.createElement("td")).addClass("totalARRow").text(paymentAmountARSToAdd);
+                var td5 = $(document.createElement("td")).text(cardCharge);
                 var i   = $(document.createElement("i")).addClass("fa fa-trash-o");
                 var btn = $(document.createElement("button")).attr("type","button").addClass("btn btn-danger btn-circle").append(i);
-                var td5 = $(document.createElement("td")).append(btn);
-                var tr1 = $(document.createElement("tr")).attr("id",id).addClass("paymentRow").append(td1).append(td2).append(td3).append(td4).append(td5);
+                var td6 = $(document.createElement("td")).append(btn);
+                var tr1 = $(document.createElement("tr")).attr("id",id).addClass("paymentRow").append(td1).append(td2).append(td3).append(td4).append(td5).append(td6);
                 $(".paymentTableBody").append(tr1);
                 $(btn).click(function(){
                     _removePayment(id);
                     $(btn).closest(".paymentRow").remove();
                 });
             } else {
-                console.log("POPUP ERROR");
-                alert("El método de pago y la moneda seleccionada ya fueron agregados. Borre el registro existente e intente nuevamente.");
             }
         }
 
-        function _addPayment(id, val, arVal) {
+        function _addPayment(id, val, arVal, cardCharge) {
             var status = false;
             if(!sale.paymentRows[id] || sale.paymentRows[id].length < 2) {
-                sale.paymentRows[id] = [val, arVal];
-                _calculateremainingAmount();
-                status = true;
+                status = _calculateRemainingAmount(arVal);
+            } else {
+                alert("- El método de pago y la moneda seleccionada ya fueron agregados. Borre el registro existente e intente nuevamente.");
+            }
+            if(status) {
+                sale.paymentRows[id] = [val, arVal, cardCharge];
+                _calculateTotalCardCharge();
+                _calculateTotalWithCharge();
             }
             return status;
         }
 
         function _removePayment(id) {
             sale.paymentRows[id] = [];
-            _calculateremainingAmount();
+            _calculateRemainingAmount(0);
+            _calculateTotalCardCharge();
+            _calculateTotalWithCharge();
         }
 
-        function _calculateremainingAmount() {
+        function _calculateRemainingAmount(arAmount) {
+            var status = false;
             var remainingAmount = sale.totalAR;
             for (const key in sale.paymentRows) {
-                remainingAmount -= sale.paymentRows[key][1] ? Number(sale.paymentRows[key][1]) : 0;
+                remainingAmount -= Number(Number(sale.paymentRows[key][1] ? Number(sale.paymentRows[key][1]) : 0).toFixed(2));
             }
-            $("#remainingAmount").val(remainingAmount);
+            remainingAmount = Number((remainingAmount - arAmount).toFixed(2));
+            if(remainingAmount >= 0) {
+                $("#remainingAmount").val(remainingAmount);
+                status = true;
+            } else {
+                alert("- La suma total no puede ser mayor que el total a pagar.");
+            }
+            return status;
+        }
+
+        function _calculateTotalCardCharge() {
+            var totalCardCharge = 0;
+            for (const key in sale.paymentRows) {
+                totalCardCharge += Number(Number(sale.paymentRows[key][2] ? Number(sale.paymentRows[key][2]) : 0).toFixed(2));
+            }
+            $("#sumCardCharge").val(totalCardCharge);
+        }
+
+        function _calculateTotalWithCharge() {
+            var totalWithCharges = Number((Number($("#sumCardCharge").val()) + sale.totalAR - Number($("#remainingAmount").val())).toFixed(2));
+            $("#totalWithCharges").val(totalWithCharges);
         }
 
     </script>

@@ -268,7 +268,6 @@ function _getExchangeRates(res, rej) {
 /*------------------------ PARSERS -------------------------------------*/
 /*----------------------------------------------------------------------*/
 function  _parseCreatedClientData(result, sale) {
-    console.log(result);
     _createSale(result, sale);
 }
 
