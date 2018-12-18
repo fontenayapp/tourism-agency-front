@@ -876,7 +876,7 @@
                 customExchangeRate: 0,
                 discount: 0,
                 totalAR: 0,
-                paymentRows: []
+                payments: []
             };
             //DELETE
             $("#nextBtn").focus();
@@ -1020,7 +1020,7 @@
             sale.totalAR = sale.subtotalAR; //Find total en pesos sin modificar
             $(".paymentTableBody").empty();
             $("#paymentAmountToAdd").val(0);
-            sale.paymentRows = [];
+            sale.payments = [];
 
             var totalInput = currRowSel.find(".exchangeRate");
             var totalCurrency = 0;
@@ -1043,8 +1043,8 @@
         }
 
         function loadFinishTab() {
-            sale.cardCharges = $("#remainingAmount").val();
-            $(".productTotal").text(sale.totalAR + sale.cardCharges);
+            sale.card_charges = $("#remainingAmount").val();
+            $(".productTotal").text(sale.totalAR + sale.card_charges);
             loadProductsTable(5);
             _enablePrintBtns();
         }
@@ -1465,14 +1465,14 @@
 
         function _addPayment(id, val, arVal, cardCharge) {
             var status = false;
-            if(!sale.paymentRows[id] || sale.paymentRows[id].length < 2) {
+            if(!sale.payments[id] || sale.payments[id].length < 2) {
                 status = _calculateRemainingAmount(arVal);
             } else {
                 $("#"+id).css("border","3px solid red");
                 alert("- El método de pago y la moneda seleccionada ya fueron agregados. Borre el registro existente e intente nuevamente.");
             }
             if(status) {
-                sale.paymentRows[id] = [val, arVal, cardCharge];
+                sale.payments[id] = [val, arVal, cardCharge];
                 _calculateTotalCardCharge();
                 _calculateTotalWithCharge();
             }
@@ -1481,7 +1481,7 @@
 
         function _removePayment(id) {
             _removeBorders();
-            sale.paymentRows[id] = [];
+            sale.payments[id] = [];
             _calculateRemainingAmount(0);
             _calculateTotalCardCharge();
             _calculateTotalWithCharge();
@@ -1494,8 +1494,8 @@
         function _calculateRemainingAmount(arAmount) {
             var status = false;
             var remainingAmount = sale.totalAR;
-            for (const key in sale.paymentRows) {
-                remainingAmount -= Number(Number(sale.paymentRows[key][1] ? Number(sale.paymentRows[key][1]) : 0).toFixed(2));
+            for (const key in sale.payments) {
+                remainingAmount -= Number(Number(sale.payments[key][1] ? Number(sale.payments[key][1]) : 0).toFixed(2));
             }
             remainingAmount = Number((remainingAmount - arAmount).toFixed(2));
             if(remainingAmount >= 0) {
@@ -1509,8 +1509,8 @@
 
         function _calculateTotalCardCharge() {
             var totalCardCharge = 0;
-            for (const key in sale.paymentRows) {
-                totalCardCharge += Number(Number(sale.paymentRows[key][2] ? Number(sale.paymentRows[key][2]) : 0).toFixed(2));
+            for (const key in sale.payments) {
+                totalCardCharge += Number(Number(sale.payments[key][2] ? Number(sale.payments[key][2]) : 0).toFixed(2));
             }
             $("#sumCardCharge").val(totalCardCharge);
         }

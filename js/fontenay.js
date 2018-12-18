@@ -121,26 +121,15 @@ function _createClient(sale) {
 }
 
 function _createSale(client, sale) {
-    var clientid = client.client_id;
-    var products = sale.products;
-    var promoterid = sale.promoter.promoter_id;
-
-    var total = sale.total;
-
-    var promotercommission = total*0.1;
-    var sellercommission = (total*0.9 - parseInt($("#productstockprice").val()))*0.1625;
+    sale.client_id = client.client_id;
+    sale.promoter_id = sale.promoter.promoter_id;
+    sale.total = sale.totalAR;
+    sale.promoter_commission = sale.total*0.1;
+    sale.seller_commission = Number(((sale.total*0.9 - Number(sale.totalStockAR))*0.1625).toFixed(2));
 
     _loadAjaxSetup();
     $.post(host+"/sale",
-        JSON.stringify({
-            client_id: clientid,
-            promoter_id: promoterid,
-            promoter_commission: promotercommission,
-            //seller_id: sellerid,
-            seller_commission: sellercommission,
-            products: products,
-            total: total
-        }),
+        JSON.stringify(sale),
         function(result){
             _parseCreatedSaleData(result);
         }
