@@ -317,6 +317,12 @@ function _getExchangeRate(currency) {
     return exchRate;
 }
 
+function _getCurrencyID(currency) {
+    var id = 0;
+    var exchangeRates = Models.exchangerates ? Models.exchangerates : Models.default.exchangerates;
+    id = exchangeRates.find(function(el){return el.code === currency}).currency_id;
+    return id;
+}
 
 function _getCurrentDate(){
     var today = new Date();
