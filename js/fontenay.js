@@ -261,7 +261,16 @@ function  _parseCreatedClientData(result, sale) {
 }
 
 function  _parseCreatedSaleData(result) {
-    console.log(result);
+    $("#wrapper").removeClass("mask");
+    var noerror = true;
+    if(noerror) {
+        var x = document.getElementsByClassName("tab");
+        x[currentTab-1].style.display = "none";
+        showTab(4);
+    } else {
+        currentTab -= 1;
+        showTab(3);
+    }
 }
 
 function  _parseCreatedCurrExchangeData(result) {
