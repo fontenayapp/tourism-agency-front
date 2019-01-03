@@ -271,6 +271,7 @@ function  _parseCreatedSaleData(result) {
         currentTab -= 1;
         showTab(3);
     }
+    sale.success = result;
 }
 
 function  _parseCreatedCurrExchangeData(result) {
