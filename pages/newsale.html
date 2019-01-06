@@ -961,9 +961,16 @@
                         peopleNumber = false;
                     }
                 } else if(3 === currentTab) {
-                    if(Number($("#remainingAmount").val()) !== 0) {
+                    var value = Math.abs(Number($("#remainingAmount").val()));
+                    if(value > 1) {
                         $('#wrongAmountModal').modal('show');
                         remainingAmount = false;
+                    } else if (value > 0) {
+                        if(undefined === sale.paymentRows["cashPARS"]) {
+                            _addPayment("cashPARS", value, value, 0, 1);
+                        } else {
+                            _updateARSPayment(value);
+                        }
                     }
                 }
             }
@@ -1492,6 +1499,14 @@
             _calculateTotalCardCharge();
             _calculateTotalWithCharge();
         }
+
+        function _updateARSPayment(value) {
+            var cashPARS = sale.paymentRows["cashPARS"];
+            var oldValue = Number(cashPARS[1]);
+            _removePayment("cashPARS");
+            _addPayment("cashPARS",oldValue + value, oldValue + value, 0, 1)
+        }
+
 
         function _removeBorders() {
             $(".paymentRow").css("border","none");
