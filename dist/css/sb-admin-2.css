@@ -500,6 +500,15 @@ table.dataTable thead .sorting:after {
   }
 }
 /*----------END MASK--------------*/
+.form-control-static.inlineBlock {
+  display: inline-block;
+}
+.voucherHeader {
+  border-bottom: black solid 2px;
+}
+.voucherText {
+  font-size: 10px;
+}
 /*--------------END CUSTOM CSS---------------------*/
 @media (max-width: 767px) {
   ul.timeline:before {
@@ -537,5 +546,9 @@ table.dataTable thead .sorting:after {
   }
   .printPage {
     margin: 0!important;
+    page-break-after: always;
+  }
+  .lessSpace {
+    margin: 0;
   }
 }
