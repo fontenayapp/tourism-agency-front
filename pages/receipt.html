@@ -63,6 +63,31 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                    <table class="table table-striped" id="itemsTable">
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                                <th>Precio unitario</th>
+                                <th>Importe</th>
+                            </tr>
+                        </thead>
+                        <tbody class="itemsTableBody"></tbody></table>
+                </div>
+                <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                    <table class="table table-striped" id="paymentsTable">
+                        <thead>
+                        <tr>
+                            <th>Método de pago</th>
+                            <th>Moneda</th>
+                            <th>Importe</th>
+                        </tr>
+                        </thead>
+                        <tbody class="paymentsTableBody"></tbody></table>
+                </div>
+            </div>
         </div>
     </div>
     <!-- jQuery -->
@@ -102,6 +127,29 @@
 
         function  _fillInformation(sale) {
             $(".productTotal").text("$ "+sale.total + ".00");
+            sale.products.forEach(function(el){
+                loadItemTableRow(el);
+            });
+            sale.payments.forEach(function(el){
+                loadPaymentTableRow(el);
+            });
+        }
+
+        function loadItemTableRow(product) {
+            var td1 = $(document.createElement("td")).text(product.product.name);
+            var td2 = $(document.createElement("td")).text(product.adults + product.children + product.babies);
+            var td3 = $(document.createElement("td")).text(product.product.selling_price);
+            var td4 = $(document.createElement("td")).text(product.price);
+            var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3).append(td4);
+            $(".itemsTableBody").append(tr1);
+        }
+
+        function loadPaymentTableRow(payment) {
+            var td1 = $(document.createElement("td")).text(payment.product.name);
+            var td2 = $(document.createElement("td")).text(payment);
+            var td3 = $(document.createElement("td")).text(payment);
+            var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3);
+            $(".paymentsTableBody").append(tr1);
         }
     </script>
 </body>
