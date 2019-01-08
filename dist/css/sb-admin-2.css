@@ -500,6 +500,9 @@ table.dataTable thead .sorting:after {
   }
 }
 /*----------END MASK--------------*/
+.increaseWidth {
+  min-width: 175px;
+}
 .form-control-static.inlineBlock {
   display: inline-block;
 }
