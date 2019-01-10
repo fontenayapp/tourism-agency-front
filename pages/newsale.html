@@ -779,6 +779,8 @@
                                 <button type="button" class="btn btn-success" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
                                 <button type="button" class="btn btn-primary" id="printVoucherBtn" onclick="_printVoucher()" style="display: none">Voucher</button>
                                 <button type="button" class="btn btn-primary" id="printReceiptBtn" onclick="_printReceipt()" style="display: none">Recibo</button>
+                                <button type="button" class="btn btn-primary" id="downloadVoucherBtn" onclick="_downloadVoucher()" style="display: none">Voucher</button>
+                                <button type="button" class="btn btn-primary" id="downloadReceiptBtn" onclick="_downloadReceipt()" style="display: none">Recibo</button>
                             </div>
                         </div>
 
@@ -1271,6 +1273,8 @@
             $("#nextBtn").hide();
             $("#printVoucherBtn").show();
             $("#printReceiptBtn").show();
+            $("#downloadVoucherBtn").show();
+            $("#downloadReceiptBtn").show();
         }
 
         function _printVoucher() {
@@ -1280,6 +1284,16 @@
 
         function _printReceipt() {
             var win = window.open("receipt.html?saleid=" + sale.success.sale_id, "_blank");
+            win.focus();
+        }
+
+        function _downloadVoucher() {
+            var win = window.open("voucher.html?saleid=" + sale.success.sale_id+"&download=true", "_blank");
+            win.focus();
+        }
+
+        function _downloadReceipt() {
+            var win = window.open("receipt.html?saleid=" + sale.success.sale_id+"&download=true", "_blank");
             win.focus();
         }
 

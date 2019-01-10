@@ -92,12 +92,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.9/metisMenu.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/fontenay.js"></script>
 
     <script>
         $(document).ready(function() {
-            var myParam = location.search.split("saleid=")[1];
+            var myParam = location.search.split("saleid=")[1].split("&")[0];
             console.log(myParam);
             _loadSale(myParam);
         });
@@ -130,6 +134,11 @@
             sale.products.forEach(function(el){
                 loadItemTableRow(el);
             });
+
+            var myParams = location.search.split("download=");
+            if(myParams[1] !== undefined && myParams[1] === "true") {
+                _downloadPDF(sale.sale_id)
+            }
         }
 
         function loadItemTableRow(product) {
@@ -146,6 +155,21 @@
             var saleDate = _getFormatDate(new Date());
             var html = "N° de formato: " + sale.sale_id + "<br>Fecha del formato: " + saleDate +"<br>";
             $(".receiptInfo").append(html);
+        }
+
+        function _downloadPDF(saleid) {
+            var w = document.getElementById("page-wrapper").offsetWidth;
+            var h = document.getElementById("page-wrapper").offsetHeight;
+            html2canvas(document.getElementById("page-wrapper"), {
+                dpi: 300, // Set to 300 DPI
+                scale: 3, // Adjusts your resolution
+                onrendered: function (canvas) {
+                    var img = canvas.toDataURL("image/jpeg", 1);
+                    var doc = new jsPDF('L', 'px', [w, h]);
+                    doc.addImage(img, 'JPEG', 0, 0, w, h);
+                    doc.save('RECIBO-N-' + saleid + '.pdf');
+                }
+            });
         }
     </script>
 </body>
