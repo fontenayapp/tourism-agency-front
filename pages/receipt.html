@@ -28,7 +28,7 @@
 </head>
 <body>
     <div id="wrapper">
-        <div id="page-wrapper" class="printPage">
+        <div id="page-wrapper" class="printPage" style="max-width: 1100px;">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
                     <h1 class="page-header">FONTENAY TOURS</h1>
@@ -159,14 +159,14 @@
 
         function _downloadPDF(saleid) {
             var w = document.getElementById("page-wrapper").offsetWidth;
-            var h = document.getElementById("page-wrapper").offsetHeight;
+            var h = document.getElementById("wrapper").offsetHeight;
             html2canvas(document.getElementById("page-wrapper"), {
                 dpi: 300, // Set to 300 DPI
                 scale: 3, // Adjusts your resolution
                 onrendered: function (canvas) {
                     var img = canvas.toDataURL("image/jpeg", 1);
-                    var doc = new jsPDF('L', 'px', [w, h]);
-                    doc.addImage(img, 'JPEG', 0, 0, w, h);
+                    var doc = new jsPDF('P', 'px', [h, w]);
+                    doc.addImage(img, 'JPEG', 0, 0);
                     doc.save('RECIBO-N-' + saleid + '.pdf');
                 }
             });
