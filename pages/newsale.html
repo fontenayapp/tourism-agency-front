@@ -1083,25 +1083,6 @@
             load();
         }
 
-        function _loadProviders() {
-            var providersPromise = new Promise(
-                function (resolve, reject) {
-                    _getProviders(resolve, reject);
-                }
-            );
-
-            var load = function() {
-                providersPromise
-                    .then(function (result) {
-                        _loadProvidersSelect(result);
-                    })
-                    .catch(function (error) {
-                        console.log(error.message);
-                    });
-            };
-            load();
-        }
-
         function _loadProducts() {
             var productsPromise = new Promise(
                 function (resolve, reject) {

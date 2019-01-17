@@ -314,8 +314,9 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="productTable">
                             </table>
+                            <button type="button" class="btn btn-success" onclick="_openCreateProductModal()">Agregar producto</button>
                             <!-- /.table-responsive -->
                         </div>
                         <!-- /.panel-body -->
@@ -331,7 +332,7 @@
     <!-- /#wrapper -->
 
 
-    <div class="modal fade" id="productDetailsModal" tabindex="-1" role="dialog" aria-labelledby="productDetailsModal" aria-hidden="true">
+    <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -341,11 +342,11 @@
                 <div class="modal-body row">
                     <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                         <label>Producto</label>
-                        <p class="productnamelabel form-control-static"></p>
+                        <p class="namelabel form-control-static"></p>
                     </div>
                     <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                         <label>ID</label>
-                        <p class="productidlabel form-control-static"></p>
+                        <p class="idlabel form-control-static"></p>
                     </div>
                     <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                         <label>Proveedor</label>
@@ -353,15 +354,15 @@
                     </div>
                     <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                         <label>Descripción</label>
-                        <p class="productdescriptionlabel form-control-static"></p>
+                        <p class="descriptionlabel form-control-static"></p>
                     </div>
                     <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                         <label>Precio de venta</label>
-                        <p class="productsellingpricelabel form-control-static"></p>
+                        <p class="sellingpricelabel form-control-static"></p>
                     </div>
                     <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                         <label>Precio de costo</label>
-                        <p class="productstockpricelabel form-control-static"></p>
+                        <p class="stockpricelabel form-control-static"></p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -370,7 +371,8 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="productEditModal" tabindex="-1" role="dialog" aria-labelledby="productEditModal" aria-hidden="true">
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -378,15 +380,51 @@
                     <h4 class="modal-title">Editar producto</h4>
                 </div>
                 <div class="modal-body">
-                    No se ha seleccionado ningún producto. Agregue uno para continuar con el siguiente paso.
+                    <div class="row form-group">
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>ID</label>
+                            <p id="editid" class="form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label>Producto</label>
+                            <input class="form-control" id="editname" value="">
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Proveedor</label>
+                            <select class="form-control" id="editprovidersel">
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Descripción</label>
+                            <input class="form-control" id="editdescription" value="">
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Precio de venta</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="editsellingprice" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Precio de costo</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="editstockprice" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" onclick="_saveEditProduct()">Guardar cambios</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="productCreateModal" tabindex="-1" role="dialog" aria-labelledby="productCreateModal" aria-hidden="true">
+
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -394,10 +432,58 @@
                     <h4 class="modal-title">Añadir producto</h4>
                 </div>
                 <div class="modal-body">
-                    No se ha seleccionado ningún producto. Agregue uno para continuar con el siguiente paso.
+                    <div class="row form-group">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label>Producto</label>
+                            <input class="form-control" id="createname" value="">
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Proveedor</label>
+                            <select class="form-control" id="createprovidersel">
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Descripción</label>
+                            <input class="form-control" id="createdescription" value="">
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Precio de venta</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="createsellingprice" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Precio de costo</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="createstockprice" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" onclick="_saveCreateProduct()">Crear producto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="successFinishModal" tabindex="-1" role="dialog" aria-labelledby="successFinishModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="noProductsModalTitle">Guardado exitoso</h4>
+                </div>
+                <div class="modal-body">
+                    El producto se ha almacenado satisfactoriamente.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
                 </div>
             </div>
         </div>
@@ -421,23 +507,113 @@
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
+    $(document).ready(function() {
+        _checkLogin();
+        _loadProducts();
+        _loadProviders();
+    });
+
+    function _loadProvidersSelect(providers) {
+        Models["providers"] = providers;
+    }
+
+    function _loadProvidersSelectCreate() {
+        var provCreateSel = $("#createprovidersel");
+        provCreateSel.empty();
+        Models["providers"].forEach(function(element, index){
+            var opt = $(document.createElement("option"));
+            opt.text(element.name);
+            opt.attr("value", element.provider_id);
+            provCreateSel.append(opt);
+        });
+    }
+
+    function _loadProvidersSelectEdit() {
+        var provEditSel = $("#editprovidersel");
+        provEditSel.empty();
+        Models["providers"].forEach(function(element, index){
+            var opt = $(document.createElement("option"));
+            opt.text(element.name);
+            opt.attr("value", element.provider_id);
+            provEditSel.append(opt);
+        });
+    }
+
     function _openDetailsProductModal(){
-        $("#productDetailsModal").modal('show');
+        $("#detailsModal").modal('show');
+        var product = _getProductByEvent(event);
+        _loadDetailsInformation(product);
+    }
+
+    function _openEditProductModal() {
+        $("#editModal").modal('show');
+        var product = _getProductByEvent(event);
+        _loadEditInformation(product);
+    }
+
+    function _openCreateProductModal() {
+        $("#createModal").modal('show');
+        _clearCreateInformation();
+    }
+
+    function _getProductByEvent(event) {
         var tr = $(event.target).closest("tr");
         var prodId = tr.find(".productid").length !== 0 ? tr.find(".productid").text() : tr.prev().find(".productid").text();
         var product = Models["products"].find(function(e) {
             return e.product_id === parseInt(prodId);
         });
-        _loadDetailsInformation(product);
+        return product;
+    }
+
+    function _saveEditProduct() {
+        var productEdited = {
+            product_id: $("#editid").text(),
+            name: $("#editname").val(),
+            selling_price: $("#editsellingprice").val(),
+            stock_price: $("#editstockprice").val(),
+            description: $("#editdescription").val(),
+            provider_id: $("#editprovidersel").val()
+        };
+        _saveProductDetails(productEdited);
+    }
+
+    function _saveCreateProduct() {
+        var productCreated = {
+            name: $("#createname").val(),
+            selling_price: $("#createsellingprice").val(),
+            stock_price: $("#createstockprice").val(),
+            description: $("#createdescription").val(),
+            provider_id: $("#createprovidersel").val()
+        };
+        _createProduct(productCreated);
     }
 
     function _loadDetailsInformation(product) {
-        $(".productnamelabel").text(product.name);
-        $(".productidlabel").text(product.product_id);
+        $(".namelabel").text(product.name);
+        $(".idlabel").text(product.product_id);
         $(".providernamelabel").text(product.provider.name);
-        $(".productdescriptionlabel").text(product.description);
-        $(".productsellingpricelabel").text(product.selling_price);
-        $(".productstockpricelabel").text(product.stock_price);
+        $(".descriptionlabel").text(product.description);
+        $(".sellingpricelabel").text(product.selling_price);
+        $(".stockpricelabel").text(product.stock_price);
+    }
+
+    function _loadEditInformation(product) {
+        _loadProvidersSelectEdit();
+        $("#editname").val(product.name);
+        $("#editid").text(product.product_id);
+        $("#editprovidername").val(product.provider.name);
+        $("#editdescription").val(product.description);
+        $("#editsellingprice").val(product.selling_price);
+        $("#editstockprice").val(product.stock_price);
+    }
+
+    function _clearCreateInformation() {
+        _loadProvidersSelectCreate();
+        $("#createname").val("");
+        $("#createsellingprice").val("");
+        $("#createstockprice").val("");
+        $("#createdescription").val("");
+       // $("#createprovidersel").val(1)
     }
 
     function _loadProducts() {
@@ -452,9 +628,9 @@
                 .then(function (result) {
                     var list = _fixProductsFormat(result);
                     var buttonsHTML = '<button type="button" onclick="_openDetailsProductModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
-                        +'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
+                        +'<button type="button" onclick="_openEditProductModal()" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
                         +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
-                    $('#dataTables-example').DataTable({
+                    $('#productTable').DataTable({
                         responsive: true,
                         data: list,
                         columns: [
@@ -510,7 +686,24 @@
         };
         load();
     }
-    _loadProducts();
+
+    function _refreshEditProductModal(result) {
+        $("#editModal").modal('hide');
+        _refreshModal();
+
+    }
+
+    function _refreshCreateProductModal(result) {
+        $("#createModal").modal('hide');
+        _refreshModal();
+    }
+
+    function _refreshModal() {
+        $("#productTable").dataTable().fnDestroy();
+        $("#successFinishModal").modal('show');
+        _loadProducts();
+        _loadProviders();
+    }
     </script>
 
 </body>
