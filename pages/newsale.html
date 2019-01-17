@@ -477,7 +477,7 @@
                                 <label>Promotor</label>
                                 <p class="promoterlabel form-control-static"></p>
                             </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1">
+                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
                                 <label>Subtotal</label>
                                 <div class="form-control-static">
                                     <div style="float: left;">AR$</div>
@@ -489,7 +489,7 @@
                             <!--<label>Vendedor</label>-->
                             <!--<p id="sellerconf" class="form-control-static"></p>-->
                             <!--</div>-->
-                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1">
+                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
                                 <label>Moneda descuento</label>
                                 <select class="form-control" id="discountcurrencysel">
                                     <option value="dollarstr" curr="USD">Dólar</option>
@@ -498,7 +498,7 @@
                                     <option value="pesostr" curr="ARS">Peso</option>
                                 </select>
                             </div>
-                            <div class="table-responsive col-xs-12 col-sm-12 col-md-6 col-lg-7">
+                            <div class="table-responsive col-xs-12 col-sm-12 col-md-6 col-lg-9">
                                 <table class="table" id="discountstable">
                                     <thead>
                                         <tr><th>Cotización</th><th>Subtotal convertido</th><th>Descuento</th><th>Total a cobrar</th></tr>
@@ -1368,10 +1368,10 @@
             var td1 = $(document.createElement("td")).addClass("increaseWidth").text(product.provider.name);
             var td2 = $(document.createElement("td")).addClass("increaseWidth").text(product.product.name);
             var td3 = $(document.createElement("td")).addClass("increaseWidth").text(product.date);
-            var td4 = $(document.createElement("td")).addClass("increaseWidth").text(product.transfer ? "Sí" : "No");
-            var td5 = $(document.createElement("td")).addClass("increaseWidth").text(product.adults);
-            var td6 = $(document.createElement("td")).addClass("increaseWidth").text(product.children);
-            var td7 = $(document.createElement("td")).addClass("increaseWidth").text(product.babies);
+            var td4 = $(document.createElement("td")).text(product.transfer ? "Sí" : "No");
+            var td5 = $(document.createElement("td")).text(product.adults);
+            var td6 = $(document.createElement("td")).text(product.children);
+            var td7 = $(document.createElement("td")).text(product.babies);
             var td8 = $(document.createElement("td")).addClass("increaseWidth").text(product.price);
             var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7).append(td8);
             var clss = o === 3? ".productConfTableBody" : ".productFinishTableBody";
