@@ -324,6 +324,23 @@ function _fixSalesFormat(result) {
 }
 
 
+function _fixProductsFormat(result) {
+    var list = [];
+    result.forEach(function(e) {
+        var elem = {};
+        elem.id = e.product_id;
+        elem.providername = "TEST"; //e.provider.name;
+        elem.providerid = e.provider_id;
+        elem.description = e.description;
+        elem.name = e.name;
+        elem.sellingprice = e.selling_price;
+        elem.stockprice = e.stock_price;
+        list.push(elem);
+    });
+    return list;
+}
+
+
 function _getFormatDate(dat){
     var month = dat.getMonth()+1;
     month = month > 9 ? month : "0"+month;
