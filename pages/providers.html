@@ -317,7 +317,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="providerTable">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="providersTable">
                             </table>
                             <button type="button" class="btn btn-success" onclick="_openCreateProviderModal()">Agregar proveedor</button>
                             <!-- /.table-responsive -->
@@ -352,16 +352,16 @@
                         <p class="idlabel form-control-static"></p>
                     </div>
                     <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <label>Descripción</label>
-                        <p class="descriptionlabel form-control-static"></p>
+                        <label>Email</label>
+                        <p class="emaillabel form-control-static"></p>
                     </div>
                     <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <label>Precio de venta</label>
-                        <p class="sellingpricelabel form-control-static"></p>
+                        <label>Teléfono</label>
+                        <p class="phonelabel form-control-static"></p>
                     </div>
                     <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <label>Precio de costo</label>
-                        <p class="stockpricelabel form-control-static"></p>
+                        <label>Sitio web</label>
+                        <p class="urllabel form-control-static"></p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -385,33 +385,20 @@
                             <p id="editid" class="form-control-static"></p>
                         </div>
                         <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <label>Producto</label>
+                            <label>Proveedor</label>
                             <input class="form-control" id="editname" value="">
                         </div>
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Proveedor</label>
-                            <select class="form-control" id="editprovidersel">
-                            </select>
+                            <label>Email</label>
+                            <input class="form-control" id="editemail" value="">
                         </div>
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Descripción</label>
-                            <input class="form-control" id="editdescription" value="">
+                            <label>Phone</label>
+                            <input class="form-control" id="editphone" value="">
                         </div>
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Precio de venta</label>
-                            <div class=" input-group">
-                                <span class="input-group-addon">$</span>
-                                <input id="editsellingprice" class="form-control" type="number" min="1">
-                                <span class="input-group-addon">.00</span>
-                            </div>
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Precio de costo</label>
-                            <div class=" input-group">
-                                <span class="input-group-addon">$</span>
-                                <input id="editstockprice" class="form-control" type="number" min="1">
-                                <span class="input-group-addon">.00</span>
-                            </div>
+                            <label>Sitio web</label>
+                            <input class="form-control" id="editurl" value="">
                         </div>
                     </div>
                 </div>
@@ -551,23 +538,25 @@
 
     function _getProviderByEvent(event) {
         var tr = $(event.target).closest("tr");
-        var prodId = tr.find(".productid").length !== 0 ? tr.find(".productid").text() : tr.prev().find(".productid").text();
-        var product = Models["products"].find(function(e) {
-            return e.product_id === parseInt(prodId);
+        var provId = tr.find(".providerid").length !== 0 ? tr.find(".providerid").text() : tr.prev().find(".providerid").text();
+        var provider = Models["providers"].find(function(e) {
+            return e.provider_id === parseInt(provId);
         });
-        return product;
+        return provider;
     }
 
-    function _saveEditProduct() {
-        var productEdited = {
-            product_id: $("#editid").text(),
+    function _saveEditProvider() {
+        if(!validateModal()) {
+            return;
+        }
+        var providerEdited = {
+            provider_id: $("#editid").text(),
             name: $("#editname").val(),
-            selling_price: $("#editsellingprice").val(),
-            stock_price: $("#editstockprice").val(),
-            description: $("#editdescription").val(),
-            provider_id: $("#editprovidersel").val()
+            email: $("#editemail").val(),
+            phone: $("#editphone").val(),
+            url: $("#editurl").val()
         };
-        _saveProductDetails(productEdited);
+        _saveProviderDetails(providerEdited);
     }
 
     function _saveCreateProduct() {
@@ -584,23 +573,21 @@
         _createProduct(productCreated);
     }
 
-    function _loadDetailsInformation(product) {
-        $(".namelabel").text(product.name);
-        $(".idlabel").text(product.product_id);
-        $(".providernamelabel").text(product.product.provider.name);
-        $(".descriptionlabel").text(product.description);
-        $(".sellingpricelabel").text(product.selling_price);
-        $(".stockpricelabel").text(product.stock_price);
+    function _loadDetailsInformation(provider) {
+        $(".namelabel").text(provider.name);
+        $(".idlabel").text(provider.provider_id);
+        $(".phonelabel").text(provider.phone);
+        $(".emaillabel").text(provider.email);
+        var a = $(document.createElement("a")).attr("href",provider.url).attr("target","_blank").text(provider.url);
+        $(".urllabel").empty().append(a);
     }
 
-    function _loadEditInformation(product) {
-        _loadProvidersSelectEdit();
-        $("#editname").val(product.name);
-        $("#editid").text(product.product_id);
-        $("#editprovidername").val(product.product.provider.name);
-        $("#editdescription").val(product.description);
-        $("#editsellingprice").val(product.selling_price);
-        $("#editstockprice").val(product.stock_price);
+    function _loadEditInformation(provider) {
+        $("#editname").val(provider.name);
+        $("#editid").text(provider.provider_id);
+        $("#editphone").val(provider.phone);
+        $("#editemail").val(provider.email);
+        $("#editurl").val(provider.url);
     }
 
     function _clearCreateInformation() {
@@ -612,30 +599,29 @@
        // $("#createprovidersel").val(1)
     }
 
-    function _loadProducts() {
-        var productsPromise = new Promise(
+    function _loadProviders() {
+        var providersPromise = new Promise(
             function (resolve, reject) {
-                _getProducts(resolve, reject);
+                _getProviders(resolve, reject);
             }
         );
 
         var load = function() {
-            productsPromise
+            providersPromise
                 .then(function (result) {
-                    var list = _fixProductsFormat(result);
-                    var buttonsHTML = '<button type="button" onclick="_openDetailsProductModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
-                        +'<button type="button" onclick="_openEditProductModal()" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
+                    var list = _fixProvidersFormat(result);
+                    var buttonsHTML = '<button type="button" onclick="_openDetailsProviderModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
+                        +'<button type="button" onclick="_openEditProviderModal()" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
                         +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
-                    $('#productTable').DataTable({
+                    $('#providersTable').DataTable({
                         responsive: true,
                         data: list,
                         columns: [
                             { title: "ID", data: "id"},
                             { title: "Nombre",data: "name" },
-                            { title: "Proveedor",data: "providername" },
-                            { title: "Descripcion",data: "description" },
-                            { title: "Precio venta",data: "sellingprice" },
-                            { title: "Precio proveedor",data: "stockprice" },
+                            { title: "Email",data: "email" },
+                            { title: "Teléfono",data: "phone" },
+                            { title: "Web",data: "url" },
                             { title: "Acciones", data: null }
                         ],
                         language: {
@@ -664,7 +650,7 @@
                         columnDefs: [
                             {
                                 width: '7%',
-                                class: 'productid',
+                                class: 'providerid',
                                 targets: 0  //la primer columna tendra una anchura del  20% de la tabla
                             },
                             {
@@ -683,7 +669,7 @@
         load();
     }
 
-    function _refreshEditProductModal(result) {
+    function _refreshEditProviderModal(result) {
         $("#editModal").modal('hide');
         _refreshModal();
 
@@ -695,15 +681,15 @@
     }
 
     function _refreshModal() {
-        $("#productTable").dataTable().fnDestroy();
+        $("#providersTable").dataTable().fnDestroy();
         $("#successFinishModal").modal('show');
-        _loadProducts();
         _loadProviders();
     }
 
     function validateModal() {
-        return _validateHTMLForm($("#createModal"));
+        return _validateHTMLForm($("#editModal"));
     }
+
     </script>
 
 </body>

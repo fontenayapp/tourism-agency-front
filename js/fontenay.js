@@ -227,6 +227,22 @@ function _saveProductDetails(product) {
     */
 }
 
+function _saveProviderDetails(providerEdited) {
+    _loadAjaxSetup();
+
+    $.ajax({
+        url: host+"/provider",
+        type: "PUT",
+        data: JSON.stringify(providerEdited),
+        success: function(result){
+            _parseEditedProvider(result);
+        },
+        fail: function(error) {
+            _manageError(error);
+        }
+    });
+}
+
 
 
 
@@ -386,7 +402,9 @@ function  _parseEditedProduct(result) {
     _refreshEditProductModal(result);
 }
 
-
+function  _parseEditedProvider(result) {
+    _refreshEditProviderModal(result);
+}
 
 
 /*----------------------------------------------------------------------*/
@@ -444,6 +462,21 @@ function _fixProductsFormat(result) {
     });
     return list;
 }
+
+function _fixProvidersFormat(result) {
+    var list = [];
+    result.forEach(function(e) {
+        var elem = {};
+        elem.id = e.provider_id;
+        elem.name = e.name;
+        elem.email = e.email;
+        elem.phone = e.phone;
+        elem.url = e.url;
+        list.push(elem);
+    });
+    return list;
+}
+
 
 function _fixSalesFormat(result) {
     var list = [];
