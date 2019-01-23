@@ -578,6 +578,9 @@
     }
 
     function _saveCreateProduct() {
+        if(!validateModal()) {
+            return;
+        }
         var productCreated = {
             name: $("#createname").val(),
             selling_price: $("#createsellingprice").val(),
@@ -703,6 +706,10 @@
         $("#successFinishModal").modal('show');
         _loadProducts();
         _loadProviders();
+    }
+
+    function validateModal() {
+        return _validateHTMLForm($("#createModal"));
     }
     </script>
 

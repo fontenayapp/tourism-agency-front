@@ -103,7 +103,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="transactionsTable">
                             </table>
                             <button type="button" class="btn btn-success" onclick="_openCreateTransactionModal()">Agregar transacción</button>
                             <!-- /.table-responsive -->
@@ -127,7 +127,7 @@
                     <h4 class="modal-title">Añadir transacción</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row form-group">
+                    <div class="row form-group" id="createForm">
                         <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <label>Descripción</label>
                             <input class="form-control" id="createDescription" value="" required>
@@ -233,7 +233,7 @@
                         var buttonsHTML = '<button type="button" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
                             +'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
                             +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
-                        $('#dataTables-example').DataTable({
+                        $('#transactionsTable').DataTable({
                             responsive: true,
                             data: listado,
                             columns: [
@@ -291,6 +291,9 @@
         }
 
         function _saveCreateTransaction() {
+            if(!validateModal()) {
+                return;
+            }
             var transactionCreated = {
                 category_id: 1,
                 amount: $("#createAmount").val(),
@@ -317,6 +320,21 @@
                 currency = $(event.currentTarget).val();
             }
             $("#exchangeRate").val(_getExchangeRate(currency));
+        }
+
+        function validateModal() {
+            return _validateHTMLForm($("#createModal"));
+        }
+
+        function _refreshCreateTransactionModal(result) {
+            $("#createModal").modal('hide');
+            _refreshModal();
+        }
+
+        function _refreshModal() {
+            $("#transactionsTable").dataTable().fnDestroy();
+            $("#successFinishModal").modal('show');
+            _loadTransactions();
         }
     </script>
 

@@ -379,6 +379,7 @@ function  _parseCreatedSaleData(result) {
 
 function  _parseCreatedTransactionData(result) {
     Models["transactions"] = result;
+    _refreshCreateTransactionModal(result);
 }
 
 function  _parseEditedProduct(result) {
@@ -561,6 +562,19 @@ function _loadSaleProducts() {
     return list;
 }
 
+function _validateHTMLForm(form) {
+    var inputs, valid = true;
+    inputs = form.find("input");
+    for (i = 0; i < inputs.length; i++) {
+        var elem = $(inputs[i]);
+        elem.removeClass("invalid").parent().removeClass("has-error");
+        if ("" === elem[0].value) {
+            elem.addClass("invalid").parent().addClass("has-error");
+            valid = false;
+        }
+    }
+   return valid;
+}
 
 
 
