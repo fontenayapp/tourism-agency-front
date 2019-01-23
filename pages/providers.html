@@ -304,7 +304,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                    <h1 class="page-header">Ventas</h1>
+                    <h1 class="page-header">Productos</h1>
                 </div>
                 <!-- /.col-xs-12 col-sm-12 col-md-12 col-lg-12  -->
             </div>
@@ -313,12 +313,13 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Listado de ventas
+                            Listado de proveedores
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="providerTable">
                             </table>
+                            <button type="button" class="btn btn-success" onclick="_openCreateProviderModal()">Agregar proveedor</button>
                             <!-- /.table-responsive -->
                         </div>
                         <!-- /.panel-body -->
@@ -334,67 +335,149 @@
     <!-- /#wrapper -->
 
 
-    <div class="modal fade" id="saleDetailsModal" tabindex="-1" role="dialog" aria-labelledby="saleDetailsModal" aria-hidden="true">
+    <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Detalles de la venta</h4>
+                    <h4 class="modal-title">Detalles del proveedor</h4>
+                </div>
+                <div class="modal-body row">
+                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                        <label>Proveedor</label>
+                        <p class="namelabel form-control-static"></p>
+                    </div>
+                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                        <label>ID</label>
+                        <p class="idlabel form-control-static"></p>
+                    </div>
+                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                        <label>Descripción</label>
+                        <p class="descriptionlabel form-control-static"></p>
+                    </div>
+                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                        <label>Precio de venta</label>
+                        <p class="sellingpricelabel form-control-static"></p>
+                    </div>
+                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                        <label>Precio de costo</label>
+                        <p class="stockpricelabel form-control-static"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Editar proveedor</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-3">
-                            <label>Nombre y Apellido</label>
-                            <p class="clientnamelabel form-control-static"></p>
+                    <div class="row form-group">
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>ID</label>
+                            <p id="editid" class="form-control-static"></p>
                         </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                            <label>Identificador</label>
-                            <p class="passportlabel form-control-static"></p>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label>Producto</label>
+                            <input class="form-control" id="editname" value="">
                         </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                            <label>Nacionalidad</label>
-                            <p class="nationalitylabel form-control-static"></p>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Proveedor</label>
+                            <select class="form-control" id="editprovidersel">
+                            </select>
                         </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                            <label>Hotel</label>
-                            <p class="hotellabel form-control-static"></p>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Descripción</label>
+                            <input class="form-control" id="editdescription" value="">
                         </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                            <label>Dirección</label>
-                            <p class="addresslabel form-control-static"></p>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Precio de venta</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="editsellingprice" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
                         </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                            <label>Habitación</label>
-                            <p class="roomlabel form-control-static"></p>
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                            <label>Número de contacto</label>
-                            <p class="phonelabel form-control-static"></p>
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                            <label>Email</label>
-                            <p class="emaillabel form-control-static"></p>
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-12 col-lg-12 ">
-                            <label>Promotor</label>
-                            <p class="promoterlabel form-control-static"></p>
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-12 col-lg-12 ">
-                            <label>Vendedor</label>
-                            <p class="sellerlabel form-control-static"></p>
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
-                            <label>Total</label>
-                            <p class="totallabel form-control-static"></p>
-                        </div>
-                        <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Productos vendidos</h4>
-                        <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                            <table class="table table-striped" id="productssoldtable"></table>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Precio de costo</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="editstockprice" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" onclick="_saveEditProvider()">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Añadir proveedor</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label>Proveedor</label>
+                            <input class="form-control" id="createname" value="">
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Descripción</label>
+                            <input class="form-control" id="createdescription" value="">
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Precio de venta</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="createsellingprice" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Precio de costo</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="createstockprice" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" onclick="_saveCreateProvider()">Crear proveedor</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="successFinishModal" tabindex="-1" role="dialog" aria-labelledby="successFinishModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="noProductsModalTitle">Guardado exitoso</h4>
+                </div>
+                <div class="modal-body">
+                    El proveedor se ha almacenado satisfactoriamente.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
                 </div>
             </div>
         </div>
@@ -418,46 +501,141 @@
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
+    $(document).ready(function() {
+        _checkLogin();
+        _loadProviders();
+    });
 
-    function _openDetailsModal(){
-        $("#saleDetailsModal").modal('show');
-        var tr = $(event.target).closest("tr");
-        var saleId = tr.find(".saleid").length !== 0 ? tr.find(".saleid").text() : tr.prev().find(".saleid").text();
-        var sale = Models["sales"].find(function(e) {
-            return e.sale_id === parseInt(saleId);
-        });
-        if(undefined === sale) {
-            $("#saleDetailsModal").find(".modal-body").text("Un error ha ocurrido. La venta no fue encontrada. Recargue la página y reintente, por favor.")
-        } else {
-            loadInformation(sale);
-        }
+    function _loadProvidersSelect(providers) {
+        Models["providers"] = providers;
     }
 
-    function _loadSales() {
-        var salesPromise = new Promise(
+    function _loadProvidersSelectCreate() {
+        var provCreateSel = $("#createprovidersel");
+        provCreateSel.empty();
+        Models["providers"].forEach(function(element, index){
+            var opt = $(document.createElement("option"));
+            opt.text(element.name);
+            opt.attr("value", element.provider_id);
+            provCreateSel.append(opt);
+        });
+    }
+
+    function _loadProvidersSelectEdit() {
+        var provEditSel = $("#editprovidersel");
+        provEditSel.empty();
+        Models["providers"].forEach(function(element, index){
+            var opt = $(document.createElement("option"));
+            opt.text(element.name);
+            opt.attr("value", element.provider_id);
+            provEditSel.append(opt);
+        });
+    }
+
+    function _openDetailsProviderModal(){
+        $("#detailsModal").modal('show');
+        var provider = _getProviderByEvent(event);
+        _loadDetailsInformation(provider);
+    }
+
+    function _openEditProviderModal() {
+        $("#editModal").modal('show');
+        var provider = _getProviderByEvent(event);
+        _loadEditInformation(provider);
+    }
+
+    function _openCreateProviderModal() {
+        $("#createModal").modal('show');
+        _clearCreateInformation();
+    }
+
+    function _getProviderByEvent(event) {
+        var tr = $(event.target).closest("tr");
+        var prodId = tr.find(".productid").length !== 0 ? tr.find(".productid").text() : tr.prev().find(".productid").text();
+        var product = Models["products"].find(function(e) {
+            return e.product_id === parseInt(prodId);
+        });
+        return product;
+    }
+
+    function _saveEditProduct() {
+        var productEdited = {
+            product_id: $("#editid").text(),
+            name: $("#editname").val(),
+            selling_price: $("#editsellingprice").val(),
+            stock_price: $("#editstockprice").val(),
+            description: $("#editdescription").val(),
+            provider_id: $("#editprovidersel").val()
+        };
+        _saveProductDetails(productEdited);
+    }
+
+    function _saveCreateProduct() {
+        if(!validateModal()) {
+            return;
+        }
+        var productCreated = {
+            name: $("#createname").val(),
+            selling_price: $("#createsellingprice").val(),
+            stock_price: $("#createstockprice").val(),
+            description: $("#createdescription").val(),
+            provider_id: $("#createprovidersel").val()
+        };
+        _createProduct(productCreated);
+    }
+
+    function _loadDetailsInformation(product) {
+        $(".namelabel").text(product.name);
+        $(".idlabel").text(product.product_id);
+        $(".providernamelabel").text(product.product.provider.name);
+        $(".descriptionlabel").text(product.description);
+        $(".sellingpricelabel").text(product.selling_price);
+        $(".stockpricelabel").text(product.stock_price);
+    }
+
+    function _loadEditInformation(product) {
+        _loadProvidersSelectEdit();
+        $("#editname").val(product.name);
+        $("#editid").text(product.product_id);
+        $("#editprovidername").val(product.product.provider.name);
+        $("#editdescription").val(product.description);
+        $("#editsellingprice").val(product.selling_price);
+        $("#editstockprice").val(product.stock_price);
+    }
+
+    function _clearCreateInformation() {
+        _loadProvidersSelectCreate();
+        $("#createname").val("");
+        $("#createsellingprice").val("");
+        $("#createstockprice").val("");
+        $("#createdescription").val("");
+       // $("#createprovidersel").val(1)
+    }
+
+    function _loadProducts() {
+        var productsPromise = new Promise(
             function (resolve, reject) {
-                _getSales(resolve, reject);
+                _getProducts(resolve, reject);
             }
         );
 
         var load = function() {
-            salesPromise
+            productsPromise
                 .then(function (result) {
-                    var listado = _fixSalesFormat(result);
-                    var buttonsHTML = '<button type="button" onclick="_openDetailsModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
-                        +'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
+                    var list = _fixProductsFormat(result);
+                    var buttonsHTML = '<button type="button" onclick="_openDetailsProductModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
+                        +'<button type="button" onclick="_openEditProductModal()" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
                         +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
-                    $('#dataTables-example').DataTable({
+                    $('#productTable').DataTable({
                         responsive: true,
-                        data: listado,
+                        data: list,
                         columns: [
                             { title: "ID", data: "id"},
-                            { title: "Cliente",data: "clientname" },
-                            { title: "Pasaporte",data: "passport" },
-                            { title: "Fecha",data: "date" },
-                            { title: "Promotor",data: "promoter" },
-                            { title: "Vendedor",data: "seller" },
-                            { title: "Monto (ARS)",data: "total" },
+                            { title: "Nombre",data: "name" },
+                            { title: "Proveedor",data: "providername" },
+                            { title: "Descripcion",data: "description" },
+                            { title: "Precio venta",data: "sellingprice" },
+                            { title: "Precio proveedor",data: "stockprice" },
                             { title: "Acciones", data: null }
                         ],
                         language: {
@@ -486,7 +664,7 @@
                         columnDefs: [
                             {
                                 width: '7%',
-                                class: 'saleid',
+                                class: 'productid',
                                 targets: 0  //la primer columna tendra una anchura del  20% de la tabla
                             },
                             {
@@ -504,22 +682,28 @@
         };
         load();
     }
-    _loadSales();
 
-    function loadInformation(sale) {
-        $(".clientnamelabel").text(sale.client.name);
-        $(".passportlabel").text(sale.client.passport_number);
-        $(".nationalitylabel").text(sale.client.nationality);
-        $(".hotellabel").text(sale.client.hotel);
-        $(".addresslabel").text(sale.client.address);
-        $(".roomlabel").text(sale.client.room_number);
-        $(".phonelabel").text(sale.client.contact_number);
-        $(".emaillabel").text(sale.client.email);
-        $(".sellerlabel").text(sale.user.first_name + " " + sale.user.last_name);
-        $(".promoterlabel").text(sale.promoter.first_name + " " + sale.promoter.last_name);
-        $(".toallabel").text("ARS " + sale.total);
+    function _refreshEditProductModal(result) {
+        $("#editModal").modal('hide');
+        _refreshModal();
+
     }
 
+    function _refreshCreateProductModal(result) {
+        $("#createModal").modal('hide');
+        _refreshModal();
+    }
+
+    function _refreshModal() {
+        $("#productTable").dataTable().fnDestroy();
+        $("#successFinishModal").modal('show');
+        _loadProducts();
+        _loadProviders();
+    }
+
+    function validateModal() {
+        return _validateHTMLForm($("#createModal"));
+    }
     </script>
 
 </body>
