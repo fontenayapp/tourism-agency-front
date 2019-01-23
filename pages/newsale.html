@@ -388,7 +388,7 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <label>Proveedor</label>
-                                                <select class="form-control" id="providersel"></select>
+                                                <select class="form-control" id="providerSel"></select>
                                             </div>
                                             <div class="form-group">
                                                 <label>Servicio</label>
@@ -1102,24 +1102,6 @@
             load();
         }
 
-        function _loadCurrencies() {
-            var currenciesPromise = new Promise(
-                function (resolve, reject) {
-                    _getExchangeRates(resolve, reject);
-                }
-            );
-
-            var load = function() {
-                currenciesPromise
-                    .then(function (result) {
-                    })
-                    .catch(function (error) {
-                        console.log(error.message);
-                    });
-            };
-            load();
-        }
-
         function _loadPromotorsSelect(result) {
             var promSel = $("#promotorsel");
             result.forEach(function(element,index){
@@ -1131,12 +1113,12 @@
         }
 
         function _loadProvidersSelect(result) {
-            _refreshProvidersSelect($("#providersel"));
+            _refreshProvidersSelect($("#providerSel"));
             _loadProducts();
         }
 
         function _refreshProvidersSelect(select) {
-            var provSel = select ? select : $("#providersel");
+            var provSel = select ? select : $("#providerSel");
             Models["providers"].forEach(function(element, index){
                 var opt = $(document.createElement("option"));
                 opt.text(element.name);
@@ -1226,7 +1208,7 @@
         function _refreshProductsSelect(providerID, select) {
             var prodSel = select ? select : $("#servicesel");
             Models["products"].filter(function(element){
-                if(element.provider_id === providerID)
+                if(element.provider.provider_id === providerID)
                     return element;})
                 .forEach(function(element){
                     var opt = $(document.createElement("option"));
@@ -1346,7 +1328,7 @@
         }
 
         function loadProdTableRow(product, o) {
-            var td1 = $(document.createElement("td")).addClass("increaseWidth").text(product.provider.name);
+            var td1 = $(document.createElement("td")).addClass("increaseWidth").text(product.product.provider.name);
             var td2 = $(document.createElement("td")).addClass("increaseWidth").text(product.product.name);
             var td3 = $(document.createElement("td")).addClass("increaseWidth").text(product.date);
             var td4 = $(document.createElement("td")).text(product.transfer ? "Sí" : "No");
@@ -1375,7 +1357,7 @@
             var deleteButton = $(document.createElement('button')).attr("type","button").addClass("close deleteProduct").text("×").click(_deleteProductPanel);
             var panelBody = $(document.createElement('div')).addClass("panel-body");
             var lbl1 = $(document.createElement('label')).text("Proveedor");
-            var sel1 = $(document.createElement('select')).addClass("form-control").attr("id","providersel");
+            var sel1 = $(document.createElement('select')).addClass("form-control").attr("id","providerSel");
             var lbl2 = $(document.createElement('label')).text("Servicio");
             var sel2 = $(document.createElement('select')).addClass("form-control").attr("id","servicesel");
             var lbl3 = $(document.createElement('label')).text("Fecha");

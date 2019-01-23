@@ -135,23 +135,8 @@
             _loadCurrencies();
         });
 
-        function _loadCurrencies() {
-            var currenciesPromise = new Promise(
-                function (resolve, reject) {
-                    _getExchangeRates(resolve, reject);
-                }
-            );
-
-            var load = function() {
-                currenciesPromise
-                    .then(function (result) {
-                        _fillExchangesValues();
-                    })
-                    .catch(function (error) {
-                        console.log(error.message);
-                    });
-            };
-            load();
+        function _loadCurrenciesHandler(result) {
+            _fillExchangesValues();
         }
 
         function _fillExchangesValues() {

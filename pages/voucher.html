@@ -201,7 +201,7 @@
         }
 
         function _fillProductData(prod, container) {
-            var prodDate = _getFormatDate(new Date(prod.date));
+            var prodDate = _getFormatDateDDMMYYYY(new Date(prod.date));
             container.find(".voucher-id").text("N°- " + prod.sold_product_id);
             container.find(".productlabel").text(prod.product.name);
             container.find(".adultslabel").text(prod.adults);

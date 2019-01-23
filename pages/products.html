@@ -591,7 +591,7 @@
     function _loadDetailsInformation(product) {
         $(".namelabel").text(product.name);
         $(".idlabel").text(product.product_id);
-        $(".providernamelabel").text(product.provider.name);
+        $(".providernamelabel").text(product.product.provider.name);
         $(".descriptionlabel").text(product.description);
         $(".sellingpricelabel").text(product.selling_price);
         $(".stockpricelabel").text(product.stock_price);
@@ -601,7 +601,7 @@
         _loadProvidersSelectEdit();
         $("#editname").val(product.name);
         $("#editid").text(product.product_id);
-        $("#editprovidername").val(product.provider.name);
+        $("#editprovidername").val(product.product.provider.name);
         $("#editdescription").val(product.description);
         $("#editsellingprice").val(product.selling_price);
         $("#editstockprice").val(product.stock_price);

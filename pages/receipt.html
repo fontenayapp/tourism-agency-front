@@ -151,8 +151,8 @@
         }
 
         function _fillReceiptInfo(sale) {
-            //var saleDate = _getFormatDate(new Date(sale.date));
-            var saleDate = _getFormatDate(new Date());
+            //var saleDate = _getFormatDateDDMMYYYY(new Date(sale.date));
+            var saleDate = _getFormatDateDDMMYYYY(new Date());
             var html = "N° de formato: " + sale.sale_id + "<br>Fecha del formato: " + saleDate +"<br>";
             $(".receiptInfo").append(html);
         }

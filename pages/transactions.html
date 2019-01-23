@@ -105,6 +105,7 @@
                         <div class="panel-body">
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                             </table>
+                            <button type="button" class="btn btn-success" onclick="_openCreateTransactionModal()">Agregar transacción</button>
                             <!-- /.table-responsive -->
                         </div>
                         <!-- /.panel-body -->
@@ -118,7 +119,75 @@
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Añadir transacción</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label>Descripción</label>
+                            <input class="form-control" id="createDescription" value="" required>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Moneda</label>
+                            <select class="form-control" id="transactionCurrency">
+                                <option value="ARS">Peso</option>
+                                <option value="USD">Dólar</option>
+                                <option value="BRL">Real</option>
+                                <option value="EUR">Euro</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Cotización</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">AR$</span>
+                                <input id="exchangeRate" class="form-control exchangeRate" step="0.1" type="number" name="quantity" min="0" disabled="">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Ingreso/Gasto</label>
+                            <select class="form-control" id="createexpensesel">
+                                <option value="true">Gasto</option>
+                                <option value="false">Ingreso</option></select>
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Monto</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="createAmount" class="form-control" type="number" min="1" step="0.01" value="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" onclick="_saveCreateTransaction()">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="modal fade" id="successFinishModal" tabindex="-1" role="dialog" aria-labelledby="successFinishModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="noProductsModalTitle">Guardado exitoso</h4>
+                </div>
+                <div class="modal-body">
+                    La transacción se ha almacenado satisfactoriamente.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -138,79 +207,117 @@
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
+        $(document).ready(function() {
+            _loadTransactions();
+            _loadCurrencies();
+            $("#transactionCurrency").change(_currencyChanged);
+        });
 
-    function _loadProducts() {
-        var productsPromise = new Promise(
-            function (resolve, reject) {
-                _getTransactions(resolve, reject);
-            }
-        );
 
-        var load = function() {
-            productsPromise
-                .then(function (result) {
-                    var listado = _fixFormat(result);
-                    var buttonsHTML = '<button type="button" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
-                        +'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
-                        +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
-                    $('#dataTables-example').DataTable({
-                        responsive: true,
-                        data: listado,
-                        columns: [
-                            { title: "ID", data: "transaction_id" },
-                            { title: "Monto",data: "amount" },
-                            { title: "Descripción",data: "description" },
-                            { title: "Fecha",data: "date" },
-                            { title: "Categoría",data: "category_id" },
-                            { title: "¿Es gasto?",data: "is_expense" },
-                            { title: "ID de venta",data: "sale_id" },
-                            { title: "Acciones",data: null }
-                        ],
-                        language: {
-                            "emptyTable": "No hay datos",
-                            "info": "Mostrando _START_ a _END_ de _TOTAL_",
-                            "infoEmpty": "Mostrando 0 a 0 de 0 filas",
-                            "infoFiltered": "(filtrado de _MAX_ filas totales)",
-                            "infoPostFix":    "",
-                            "thousands":      ",",
-                            "lengthMenu":     "Mostrar _MENU_ filas",
-                            "loadingRecords": "Cargando...",
-                            "processing":     "Procesando...",
-                            "search":         "Buscar:",
-                            "zeroRecords":    "No hay coincidencias",
-                            "paginate": {
-                                "first":      "Primero",
-                                "last":       "Último",
-                                "next":       "Siguiente",
-                                "previous":   "Previo"
+        function _loadCurrenciesHandler(result) {
+            var ev;
+            _currencyChanged(ev, "ARS");
+        }
+
+        function _loadTransactions() {
+            var productsPromise = new Promise(
+                function (resolve, reject) {
+                    _getTransactions(resolve, reject);
+                }
+            );
+
+            var load = function() {
+                productsPromise
+                    .then(function (result) {
+                        var listado = _fixFormat(result);
+                        var buttonsHTML = '<button type="button" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
+                            +'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
+                            +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
+                        $('#dataTables-example').DataTable({
+                            responsive: true,
+                            data: listado,
+                            columns: [
+                                { title: "ID", data: "transaction_id" },
+                                { title: "Monto",data: "amount" },
+                                { title: "Descripción",data: "description" },
+                                { title: "Fecha",data: "date" },
+                                { title: "Categoría",data: "category_id" },
+                                { title: "¿Es gasto?",data: "is_expense" },
+                                { title: "ID de venta",data: "sale_id" },
+                                { title: "Acciones",data: null }
+                            ],
+                            language: {
+                                "emptyTable": "No hay datos",
+                                "info": "Mostrando _START_ a _END_ de _TOTAL_",
+                                "infoEmpty": "Mostrando 0 a 0 de 0 filas",
+                                "infoFiltered": "(filtrado de _MAX_ filas totales)",
+                                "infoPostFix":    "",
+                                "thousands":      ",",
+                                "lengthMenu":     "Mostrar _MENU_ filas",
+                                "loadingRecords": "Cargando...",
+                                "processing":     "Procesando...",
+                                "search":         "Buscar:",
+                                "zeroRecords":    "No hay coincidencias",
+                                "paginate": {
+                                    "first":      "Primero",
+                                    "last":       "Último",
+                                    "next":       "Siguiente",
+                                    "previous":   "Previo"
+                                },
+                                "aria": {
+                                    "sortAscending":  ": activar para ordenar ascendentemente",
+                                    "sortDescending": ": activar para ordenar descendentemente"
+                                }
                             },
-                            "aria": {
-                                "sortAscending":  ": activar para ordenar ascendentemente",
-                                "sortDescending": ": activar para ordenar descendentemente"
-                            }
-                        },
-                        columnDefs: [
-                            {
-                                width: '7%',
-                                targets: 0  //la primer columna tendra una anchura del  20% de la tabla
-                            },
-                            {
-                                targets: -1, //-1 es la ultima columna y 0 la primera
-                                data: null,
-                                defaultContent: buttonsHTML
-                            },
-                            { orderable: false, searchable: false, targets: -1 } //Ultima columna no ordenable para botones
-                        ]
+                            columnDefs: [
+                                {
+                                    width: '7%',
+                                    targets: 0  //la primer columna tendra una anchura del  20% de la tabla
+                                },
+                                {
+                                    targets: -1, //-1 es la ultima columna y 0 la primera
+                                    data: null,
+                                    defaultContent: buttonsHTML
+                                },
+                                { orderable: false, searchable: false, targets: -1 } //Ultima columna no ordenable para botones
+                            ]
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log(error.message);
                     });
-                })
-                .catch(function (error) {
-                    console.log(error.message);
-                });
-        };
-        load();
-    }
+            };
+            load();
+        }
 
-    _loadProducts();
+        function _saveCreateTransaction() {
+            var transactionCreated = {
+                category_id: 1,
+                amount: $("#createAmount").val(),
+                is_expense: $("#createexpensesel").val(),
+                currency_id: _getCurrencyID($("#transactionCurrency").val()),
+                date: _getFormatDateYYYYMMDDHHMMSS(),
+                description: $("#createDescription").val()
+            };
+            _createTransaction(transactionCreated);
+        }
+
+        function _openCreateTransactionModal() {
+            $("#createModal").modal('show');
+            _clearCreateInformation();
+        }
+
+        function _clearCreateInformation() {
+            $("#createAmount").val("");
+            $("#createDescription").val("");
+        }
+
+        function _currencyChanged(event, currency) {
+            if(undefined !== event) {
+                currency = $(event.currentTarget).val();
+            }
+            $("#exchangeRate").val(_getExchangeRate(currency));
+        }
     </script>
 
 </body>
