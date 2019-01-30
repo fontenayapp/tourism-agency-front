@@ -295,7 +295,7 @@
                             <a href="login.html"><i class="fa fa-files-o fa-fw"></i> Login</a>
                         </li>
                         <li>
-                            <a href="reports.html"><i class="fa fa-bar-chart-o fa-fw"></i> Reports</a>
+                            <a href="reports.html"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes</a>
                         </li>
                     </ul>
                 </div>
@@ -307,7 +307,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                    <h1 class="page-header">Ventas</h1>
+                    <h1 class="page-header">Reportes</h1>
                 </div>
                 <!-- /.col-xs-12 col-sm-12 col-md-12 col-lg-12  -->
             </div>
@@ -316,11 +316,21 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Listado de ventas
+                            Comisiones por usuario
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <div class="row">
+                                <div class="form-group col-xs-6 col-sm-6 col-md-2 col-lg-2 ">
+                                    <label>Fecha desde</label>
+                                    <input class="form-control" id="minDate" type="date" value="">
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-2 col-lg-2 ">
+                                    <label>Fecha hasta</label>
+                                    <input class="form-control" id="maxDate" type="date" value="">
+                                </div>
+                            </div>
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="commissionstable">
                             </table>
                             <!-- /.table-responsive -->
                         </div>
@@ -421,6 +431,19 @@
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
+        $(document).ready(function() {
+            _loadSales();
+            var maxDate = _getCurrentDate();
+            document.getElementById("maxDate").setAttribute("max", maxDate);
+            $("#maxDate").val(maxDate).keyup(refreshField).blur(refreshField);
+            var weekAgo = new Date();
+            weekAgo = new Date(weekAgo.setDate(weekAgo.getDate() - 7));
+            $("#minDate").val(_getFormatDateYYYYMMDDHHMMSS(weekAgo).split(" ")[0]).keyup(refreshField).blur(refreshField);
+        } );
+
+        function refreshField(table) {
+            $('#commissionstable').DataTable().draw();
+        }
 
     function _openDetailsModal(){
         $("#saleDetailsModal").modal('show');
@@ -446,22 +469,21 @@
         var load = function() {
             salesPromise
                 .then(function (result) {
-                    var listado = _fixSalesFormat(result);
+                    var listado = _fixReportsFormat(result);
                     var buttonsHTML = '<button type="button" onclick="_openDetailsModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
                         +'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
                         +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
-                    $('#dataTables-example').DataTable({
+                    $('#commissionstable').DataTable({
                         responsive: true,
                         data: listado,
                         columns: [
-                            { title: "ID", data: "id"},
-                            { title: "Cliente",data: "clientname" },
-                            { title: "Pasaporte",data: "passport" },
+                            { title: "ID Venta", data: "saleid"},
                             { title: "Fecha",data: "date" },
-                            { title: "Promotor",data: "promoter" },
                             { title: "Vendedor",data: "seller" },
-                            { title: "Monto (ARS)",data: "total" },
-                            { title: "Acciones", data: null }
+                            { title: "Com. vendedor",data: "sellercommission" },
+                            { title: "Promotor",data: "promoter" },
+                            { title: "Com. promotor",data: "promotercommission" },
+                            { title: "Monto (ARS)",data: "total" }
                         ],
                         language: {
                             "emptyTable": "No hay datos",
@@ -488,9 +510,12 @@
                         },
                         columnDefs: [
                             {
-                                width: '7%',
                                 class: 'saleid',
                                 targets: 0  //la primer columna tendra una anchura del  20% de la tabla
+                            },
+                            {
+                                targets: 1,
+                                type: 'date'
                             },
                             {
                                 targets: -1, //-1 es la ultima columna y 0 la primera
@@ -507,7 +532,6 @@
         };
         load();
     }
-    _loadSales();
 
     function loadInformation(sale) {
         $(".clientnamelabel").text(sale.client.name);
@@ -522,6 +546,37 @@
         $(".promoterlabel").text(sale.promoter.first_name + " " + sale.promoter.last_name);
         $(".toallabel").text("ARS " + sale.total);
     }
+
+
+
+    $.fn.dataTableExt.afnFiltering.push(
+        function(oSettings, aData, iDataIndex) {
+            var minDateFilter = new Date($("#minDate").val());
+            var maxDateFilter = new Date($("#maxDate").val());
+            minDateFilter = isNaN(minDateFilter) ? new Date("2000-01-01") : minDateFilter.getTime() + 3*3600000; //3 hours of difference with server
+            maxDateFilter = isNaN(maxDateFilter) ? new Date("2100-12-31") : maxDateFilter.getTime() + 27*3600000 - 1; // 3h + 1 day - 1 millisec to include the following day
+            var from = aData[1].split("-");
+            var rowDate = new Date(from[2], from[1] - 1, from[0]).getTime();
+
+            if (typeof rowDate == 'undefined') {
+                rowDate = new Date(aData[0]).getTime();
+            }
+
+            if (minDateFilter && !isNaN(minDateFilter)) {
+                if (rowDate < minDateFilter) {
+                    return false;
+                }
+            }
+
+            if (maxDateFilter && !isNaN(maxDateFilter)) {
+                if (rowDate > maxDateFilter) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    );
 
     </script>
 

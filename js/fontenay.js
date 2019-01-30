@@ -495,6 +495,24 @@ function _fixSalesFormat(result) {
     return list;
 }
 
+
+function _fixReportsFormat(result) {
+    var list = [];
+    result.forEach(function(e) {
+        var elem = {};
+        elem.saleid = e.sale_id;
+        elem.date = _getFormatDateDDMMYYYY(new Date(e.date));
+        elem.seller = e.user.first_name + " " + e.user.last_name;
+        elem.sellercommission = e.user_commission;
+        elem.promoter = e.promoter.first_name + " " + e.promoter.last_name;
+        elem.promotercommission = e.promoter_commission;
+        elem.total = e.total;
+        list.push(elem);
+    });
+    return list;
+}
+
+
 function _getCurrencyID(currency) {
     var id = 0;
     var exchangeRates = Models.exchangerates ? Models.exchangerates : Models.default.exchangerates;
