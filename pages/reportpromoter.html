@@ -337,10 +337,17 @@
                                     <label>Fecha hasta</label>
                                     <input class="form-control" id="maxDate" type="date" value="">
                                 </div>
-                                <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                                <div class="form-group col-xs-6 col-sm-6 col-md-2 col-lg-2">
                                     <label>Promotor</label>
                                     <select class="form-control" id="promotersel">
                                     </select>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                                    <label>Suma comisiones</label>
+                                    <div class="form-control-static">
+                                        <div style="float: left;">AR$</div>
+                                        <div id="totalCommissions" style="float: left;"></div>
+                                    </div>
                                 </div>
                             </div>
                             <table width="100%" class="table table-striped table-bordered table-hover" id="commissionstable">
@@ -453,7 +460,17 @@
             var weekAgo = new Date();
             weekAgo = new Date(weekAgo.setDate(weekAgo.getDate() - 7));
             $("#minDate").val(_getFormatDateYYYYMMDDHHMMSS(weekAgo).split(" ")[0]).keyup(refreshField).blur(refreshField);
-        } );
+            $("#promotersel").change(refreshField);
+
+            $("#commissionstable").on("search.dt", function () {
+                var totalCommissions = 0;
+                var rows = $('#commissionstable').DataTable().rows({ search: 'applied', selected: true }).data();
+                rows.each(function(e){
+                    totalCommissions += e.promotercommission;
+                });
+                $("#totalCommissions").empty().text(totalCommissions);
+            });
+        });
 
         function refreshField(table) {
             $('#commissionstable').DataTable().draw();
@@ -497,6 +514,7 @@
                             columns: [
                                 { title: "ID Venta", data: "saleid"},
                                 { title: "Fecha",data: "date" },
+                                { title: "ID Promotor", data: "promoterid"},
                                 { title: "Promotor",data: "promoter" },
                                 { title: "Com. promotor",data: "promotercommission" },
                                 { title: "Monto (ARS)",data: "total" }
@@ -564,9 +582,9 @@
         }
 
 
-
         $.fn.dataTableExt.afnFiltering.push(
             function(oSettings, aData, iDataIndex) {
+                var promoterID = $("#promotersel").val();
                 var minDateFilter = new Date($("#minDate").val());
                 var maxDateFilter = new Date($("#maxDate").val());
                 minDateFilter = isNaN(minDateFilter) ? new Date("2000-01-01") : minDateFilter.getTime() + 3*3600000; //3 hours of difference with server
@@ -588,6 +606,10 @@
                     if (rowDate > maxDateFilter) {
                         return false;
                     }
+                }
+
+                if (promoterID !== aData[2]) {
+                    return false;
                 }
 
                 return true;

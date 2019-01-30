@@ -337,6 +337,18 @@
                                     <label>Fecha hasta</label>
                                     <input class="form-control" id="maxDate" type="date" value="">
                                 </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                                    <label>Vendedor</label>
+                                    <select class="form-control" id="sellersel">
+                                    </select>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                                    <label>Suma comisiones</label>
+                                    <div class="form-control-static">
+                                        <div style="float: left;">AR$</div>
+                                        <div id="totalCommissions" style="float: left;"></div>
+                                    </div>
+                                </div>
                             </div>
                             <table width="100%" class="table table-striped table-bordered table-hover" id="commissionstable">
                             </table>
@@ -441,12 +453,25 @@
     <script>
         $(document).ready(function() {
             _loadSales();
+            _loadUsers();
             var maxDate = _getCurrentDate();
             document.getElementById("maxDate").setAttribute("max", maxDate);
             $("#maxDate").val(maxDate).keyup(refreshField).blur(refreshField);
             var weekAgo = new Date();
             weekAgo = new Date(weekAgo.setDate(weekAgo.getDate() - 7));
             $("#minDate").val(_getFormatDateYYYYMMDDHHMMSS(weekAgo).split(" ")[0]).keyup(refreshField).blur(refreshField);
+
+            $("#promotersel").change(refreshField);
+
+            $("#commissionstable").on("search.dt", function () {
+                var totalCommissions = 0;
+                var rows = $('#commissionstable').DataTable().rows({ search: 'applied', selected: true }).data();
+                rows.each(function(e){
+                    totalCommissions += e.sellercommission;
+                });
+                $("#totalCommissions").empty().text(totalCommissions);
+            });
+
         } );
 
         function refreshField(table) {
@@ -487,6 +512,7 @@
                         columns: [
                             { title: "ID Venta", data: "saleid"},
                             { title: "Fecha",data: "date" },
+                            { title: "ID Vendedor", data: "sellerid"},
                             { title: "Vendedor",data: "seller" },
                             { title: "Com. vendedor",data: "sellercommission" },
                             { title: "Monto (ARS)",data: "total" }
