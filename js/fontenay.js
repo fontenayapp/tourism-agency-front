@@ -253,7 +253,7 @@ function _saveProviderDetails(providerEdited) {
 /*----------------------------------------------------------------------*/
 /*------------------------ GET -----------------------------------------*/
 /*----------------------------------------------------------------------*/
-function _getPromotors(res, rej) {
+function _getpromoters(res, rej) {
     _loadAjaxSetup();
 
     $.get(host+"/promoters",
@@ -375,7 +375,7 @@ function  _parseCreatedCurrExchangeData(result) {
     _refreshCurrenciesForm(result);
 }
 
-function _parseCreatedProductData(result) {
+function  _parseCreatedProductData(result) {
     _refreshCreateProductModal(result);
 }
 
@@ -477,7 +477,6 @@ function _fixProvidersFormat(result) {
     return list;
 }
 
-
 function _fixSalesFormat(result) {
     var list = [];
     result.forEach(function(e) {
@@ -495,12 +494,13 @@ function _fixSalesFormat(result) {
     return list;
 }
 
-
 function _fixReportsFormat(result) {
     var list = [];
     result.forEach(function(e) {
         var elem = {};
         elem.saleid = e.sale_id;
+        elem.userid = e.user.user_id;
+        elem.promoterid = e.promoter.promoter_id;
         elem.date = _getFormatDateDDMMYYYY(new Date(e.date));
         elem.seller = e.user.first_name + " " + e.user.last_name;
         elem.sellercommission = e.user_commission;
@@ -511,7 +511,6 @@ function _fixReportsFormat(result) {
     });
     return list;
 }
-
 
 function _getCurrencyID(currency) {
     var id = 0;
@@ -583,6 +582,16 @@ function _getLongCurrentDate(){
     var m = addZero(d.getMinutes());
     var s = addZero(d.getSeconds());
     return _getCurrentDate() + " " + h + ":" + m + ":" + s;
+}
+
+function _loadpromotersSelect(result) {
+    var promSel = $("#promotersel");
+    result.forEach(function(element,index){
+        var opt = $(document.createElement("option"));
+        opt.text(element.first_name + " "+ element.last_name);
+        opt.attr("value",element.promoter_id);
+        promSel.append(opt);
+    })
 }
 
 function _loadSaleProducts() {
@@ -661,6 +670,24 @@ function _loadCurrencies() {
     load();
 }
 
+function _loadpromoters() {
+    var promotersPromise = new Promise(
+        function (resolve, reject) {
+            _getpromoters(resolve, reject);
+        }
+    );
+
+    var load = function() {
+        promotersPromise
+            .then(function (result) {
+                _loadpromotersHandler(result);
+            })
+            .catch(function (error) {
+                console.log(error.message);
+            });
+    };
+    load();
+}
 
 function _loadProviders() {
     var providersPromise = new Promise(
@@ -672,7 +699,7 @@ function _loadProviders() {
     var load = function() {
         providersPromise
             .then(function (result) {
-                _loadProvidersSelect(result);
+                _loadProvidersHandler(result);
             })
             .catch(function (error) {
                 console.log(error.message);

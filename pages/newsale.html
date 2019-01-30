@@ -377,7 +377,7 @@
                             </div>
                             <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                                 <label>Promotor</label>
-                                <select class="form-control" id="promotorsel">
+                                <select class="form-control" id="promotersel">
                                 </select>
                             </div>
                             <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
@@ -875,7 +875,7 @@
         $(document).ready(function() {
             _checkLogin();
             $("#date").val(_getCurrentDate());
-            _loadPromotors();
+            _loadpromoters();
             _loadProviders();
             _loadCurrencies();
             $("#servicesel").change(_productChanged);
@@ -1023,7 +1023,7 @@
                 passport_number: $("#passport").val(),
                 contact_number: $("#phonenumber").val()
             };
-            sale.promoter = _findPromoter($("#promotorsel").val());
+            sale.promoter = _findPromoter($("#promotersel").val());
         }
 
         function loadConfirmationTab() {
@@ -1078,23 +1078,8 @@
             _enablePrintBtns();
         }
 
-        function _loadPromotors() {
-            var promotorsPromise = new Promise(
-                function (resolve, reject) {
-                    _getPromotors(resolve, reject);
-                }
-            );
-
-            var load = function() {
-                promotorsPromise
-                .then(function (result) {
-                    _loadPromotorsSelect(result);
-                })
-                .catch(function (error) {
-                    console.log(error.message);
-                });
-            };
-            load();
+        function _loadpromotersHandler(result) {
+            _loadpromotersSelect(result)
         }
 
         function _loadProducts() {
@@ -1116,17 +1101,7 @@
             load();
         }
 
-        function _loadPromotorsSelect(result) {
-            var promSel = $("#promotorsel");
-            result.forEach(function(element,index){
-                var opt = $(document.createElement("option"));
-                opt.text(element.first_name + " "+ element.last_name);
-                opt.attr("value",element.promoter_id);
-                promSel.append(opt);
-            })
-        }
-
-        function _loadProvidersSelect(result) {
+        function _loadProvidersHandler(result) {
             _refreshProvidersSelect($("#providerSel"));
             _loadProducts();
         }

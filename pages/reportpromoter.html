@@ -315,7 +315,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                    <h1 class="page-header">Reportes</h1>
+                    <h1 class="page-header">Promotores</h1>
                 </div>
                 <!-- /.col-xs-12 col-sm-12 col-md-12 col-lg-12  -->
             </div>
@@ -324,7 +324,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Comisiones por usuario
+                            Comisiones de promotores
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -336,6 +336,11 @@
                                 <div class="form-group col-xs-6 col-sm-6 col-md-2 col-lg-2 ">
                                     <label>Fecha hasta</label>
                                     <input class="form-control" id="maxDate" type="date" value="">
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                                    <label>Promotor</label>
+                                    <select class="form-control" id="promotersel">
+                                    </select>
                                 </div>
                             </div>
                             <table width="100%" class="table table-striped table-bordered table-hover" id="commissionstable">
@@ -441,6 +446,7 @@
     <script>
         $(document).ready(function() {
             _loadSales();
+            _loadpromoters();
             var maxDate = _getCurrentDate();
             document.getElementById("maxDate").setAttribute("max", maxDate);
             $("#maxDate").val(maxDate).keyup(refreshField).blur(refreshField);
@@ -453,138 +459,140 @@
             $('#commissionstable').DataTable().draw();
         }
 
-    function _openDetailsModal(){
-        $("#saleDetailsModal").modal('show');
-        var tr = $(event.target).closest("tr");
-        var saleId = tr.find(".saleid").length !== 0 ? tr.find(".saleid").text() : tr.prev().find(".saleid").text();
-        var sale = Models["sales"].find(function(e) {
-            return e.sale_id === parseInt(saleId);
-        });
-        if(undefined === sale) {
-            $("#saleDetailsModal").find(".modal-body").text("Un error ha ocurrido. La venta no fue encontrada. Recargue la página y reintente, por favor.")
-        } else {
-            loadInformation(sale);
+        function _loadpromotersHandler(result) {
+            _loadpromotersSelect(result)
         }
-    }
 
-    function _loadSales() {
-        var salesPromise = new Promise(
-            function (resolve, reject) {
-                _getSales(resolve, reject);
+        function _openDetailsModal(){
+            $("#saleDetailsModal").modal('show');
+            var tr = $(event.target).closest("tr");
+            var saleId = tr.find(".saleid").length !== 0 ? tr.find(".saleid").text() : tr.prev().find(".saleid").text();
+            var sale = Models["sales"].find(function(e) {
+                return e.sale_id === parseInt(saleId);
+            });
+            if(undefined === sale) {
+                $("#saleDetailsModal").find(".modal-body").text("Un error ha ocurrido. La venta no fue encontrada. Recargue la página y reintente, por favor.")
+            } else {
+                loadInformation(sale);
+            }
+        }
+
+        function _loadSales() {
+            var salesPromise = new Promise(
+                function (resolve, reject) {
+                    _getSales(resolve, reject);
+                }
+            );
+
+            var load = function() {
+                salesPromise
+                    .then(function (result) {
+                        var listado = _fixReportsFormat(result);
+                        var buttonsHTML = '<button type="button" onclick="_openDetailsModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
+                            +'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
+                            +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
+                        $('#commissionstable').DataTable({
+                            responsive: true,
+                            data: listado,
+                            columns: [
+                                { title: "ID Venta", data: "saleid"},
+                                { title: "Fecha",data: "date" },
+                                { title: "Promotor",data: "promoter" },
+                                { title: "Com. promotor",data: "promotercommission" },
+                                { title: "Monto (ARS)",data: "total" }
+                            ],
+                            language: {
+                                "emptyTable": "No hay datos",
+                                "info": "Mostrando _START_ a _END_ de _TOTAL_",
+                                "infoEmpty": "Mostrando 0 a 0 de 0 filas",
+                                "infoFiltered": "(filtrado de _MAX_ filas totales)",
+                                "infoPostFix":    "",
+                                "thousands":      ",",
+                                "lengthMenu":     "Mostrar _MENU_ filas",
+                                "loadingRecords": "Cargando...",
+                                "processing":     "Procesando...",
+                                "search":         "Buscar:",
+                                "zeroRecords":    "No hay coincidencias",
+                                "paginate": {
+                                    "first":      "Primero",
+                                    "last":       "Último",
+                                    "next":       "Siguiente",
+                                    "previous":   "Previo"
+                                },
+                                "aria": {
+                                    "sortAscending":  ": activar para ordenar ascendentemente",
+                                    "sortDescending": ": activar para ordenar descendentemente"
+                                }
+                            },
+                            columnDefs: [
+                                {
+                                    class: 'saleid',
+                                    targets: 0  //la primer columna tendra una anchura del  20% de la tabla
+                                },
+                                {
+                                    targets: 1,
+                                    type: 'date'
+                                },
+                                {
+                                    targets: -1, //-1 es la ultima columna y 0 la primera
+                                    data: null,
+                                    defaultContent: buttonsHTML
+                                },
+                                { orderable: false, searchable: false, targets: -1 } //Ultima columna no ordenable para botones
+                            ]
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log(error.message);
+                    });
+            };
+            load();
+        }
+
+        function loadInformation(sale) {
+            $(".clientnamelabel").text(sale.client.name);
+            $(".passportlabel").text(sale.client.passport_number);
+            $(".nationalitylabel").text(sale.client.nationality);
+            $(".hotellabel").text(sale.client.hotel);
+            $(".addresslabel").text(sale.client.address);
+            $(".roomlabel").text(sale.client.room_number);
+            $(".phonelabel").text(sale.client.contact_number);
+            $(".emaillabel").text(sale.client.email);
+            $(".sellerlabel").text(sale.user.first_name + " " + sale.user.last_name);
+            $(".promoterlabel").text(sale.promoter.first_name + " " + sale.promoter.last_name);
+            $(".toallabel").text("ARS " + sale.total);
+        }
+
+
+
+        $.fn.dataTableExt.afnFiltering.push(
+            function(oSettings, aData, iDataIndex) {
+                var minDateFilter = new Date($("#minDate").val());
+                var maxDateFilter = new Date($("#maxDate").val());
+                minDateFilter = isNaN(minDateFilter) ? new Date("2000-01-01") : minDateFilter.getTime() + 3*3600000; //3 hours of difference with server
+                maxDateFilter = isNaN(maxDateFilter) ? new Date("2100-12-31") : maxDateFilter.getTime() + 27*3600000 - 1; // 3h + 1 day - 1 millisec to include the following day
+                var from = aData[1].split("-");
+                var rowDate = new Date(from[2], from[1] - 1, from[0]).getTime();
+
+                if (typeof rowDate === 'undefined') {
+                    rowDate = new Date(aData[0]).getTime();
+                }
+
+                if (minDateFilter && !isNaN(minDateFilter)) {
+                    if (rowDate < minDateFilter) {
+                        return false;
+                    }
+                }
+
+                if (maxDateFilter && !isNaN(maxDateFilter)) {
+                    if (rowDate > maxDateFilter) {
+                        return false;
+                    }
+                }
+
+                return true;
             }
         );
-
-        var load = function() {
-            salesPromise
-                .then(function (result) {
-                    var listado = _fixReportsFormat(result);
-                    var buttonsHTML = '<button type="button" onclick="_openDetailsModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
-                        +'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
-                        +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
-                    $('#commissionstable').DataTable({
-                        responsive: true,
-                        data: listado,
-                        columns: [
-                            { title: "ID Venta", data: "saleid"},
-                            { title: "Fecha",data: "date" },
-                            { title: "Vendedor",data: "seller" },
-                            { title: "Com. vendedor",data: "sellercommission" },
-                            { title: "Promotor",data: "promoter" },
-                            { title: "Com. promotor",data: "promotercommission" },
-                            { title: "Monto (ARS)",data: "total" }
-                        ],
-                        language: {
-                            "emptyTable": "No hay datos",
-                            "info": "Mostrando _START_ a _END_ de _TOTAL_",
-                            "infoEmpty": "Mostrando 0 a 0 de 0 filas",
-                            "infoFiltered": "(filtrado de _MAX_ filas totales)",
-                            "infoPostFix":    "",
-                            "thousands":      ",",
-                            "lengthMenu":     "Mostrar _MENU_ filas",
-                            "loadingRecords": "Cargando...",
-                            "processing":     "Procesando...",
-                            "search":         "Buscar:",
-                            "zeroRecords":    "No hay coincidencias",
-                            "paginate": {
-                                "first":      "Primero",
-                                "last":       "Último",
-                                "next":       "Siguiente",
-                                "previous":   "Previo"
-                            },
-                            "aria": {
-                                "sortAscending":  ": activar para ordenar ascendentemente",
-                                "sortDescending": ": activar para ordenar descendentemente"
-                            }
-                        },
-                        columnDefs: [
-                            {
-                                class: 'saleid',
-                                targets: 0  //la primer columna tendra una anchura del  20% de la tabla
-                            },
-                            {
-                                targets: 1,
-                                type: 'date'
-                            },
-                            {
-                                targets: -1, //-1 es la ultima columna y 0 la primera
-                                data: null,
-                                defaultContent: buttonsHTML
-                            },
-                            { orderable: false, searchable: false, targets: -1 } //Ultima columna no ordenable para botones
-                        ]
-                    });
-                })
-                .catch(function (error) {
-                    console.log(error.message);
-                });
-        };
-        load();
-    }
-
-    function loadInformation(sale) {
-        $(".clientnamelabel").text(sale.client.name);
-        $(".passportlabel").text(sale.client.passport_number);
-        $(".nationalitylabel").text(sale.client.nationality);
-        $(".hotellabel").text(sale.client.hotel);
-        $(".addresslabel").text(sale.client.address);
-        $(".roomlabel").text(sale.client.room_number);
-        $(".phonelabel").text(sale.client.contact_number);
-        $(".emaillabel").text(sale.client.email);
-        $(".sellerlabel").text(sale.user.first_name + " " + sale.user.last_name);
-        $(".promoterlabel").text(sale.promoter.first_name + " " + sale.promoter.last_name);
-        $(".toallabel").text("ARS " + sale.total);
-    }
-
-
-
-    $.fn.dataTableExt.afnFiltering.push(
-        function(oSettings, aData, iDataIndex) {
-            var minDateFilter = new Date($("#minDate").val());
-            var maxDateFilter = new Date($("#maxDate").val());
-            minDateFilter = isNaN(minDateFilter) ? new Date("2000-01-01") : minDateFilter.getTime() + 3*3600000; //3 hours of difference with server
-            maxDateFilter = isNaN(maxDateFilter) ? new Date("2100-12-31") : maxDateFilter.getTime() + 27*3600000 - 1; // 3h + 1 day - 1 millisec to include the following day
-            var from = aData[1].split("-");
-            var rowDate = new Date(from[2], from[1] - 1, from[0]).getTime();
-
-            if (typeof rowDate == 'undefined') {
-                rowDate = new Date(aData[0]).getTime();
-            }
-
-            if (minDateFilter && !isNaN(minDateFilter)) {
-                if (rowDate < minDateFilter) {
-                    return false;
-                }
-            }
-
-            if (maxDateFilter && !isNaN(maxDateFilter)) {
-                if (rowDate > maxDateFilter) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-    );
 
     </script>
 

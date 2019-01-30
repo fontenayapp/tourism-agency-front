@@ -295,7 +295,15 @@
                             <a href="login.html"><i class="fa fa-files-o fa-fw"></i> Login</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>                            <ul class="nav nav-second-level collapse">                                <li>                                    <a href="reportseller.html">Comisión vendedores</a>                                </li>                                <li>                                    <a href="reportpromoter.html">Comisión promotores</a>                                </li>                            </ul>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                    <a href="reportseller.html">Comisión vendedores</a>
+                                </li>
+                                <li>
+                                    <a href="reportpromoter.html">Comisión promotores</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -307,7 +315,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                    <h1 class="page-header">Reportes</h1>
+                    <h1 class="page-header">Vendedores</h1>
                 </div>
                 <!-- /.col-xs-12 col-sm-12 col-md-12 col-lg-12  -->
             </div>
@@ -316,7 +324,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Comisiones por usuario
+                            Comisiones de vendedores
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -467,7 +475,7 @@
         );
 
         var load = function() {
-            salesPromise
+            salesPromises
                 .then(function (result) {
                     var listado = _fixReportsFormat(result);
                     var buttonsHTML = '<button type="button" onclick="_openDetailsModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
@@ -481,8 +489,6 @@
                             { title: "Fecha",data: "date" },
                             { title: "Vendedor",data: "seller" },
                             { title: "Com. vendedor",data: "sellercommission" },
-                            { title: "Promotor",data: "promoter" },
-                            { title: "Com. promotor",data: "promotercommission" },
                             { title: "Monto (ARS)",data: "total" }
                         ],
                         language: {
