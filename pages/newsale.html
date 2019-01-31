@@ -315,7 +315,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
+                        <li style="display:none;">
                             <a href="login.html"><i class="fa fa-files-o fa-fw"></i> Login</a>
                         </li>
                         <li>
@@ -345,35 +345,15 @@
                             <h2>Datos del cliente</h2>
                             <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
                                 <label>Nombre y Apellido</label>
-                                <input class="form-control" id="clientname" value="Nombrecliente">
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                                <label>Identificador</label>
-                                <input class="form-control" id="passport" value="ADS342234" >
+                                <input class="form-control" id="clientname" value="">
                             </div>
                             <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                                 <label>Nacionalidad</label>
-                                <input class="form-control" id="nationality" value="Nacionalidadcliente">
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                                <label>Hotel</label>
-                                <input class="form-control" id="hotel" value="Hotelcliente">
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                                <label>Dirección</label>
-                                <input class="form-control" id="address" value="Direccioncliente">
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                                <label>Habitación</label>
-                                <input class="form-control" id="room" value="334A">
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                                <label>Número de contacto</label>
-                                <input class="form-control" id="phonenumber" value="541144332211">
+                                <input class="form-control" id="nationality" value="">
                             </div>
                             <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                                 <label>Email</label>
-                                <input class="form-control" id="email" value="Email@cliente.com">
+                                <input class="form-control" id="email" value="">
                             </div>
                             <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                                 <label>Promotor</label>
@@ -381,12 +361,24 @@
                                 </select>
                             </div>
                             <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                                <!--<label>Vendedor</label>
-                                <select class="form-control" id="sellersel">
-                                    <option>Vendedor 1</option>
-                                    <option>Vendedor 2</option>
-                                    <option>Vendedor 3</option>
-                                </select>-->
+                                <label>Identificador</label>
+                                <input class="form-control no-required" id="passport" value="" >
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>Hotel</label>
+                                <input class="form-control no-required" id="hotel" value="">
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>Dirección</label>
+                                <input class="form-control no-required" id="address" value="">
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>Habitación</label>
+                                <input class="form-control no-required" id="room" value="">
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>Número de contacto</label>
+                                <input class="form-control no-required" id="phonenumber" value="">
                             </div>
                         </div>
 
@@ -455,41 +447,43 @@
                         <div class="tab" class="form-group">
                             <h2>Confirmación</h2>
                             <h4>Datos del cliente</h4>
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-3">
-                                <label>Nombre y Apellido</label>
-                                <p class="clientnamelabel form-control-static"></p>
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                                <label>Identificador</label>
-                                <p class="passportlabel form-control-static"></p>
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                                <label>Nacionalidad</label>
-                                <p class="nationalitylabel form-control-static"></p>
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                                <label>Hotel</label>
-                                <p class="hotellabel form-control-static"></p>
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                                <label>Dirección</label>
-                                <p class="addresslabel form-control-static"></p>
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                                <label>Habitación</label>
-                                <p class="roomlabel form-control-static"></p>
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                                <label>Número de contacto</label>
-                                <p class="phonelabel form-control-static"></p>
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                                <label>Email</label>
-                                <p class="emaillabel form-control-static"></p>
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-12 col-lg-12 ">
-                                <label>Promotor</label>
-                                <p class="promoterlabel form-control-static"></p>
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                                    <label>Nombre y Apellido</label>
+                                    <p class="clientnamelabel form-control-static"></p>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                                    <label>Nacionalidad</label>
+                                    <p class="nationalitylabel form-control-static"></p>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                                    <label>Email</label>
+                                    <p class="emaillabel form-control-static"></p>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3 ">
+                                    <label>Promotor</label>
+                                    <p class="promoterlabel form-control-static"></p>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                                    <label>Identificador</label>
+                                    <p class="passportlabel form-control-static"></p>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                                    <label>Hotel</label>
+                                    <p class="hotellabel form-control-static"></p>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                                    <label>Dirección</label>
+                                    <p class="addresslabel form-control-static"></p>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                                    <label>Habitación</label>
+                                    <p class="roomlabel form-control-static"></p>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                                    <label>Número de contacto</label>
+                                    <p class="phonelabel form-control-static"></p>
+                                </div>
                             </div>
                             <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
                                 <label>Subtotal</label>
@@ -883,6 +877,9 @@
             $(".exchangeRate").blur(_calculateSubtotalAmount);
             $(".discount").blur(_calculateTotalAmount);
             $("#adults, #children, #babies").change(_peopleChanged);
+            $("#paymentCurrency").change(_refreshPaymentAmountToAdd);
+            $("#remainingAmount").change(_refreshPaymentAmountToAdd);
+
             sale = {
                 client: {},
                 products: [],
@@ -965,7 +962,7 @@
                 // If a field is empty...
                 var elem = $(y[i]);
                 elem.removeClass("invalid").parent().removeClass("has-error");
-                if ("" === elem[0].value) {
+                if ("" === elem[0].value && !elem.hasClass("no-required")) {
                     // add an "invalid" class to the field:
                     elem.addClass("invalid").parent().addClass("has-error");
                     // and set the current valid status to false:
@@ -1065,7 +1062,7 @@
             }
 
             $("#totalAmountPayment").text(sale.totalAR);
-            $("#remainingAmount").val(sale.totalAR);
+            $("#remainingAmount").val(sale.totalAR).trigger("change");
             $("#totalWithCharges").val(sale.totalAR);
             $("#paymentCurrency").val(sale.discountCurrency);
             $("#paymentAmountToAdd").val(currRowSel.find(".totalColumn input").val());
@@ -1169,6 +1166,16 @@
         function _peopleChanged(event) {
             var currP = $(event.target).closest(".productPanel").find("#servicesel");
             _updatePrice(parseInt(currP.val()), currP);
+        }
+
+        function _refreshPaymentAmountToAdd(e) {
+            var currency = $("#paymentCurrency").val();
+            var exchRate = _getExchangeRate(currency);
+            if(sale.discountCurrency === currency) {
+                exchRate = sale.customExchangeRate;
+            }
+            var newValue = Number(Number($("#remainingAmount").val()) / exchRate).toFixed(2);
+            $("#paymentAmountToAdd").val(newValue);
         }
 
         function _updatePrice(productID, select) {
@@ -1486,7 +1493,7 @@
             }
             remainingAmount = Number((remainingAmount - arAmount).toFixed(2));
             if(remainingAmount >= 0) {
-                $("#remainingAmount").val(remainingAmount);
+                $("#remainingAmount").val(remainingAmount).trigger("change");
                 status = true;
             } else {
                 alert("- La suma total no puede ser mayor que el total a pagar.");

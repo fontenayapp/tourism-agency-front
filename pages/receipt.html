@@ -61,8 +61,7 @@
                         <thead>
                             <tr>
                                 <th>Descripción</th>
-                                <th>Cant.</th>
-                                <th>Precio u.</th>
+                                <th>Cantidad personas</th>
                                 <th>Importe</th>
                             </tr>
                         </thead>
@@ -102,7 +101,6 @@
     <script>
         $(document).ready(function() {
             var myParam = location.search.split("saleid=")[1].split("&")[0];
-            console.log(myParam);
             _loadSale(myParam);
         });
 
@@ -144,9 +142,8 @@
         function loadItemTableRow(product) {
             var td1 = $(document.createElement("td")).text(product.product.name);
             var td2 = $(document.createElement("td")).text(product.adults + product.children + product.babies);
-            var td3 = $(document.createElement("td")).text(product.product.selling_price);
-            var td4 = $(document.createElement("td")).text(product.price);
-            var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3).append(td4);
+            var td3 = $(document.createElement("td")).text("$ " + product.price +".00");
+            var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3);
             $(".itemsTableBody").append(tr1);
         }
 

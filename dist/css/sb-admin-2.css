@@ -420,6 +420,7 @@ table.dataTable thead .sorting:after {
 }
 .voucherText {
   font-size: 10px;
+  text-align: justify;
 }
 /*--------START MASK--------------*/
 .mask {

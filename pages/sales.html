@@ -291,7 +291,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
+                        <li style="display:none;">
                             <a href="login.html"><i class="fa fa-files-o fa-fw"></i> Login</a>
                         </li>
                         <li>
@@ -353,54 +353,65 @@
                     <h4 class="modal-title">Detalles de la venta</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                    <div class="form-group row">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
                             <label>Nombre y Apellido</label>
                             <p class="clientnamelabel form-control-static"></p>
                         </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                            <label>Identificador</label>
-                            <p class="passportlabel form-control-static"></p>
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                             <label>Nacionalidad</label>
                             <p class="nationalitylabel form-control-static"></p>
                         </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                            <label>Hotel</label>
-                            <p class="hotellabel form-control-static"></p>
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                            <label>Dirección</label>
-                            <p class="addresslabel form-control-static"></p>
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                            <label>Habitación</label>
-                            <p class="roomlabel form-control-static"></p>
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
-                            <label>Número de contacto</label>
-                            <p class="phonelabel form-control-static"></p>
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                             <label>Email</label>
                             <p class="emaillabel form-control-static"></p>
                         </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-12 col-lg-12 ">
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
                             <label>Promotor</label>
                             <p class="promoterlabel form-control-static"></p>
                         </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-12 col-lg-12 ">
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
                             <label>Vendedor</label>
                             <p class="sellerlabel form-control-static"></p>
                         </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Identificador</label>
+                            <p class="passportlabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Hotel</label>
+                            <p class="hotellabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Dirección</label>
+                            <p class="addresslabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Habitación</label>
+                            <p class="roomlabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Número de contacto</label>
+                            <p class="phonelabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-4">
                             <label>Total</label>
                             <p class="totallabel form-control-static"></p>
                         </div>
                         <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Productos vendidos</h4>
-                        <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                            <table class="table table-striped" id="productssoldtable"></table>
+                        <div class="row">
+                            <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                                <table class="table table-striped" id="productsSoldTable"></table>
+                                    <thead>
+                                    <tr>
+                                        <th>Descripción</th>
+                                        <th>Cantidad personas</th>
+                                        <th>Importe</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="productsSoldTableBody"></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -460,6 +471,7 @@
                         +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
                     $('#dataTables-example').DataTable({
                         responsive: true,
+                        order: [[ 0, "desc" ]],
                         data: listado,
                         columns: [
                             { title: "ID", data: "id"},
@@ -496,7 +508,7 @@
                         },
                         columnDefs: [
                             {
-                                width: '7%',
+                                width: '30px',
                                 class: 'saleid',
                                 targets: 0  //la primer columna tendra una anchura del  20% de la tabla
                             },
@@ -518,6 +530,7 @@
     _loadSales();
 
     function loadInformation(sale) {
+        var prodTableBody = $("#productsSoldTableBody");
         $(".clientnamelabel").text(sale.client.name);
         $(".passportlabel").text(sale.client.passport_number);
         $(".nationalitylabel").text(sale.client.nationality);
@@ -528,7 +541,24 @@
         $(".emaillabel").text(sale.client.email);
         $(".sellerlabel").text(sale.user.first_name + " " + sale.user.last_name);
         $(".promoterlabel").text(sale.promoter.first_name + " " + sale.promoter.last_name);
-        $(".toallabel").text("ARS " + sale.total);
+        $(".totallabel").text("ARS " + sale.total);
+        prodTableBody.empty();
+        sale.products.forEach(function(el){
+            loadProductTableRow(el, prodTableBody);
+        });
+    }
+
+    function loadProdTableRow(product, tableBody) {
+        var td1 = $(document.createElement("td")).addClass("increaseWidth").text(product.product.provider.name);
+        var td2 = $(document.createElement("td")).addClass("increaseWidth").text(product.product.name);
+        var td3 = $(document.createElement("td")).addClass("increaseWidth").text(product.date);
+        var td4 = $(document.createElement("td")).text(product.transfer ? "Sí" : "No");
+        var td5 = $(document.createElement("td")).text(product.adults);
+        var td6 = $(document.createElement("td")).text(product.children);
+        var td7 = $(document.createElement("td")).text(product.babies);
+        var td8 = $(document.createElement("td")).addClass("increaseWidth").text(product.price);
+        var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7).append(td8);
+        tableBody.append(tr1);
     }
 
     </script>

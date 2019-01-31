@@ -72,7 +72,7 @@ function _login() {
             _loadAjaxSetup();
 
             window.location = '/pages/transactions.html';
-    }).fail(function(error) {
+        }).fail(function(error) {
         if(error.status === 401) {
             $("#loginUnauthorizedText").show();
         }
@@ -212,19 +212,19 @@ function _saveProductDetails(product) {
         }
     });
     /*
-    $.put(host+"/product",
-        JSON.stringify({
-            code: currencyCode,
-            exchange: exchangeRate,
-            date: currDate
-        }),
-        function(result){
-            _parseEditedProduct(result);
-        }
-    ).fail(function(error) {
-        _manageError(error);
-    });
-    */
+     $.put(host+"/product",
+     JSON.stringify({
+     code: currencyCode,
+     exchange: exchangeRate,
+     date: currDate
+     }),
+     function(result){
+     _parseEditedProduct(result);
+     }
+     ).fail(function(error) {
+     _manageError(error);
+     });
+     */
 }
 
 function _saveProviderDetails(providerEdited) {
@@ -443,6 +443,8 @@ function _fixFormat(result) {
     var list = $.extend(true, [], result);
     list.forEach(function(e) {
         e.date = _getFormatDateDDMMYYYY(new Date(e.date));
+        e.is_expense = e.is_expense ? "Sí" : "No";
+        e.method = _getMethodString(e.method);
     });
     return list;
 }
@@ -571,6 +573,24 @@ function _getFormatDateYYYYMMDDHHMMSS(dat){
     return dat.getFullYear()+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
 }
 
+function _getMethodString(method) {
+    var methodStr = "";
+    switch(method) {
+        case "cash":
+            methodStr = "Efectivo";
+            break;
+        case "transfer":
+            methodStr = "Transferencia";
+            break;
+        case "card":
+            methodStr = "Tarjeta";
+            break;
+        default:
+            methodStr = "ERROR: Método desconocido";
+    }
+    return methodStr;
+}
+
 function _getLongCurrentDate(){
     function addZero(i) {
         if (i < 10)
@@ -633,7 +653,7 @@ function _validateHTMLForm(form) {
             valid = false;
         }
     }
-   return valid;
+    return valid;
 }
 
 
