@@ -453,7 +453,7 @@
     <script>
         $(document).ready(function() {
             _loadSales();
-            _loadpromoters();
+            _loadPromoters();
             var maxDate = _getCurrentDate();
             document.getElementById("maxDate").setAttribute("max", maxDate);
             $("#maxDate").val(maxDate).keyup(refreshField).blur(refreshField);
@@ -476,8 +476,8 @@
             $('#commissionstable').DataTable().draw();
         }
 
-        function _loadpromotersHandler(result) {
-            _loadpromotersSelect(result)
+        function _loadPromotersHandler(result) {
+            _loadPromotersSelect(result)
         }
 
         function _openDetailsModal(){

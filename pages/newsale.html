@@ -869,7 +869,7 @@
         $(document).ready(function() {
             _checkLogin();
             $("#date").val(_getCurrentDate());
-            _loadpromoters();
+            _loadPromoters();
             _loadProviders();
             _loadCurrencies();
             $("#servicesel").change(_productChanged);
@@ -1075,8 +1075,8 @@
             _enablePrintBtns();
         }
 
-        function _loadpromotersHandler(result) {
-            _loadpromotersSelect(result)
+        function _loadPromotersHandler(result) {
+            _loadPromotersSelect(result)
         }
 
         function _loadProducts() {

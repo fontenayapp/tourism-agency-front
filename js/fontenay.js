@@ -501,10 +501,10 @@ function _fixReportsFormat(result) {
     result.forEach(function(e) {
         var elem = {};
         elem.saleid = e.sale_id;
-        elem.userid = e.user.user_id;
-        elem.promoterid = e.promoter.promoter_id;
+        elem.userid = e.seller.user_id;
+        elem.promoterid = e.promoter.user_id;
         elem.date = _getFormatDateDDMMYYYY(new Date(e.date));
-        elem.seller = e.user.first_name + " " + e.user.last_name;
+        elem.seller = e.seller.first_name + " " + e.seller.last_name;
         elem.sellercommission = e.user_commission;
         elem.promoter = e.promoter.first_name + " " + e.promoter.last_name;
         elem.promotercommission = e.promoter_commission;
@@ -604,7 +604,7 @@ function _getLongCurrentDate(){
     return _getCurrentDate() + " " + h + ":" + m + ":" + s;
 }
 
-function _loadpromotersSelect(result) {
+function _loadPromotersSelect(result) {
     var promSel = $("#promotersel");
     result.forEach(function(element,index){
         var opt = $(document.createElement("option"));
@@ -690,7 +690,7 @@ function _loadCurrencies() {
     load();
 }
 
-function _loadpromoters() {
+function _loadPromoters() {
     var promotersPromise = new Promise(
         function (resolve, reject) {
             _getpromoters(resolve, reject);
@@ -700,7 +700,7 @@ function _loadpromoters() {
     var load = function() {
         promotersPromise
             .then(function (result) {
-                _loadpromotersHandler(result);
+                _loadPromotersHandler(result);
             })
             .catch(function (error) {
                 console.log(error.message);
