@@ -500,7 +500,7 @@
         );
 
         var load = function(salesPromise) {
-            salesPromises
+            salesPromise
                 .then(function (result) {
                     var listado = _fixReportsFormat(result);
                     var buttonsHTML = '<button type="button" onclick="_openDetailsModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
