@@ -468,7 +468,7 @@
                 rows.each(function(e){
                     totalCommissions += e.promotercommission;
                 });
-                $("#totalCommissions").empty().text(totalCommissions);
+                $("#totalCommissions").empty().text(totalCommissions.toFixed(2));
             });
         });
 
@@ -481,14 +481,14 @@
         }
 
         function _openDetailsModal(){
-            $("#saleDetailsModal").modal('show');
+            var saleDetailsModal = $("#saleDetailsModal").modal('show');
             var tr = $(event.target).closest("tr");
             var saleId = tr.find(".saleid").length !== 0 ? tr.find(".saleid").text() : tr.prev().find(".saleid").text();
             var sale = Models["sales"].find(function(e) {
                 return e.sale_id === parseInt(saleId);
             });
             if(undefined === sale) {
-                $("#saleDetailsModal").find(".modal-body").text("Un error ha ocurrido. La venta no fue encontrada. Recargue la página y reintente, por favor.")
+                saleDetailsModal.find(".modal-body").text("Un error ha ocurrido. La venta no fue encontrada. Recargue la página y reintente, por favor.")
             } else {
                 loadInformation(sale);
             }
@@ -501,7 +501,7 @@
                 }
             );
 
-            var load = function() {
+            var load = function(salesPromise) {
                 salesPromise
                     .then(function (result) {
                         var listado = _fixReportsFormat(result);
@@ -564,7 +564,7 @@
                         console.log(error.message);
                     });
             };
-            load();
+            load(salesPromise);
         }
 
         function loadInformation(sale) {

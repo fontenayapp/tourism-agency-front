@@ -617,7 +617,7 @@
             }
         );
 
-        var load = function() {
+        var load = function(providersPromise) {
             providersPromise
                 .then(function (result) {
                     var list = _fixProvidersFormat(result);
@@ -677,7 +677,7 @@
                     console.log(error.message);
                 });
         };
-        load();
+        load(providersPromise);
     }
 
     function _refreshEditProviderModal(result) {

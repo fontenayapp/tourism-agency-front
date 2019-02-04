@@ -1086,7 +1086,7 @@
                 }
             );
 
-            var load = function() {
+            var load = function(productsPromise) {
                 productsPromise
                     .then(function (result) {
                         _loadProductsSelect(result);
@@ -1095,7 +1095,7 @@
                         console.log(error.message);
                     });
             };
-            load();
+            load(productsPromise);
         }
 
         function _loadProvidersHandler(result) {

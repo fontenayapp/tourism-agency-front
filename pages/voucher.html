@@ -149,7 +149,7 @@
                 }
             );
 
-            var load = function() {
+            var load = function(salePromise) {
                 salePromise
                     .then(function (result) {
                         _fillInformation(result);
@@ -158,7 +158,7 @@
                         console.log(error.message);
                     });
             };
-            load();
+            load(salePromise);
         }
 
         function  _fillInformation(sale) {

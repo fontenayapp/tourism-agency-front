@@ -469,7 +469,7 @@
                 rows.each(function(e){
                     totalCommissions += e.sellercommission;
                 });
-                $("#totalCommissions").empty().text(totalCommissions);
+                $("#totalCommissions").empty().text(totalCommissions.toFixed(2));
             });
 
         } );
@@ -499,7 +499,7 @@
             }
         );
 
-        var load = function() {
+        var load = function(salesPromise) {
             salesPromises
                 .then(function (result) {
                     var listado = _fixReportsFormat(result);
@@ -561,8 +561,8 @@
                 .catch(function (error) {
                     console.log(error.message);
                 });
-        };
-        load();
+            };
+        load(salesPromise);
     }
 
     function loadInformation(sale) {

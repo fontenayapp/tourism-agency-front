@@ -160,7 +160,7 @@
             }
         );
 
-        var load = function() {
+        var load = function(productsPromise) {
             productsPromise
                 .then(function (result) {
                     var listado = _fixFormat(result);
@@ -221,7 +221,7 @@
                     console.log(error.message);
                 });
         };
-        load();
+        load(productsPromise);
     }
 
     _loadProducts();

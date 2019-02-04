@@ -462,7 +462,7 @@
             }
         );
 
-        var load = function() {
+        var load = function(salesPromise) {
             salesPromise
                 .then(function (result) {
                     var listado = _fixSalesFormat(result);
@@ -525,7 +525,7 @@
                     console.log(error.message);
                 });
         };
-        load();
+        load(salesPromise);
     }
     _loadSales();
 

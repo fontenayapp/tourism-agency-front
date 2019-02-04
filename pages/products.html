@@ -639,7 +639,7 @@
             }
         );
 
-        var load = function() {
+        var load = function(productsPromise) {
             productsPromise
                 .then(function (result) {
                     var list = _fixProductsFormat(result);
@@ -700,7 +700,7 @@
                     console.log(error.message);
                 });
         };
-        load();
+        load(productsPromise);
     }
 
     function _refreshEditProductModal(result) {
