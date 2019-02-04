@@ -468,7 +468,7 @@
                 rows.each(function(e){
                     totalCommissions += e.promotercommission;
                 });
-                $("#totalCommissions").empty().text(totalCommissions.toFixed(2));
+                $("#totalCommissions").empty().text(" "+totalCommissions.toFixed(2));
             });
         });
 
@@ -477,7 +477,8 @@
         }
 
         function _loadPromotersHandler(result) {
-            _loadPromotersSelect(result)
+            var promSel = $("#promotersel");
+            _loadUserSelect(result, promSel);
         }
 
         function _openDetailsModal(){

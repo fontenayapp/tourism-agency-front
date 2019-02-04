@@ -1076,7 +1076,8 @@
         }
 
         function _loadPromotersHandler(result) {
-            _loadPromotersSelect(result)
+            var promSel = $("#promotersel");
+            _loadUserSelect(result, promSel);
         }
 
         function _loadProducts() {
