@@ -126,9 +126,9 @@
         function  _fillInformation(sale) {
             _fillReceiptInfo(sale);
             var subtotal = (sale.total + sale.discount);
-            $(".productSubtotal").text("$ "+ subtotal + ".00");
-            $(".discount").text("$ "+sale.discount + ".00");
-            $(".productTotal").text("$ "+sale.total + ".00");
+            $(".productSubtotal").text("ARS "+ subtotal + ".00");
+            $(".discount").text("ARS "+sale.discount + ".00");
+            $(".productTotal").text("ARS "+sale.total + ".00");
             sale.products.forEach(function(el){
                 loadItemTableRow(el);
             });
@@ -142,7 +142,7 @@
         function loadItemTableRow(product) {
             var td1 = $(document.createElement("td")).text(product.product.name);
             var td2 = $(document.createElement("td")).text(product.adults + product.children + product.babies);
-            var td3 = $(document.createElement("td")).text("$ " + product.price +".00");
+            var td3 = $(document.createElement("td")).text("ARS " + product.price +".00");
             var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3);
             $(".itemsTableBody").append(tr1);
         }

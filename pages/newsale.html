@@ -1041,7 +1041,6 @@
             sale.discountCurrency = discountCurrencySel.find("option:selected").attr("curr");
             var exchInput = currRowSel.find(".exchangeRate");
             var customExcRate = Number(exchInput.val());
-            sale.discount = Number(discInput.val());
             var excRate = _getExchangeRate(sale.discountCurrency);
             sale.totalAR = sale.subtotalAR; //Find total en pesos sin modificar
             $(".paymentTableBody").empty();
@@ -1056,9 +1055,10 @@
             }
 
             sale.customExchangeRate = excRate;
+            sale.discount = Number(discInput.val() * sale.customExchangeRate);
 
             if(discInput[0].disabled !== true && sale.discount > 0) {
-                sale.totalAR -= (sale.discount*sale.customExchangeRate).toFixed(2);
+                sale.totalAR -= (sale.discount).toFixed(2);
             }
 
             $("#totalAmountPayment").text(sale.totalAR);
@@ -1069,8 +1069,9 @@
         }
 
         function loadFinishTab() {
-            sale.total_card_charges = $("#remainingAmount").val();
-            $(".productTotal").text(sale.totalAR + sale.total_card_charges);
+            sale.total_card_charges = Number($("#remainingAmount").val());
+            var total = sale.totalAR + sale.total_card_charges;
+            $(".productTotal").text("ARS " + total);
             loadProductsTable(5);
             _enablePrintBtns();
         }

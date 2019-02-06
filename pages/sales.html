@@ -399,19 +399,22 @@
                             <p class="totallabel form-control-static"></p>
                         </div>
                         <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Productos vendidos</h4>
-                        <div class="row">
-                            <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                                <table class="table table-striped" id="productsSoldTable"></table>
-                                    <thead>
+                        <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                            <table class="table table-striped" id="productsSoldTable">
+                                <thead>
                                     <tr>
-                                        <th>Descripción</th>
-                                        <th>Cantidad personas</th>
+                                        <th>Proveedor</th>
+                                        <th>Producto</th>
+                                        <th>Fecha</th>
+                                        <th>Transfer</th>
+                                        <th>Adultos</th>
+                                        <th>Niños</th>
+                                        <th>Bebés</th>
                                         <th>Importe</th>
                                     </tr>
-                                    </thead>
-                                    <tbody class="productsSoldTableBody"></tbody>
-                                </table>
-                            </div>
+                                </thead>
+                                <tbody id="productsSoldTableBody"></tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -442,7 +445,6 @@
     <script>
 
     function _openDetailsModal(){
-        $("#saleDetailsModal").modal('show');
         var tr = $(event.target).closest("tr");
         var saleId = tr.find(".saleid").length !== 0 ? tr.find(".saleid").text() : tr.prev().find(".saleid").text();
         var sale = Models["sales"].find(function(e) {
@@ -451,7 +453,7 @@
         if(undefined === sale) {
             $("#saleDetailsModal").find(".modal-body").text("Un error ha ocurrido. La venta no fue encontrada. Recargue la página y reintente, por favor.")
         } else {
-            loadInformation(sale);
+            sale.products ? loadInformation(sale) : _loadSaleProducts(saleId);
         }
     }
 
@@ -476,7 +478,7 @@
                         columns: [
                             { title: "ID", data: "id"},
                             { title: "Cliente",data: "clientname" },
-                            { title: "Pasaporte",data: "passport" },
+                            { title: "Email",data: "email" },
                             { title: "Fecha",data: "date" },
                             { title: "Promotor",data: "promoter" },
                             { title: "Vendedor",data: "seller" },
@@ -529,8 +531,26 @@
     }
     _loadSales();
 
+    function _loadSaleProducts(id) {
+        var salePromise = new Promise(
+            function (resolve, reject) {
+                _getSale(resolve, reject, id);
+            }
+        );
+
+        var load = function(salePromise) {
+            salePromise
+                .then(function (result) {
+                    _loadSaleHandler(result);
+                })
+                .catch(function (error) {
+                    console.log(error.message);
+                });
+        };
+        load(salePromise);
+    }
+
     function loadInformation(sale) {
-        var prodTableBody = $("#productsSoldTableBody");
         $(".clientnamelabel").text(sale.client.name);
         $(".passportlabel").text(sale.client.passport_number);
         $(".nationalitylabel").text(sale.client.nationality);
@@ -539,24 +559,39 @@
         $(".roomlabel").text(sale.client.room_number);
         $(".phonelabel").text(sale.client.contact_number);
         $(".emaillabel").text(sale.client.email);
-        $(".sellerlabel").text(sale.user.first_name + " " + sale.user.last_name);
+        $(".sellerlabel").text(sale.seller.first_name + " " + sale.seller.last_name);
         $(".promoterlabel").text(sale.promoter.first_name + " " + sale.promoter.last_name);
         $(".totallabel").text("ARS " + sale.total);
+        _fillProductsTable(sale);
+        $("#saleDetailsModal").modal('show');
+    }
+
+    function _loadSaleHandler(result) {
+        var sale = Models["sales"].find(function(e) {
+            return e.sale_id === parseInt(result.sale_id);
+        });
+        sale.products = result.products;
+        loadInformation(sale);
+
+    }
+
+    function _fillProductsTable(sale) {
+        var prodTableBody = $("#productsSoldTableBody");
         prodTableBody.empty();
         sale.products.forEach(function(el){
-            loadProductTableRow(el, prodTableBody);
+            loadProdTableRow(el, prodTableBody);
         });
     }
 
     function loadProdTableRow(product, tableBody) {
-        var td1 = $(document.createElement("td")).addClass("increaseWidth").text(product.product.provider.name);
-        var td2 = $(document.createElement("td")).addClass("increaseWidth").text(product.product.name);
-        var td3 = $(document.createElement("td")).addClass("increaseWidth").text(product.date);
+        var td1 = $(document.createElement("td")).text(product.product.provider.name);
+        var td2 = $(document.createElement("td")).text(product.product.name);
+        var td3 = $(document.createElement("td")).text(_getFormatDateDDMMYYYY(new Date(product.date)));
         var td4 = $(document.createElement("td")).text(product.transfer ? "Sí" : "No");
         var td5 = $(document.createElement("td")).text(product.adults);
         var td6 = $(document.createElement("td")).text(product.children);
         var td7 = $(document.createElement("td")).text(product.babies);
-        var td8 = $(document.createElement("td")).addClass("increaseWidth").text(product.price);
+        var td8 = $(document.createElement("td")).text(product.price);
         var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7).append(td8);
         tableBody.append(tr1);
     }

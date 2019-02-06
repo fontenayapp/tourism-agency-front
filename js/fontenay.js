@@ -455,8 +455,9 @@ function _fixFormat(result) {
     var list = $.extend(true, [], result);
     list.forEach(function(e) {
         e.date = _getFormatDateDDMMYYYY(new Date(e.date));
-        e.is_expense = e.is_expense ? "Sí" : "No";
+        e.is_expense = e.is_expense ? "Si" : "No";
         e.method = _getMethodString(e.method);
+        e.amountARS = (e.amount * e.exchange).toFixed("2");
     });
     return list;
 }
@@ -466,7 +467,7 @@ function _fixProductsFormat(result) {
     result.forEach(function(e) {
         var elem = {};
         elem.id = e.product_id;
-        elem.providername = "TEST"; //e.provider.name;
+        elem.providername = e.provider.name; //e.provider.name;
         elem.providerid = e.provider_id;
         elem.description = e.description;
         elem.name = e.name;
@@ -495,12 +496,14 @@ function _fixSalesFormat(result) {
     var list = [];
     result.forEach(function(e) {
         var elem = {};
+        elem.promoter = e.promoter ? e.promoter : e.seller;
         elem.id = e.sale_id;
+        elem.email = e.client.email;
         elem.clientname = e.client.name;
         elem.passport = e.client.passport_number;
         elem.date = _getFormatDateDDMMYYYY(new Date(e.date));
-        elem.seller = e.user.first_name + ' ' + e.user.last_name;
-        elem.promoter = e.promoter.first_name + ' ' + e.promoter.last_name;
+        elem.seller = e.seller.first_name + ' ' + e.seller.last_name;
+        elem.promoter = elem.promoter.first_name + ' ' + elem.promoter.last_name;
         elem.currency = e.currency || "N/A";
         elem.total = e.total;
         list.push(elem);
