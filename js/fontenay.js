@@ -444,7 +444,7 @@ function _findProduct(id) {
 }
 
 function _findPromoter(id) {
-    return Models.promoters.find(function(el){return el.promoter_id === Number(id)});
+    return Models.promoters.find(function(el){return el.user_id === Number(id)});
 }
 
 function _findProvider(id) {
