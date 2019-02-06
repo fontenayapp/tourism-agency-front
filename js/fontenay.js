@@ -140,7 +140,7 @@ function _createProduct(product) {
 
 function _createSale(client, sale) {
     sale.client_id = client.client_id;
-    sale.promoter_id = sale.promoter.promoter_id;
+    sale.promoter_id = sale.promoter.user_id;
     sale.total = sale.totalAR;
     sale.promoter_commission = sale.total*0.1;
     sale.seller_commission = Number(((sale.total*0.9 - Number(sale.totalStockAR))*0.1625).toFixed(2));
