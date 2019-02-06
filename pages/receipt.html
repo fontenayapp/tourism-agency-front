@@ -62,7 +62,6 @@
                             <tr>
                                 <th>Descripción</th>
                                 <th>Cantidad personas</th>
-                                <th>Importe</th>
                             </tr>
                         </thead>
                         <tbody class="itemsTableBody"></tbody>
@@ -142,14 +141,12 @@
         function loadItemTableRow(product) {
             var td1 = $(document.createElement("td")).text(product.product.name);
             var td2 = $(document.createElement("td")).text(product.adults + product.children + product.babies);
-            var td3 = $(document.createElement("td")).text("ARS " + product.price +".00");
-            var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3);
+            var tr1 = $(document.createElement("tr")).append(td1).append(td2);
             $(".itemsTableBody").append(tr1);
         }
 
         function _fillReceiptInfo(sale) {
-            //var saleDate = _getFormatDateDDMMYYYY(new Date(sale.date));
-            var saleDate = _getFormatDateDDMMYYYY(new Date());
+            var saleDate = _getFormatDateDDMMYYYY(new Date(sale.date));
             var html = "N° de formato: " + sale.sale_id + "<br>Fecha del formato: " + saleDate +"<br>";
             $(".receiptInfo").append(html);
         }

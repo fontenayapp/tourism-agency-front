@@ -565,9 +565,11 @@ function _getFormatDateDDMMYYYY(dat){
     if(undefined === dat) {
         dat = new Date();
     }
+    var day = dat.getDate();
     var month = dat.getMonth()+1;
+    day = day > 9 ? day : "0"+day;
     month = month > 9 ? month : "0"+month;
-    return dat.getDate()+"-"+month+"-"+dat.getFullYear();
+    return day+"-"+month+"-"+dat.getFullYear();
 }
 
 function _getFormatDateYYYYMMDDHHMMSS(dat){
@@ -586,6 +588,19 @@ function _getFormatDateYYYYMMDDHHMMSS(dat){
     minutes = minutes > 9 ? minutes : "0"+minutes;
     seconds = seconds > 9 ? seconds : "0"+seconds;
     return dat.getFullYear()+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+}
+
+function _getFormatDateDDMMYYYYHHMM(dat){
+    if(undefined === dat) {
+        dat = new Date();
+    }
+    var dateStr = _getFormatDateDDMMYYYY(dat);
+    var hours = dat.getHours();
+    var minutes = dat.getMinutes();
+
+    hours = hours > 9 ? hours : "0"+hours;
+    minutes = minutes > 9 ? minutes : "0"+minutes;
+    return dateStr + " " +hours+":"+minutes;
 }
 
 function _getMethodString(method) {
@@ -642,7 +657,7 @@ function _loadSaleProducts() {
                 product_id: prodID,
                 product: product,
                 provider: provider,
-                date: elem.find("#date").val() + " 00:00:00",
+                date: elem.find("#date").val() + ":00",
                 transfer: elem.find("#transfersel").val(),
                 price: Number(elem.find("#uprice").val()),
                 adults: Number(elem.find("#adults").val()),

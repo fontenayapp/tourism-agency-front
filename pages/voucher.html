@@ -138,7 +138,6 @@
     <script>
         $(document).ready(function() {
             var myParam = location.search.split("saleid=")[1].split("&")[0];
-            console.log(myParam);
             _loadSale(myParam);
         });
 
@@ -201,14 +200,15 @@
         }
 
         function _fillProductData(prod, container) {
-            var prodDate = _getFormatDateDDMMYYYY(new Date(prod.date));
+            var prodDate = _getFormatDateDDMMYYYYHHMM(new Date(prod.date));
+            var transferLabel = prod.transfer? "SÍ  (" + prodDate.split(" ")[1] + " hs.)" : "NO";
             container.find(".voucher-id").text("N°- " + prod.sold_product_id);
             container.find(".productlabel").text(prod.product.name);
             container.find(".adultslabel").text(prod.adults);
             container.find(".childrenlabel").text(prod.children);
             container.find(".babieslabel").text(prod.babies);
-            container.find(".transferlabel").text(prod.transfer? "SÍ" : "NO");
-            container.find(".datelabel").text(prodDate);
+            container.find(".transferlabel").text(transferLabel);
+            container.find(".datelabel").text(prodDate.split(" ")[0]);
         }
 
 
