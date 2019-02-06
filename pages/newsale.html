@@ -1519,11 +1519,14 @@
         function _parseSale() {
             var prodList = [];
             for (const key in sale.paymentRows) {
+                var currStr = key.slice(key.length-3,key.length);
+                var method = key.slice(0,key.length-4);
                 sale.payments.push({
-                    "method": key.slice(0,key.length-4),
-                    "currency_id": _getCurrencyID(key.slice(key.length-3,key.length)),
+                    "method": method,
+                    "currency_id": _getCurrencyID(currStr),
                     "amount": Number(sale.paymentRows[key][0]),
-                    "exchange": sale.paymentRows[key][3]
+                    "exchange": sale.paymentRows[key][3],
+                    "description": "Venta cli: " + sale.client.name + " " + currStr
                 });
             }
             sale.detailedProducts = sale.products;
