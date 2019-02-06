@@ -192,8 +192,8 @@
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Ingreso/Gasto</label>
                             <select class="form-control" id="createexpensesel">
-                                <option value="true">Gasto</option>
-                                <option value="false">Ingreso</option></select>
+                                <option value="1">Gasto</option>
+                                <option value="0">Ingreso</option></select>
                             </select>
                         </div>
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -367,7 +367,7 @@
             var transactionCreated = {
                 category_id: 1,
                 amount: $("#createAmount").val(),
-                is_expense: $("#createexpensesel").val(),
+                is_expense: Boolean(Number($("#createexpensesel").val())),
                 currency_id: _getCurrencyID($("#transactionCurrency").val()),
                 date: _getFormatDateYYYYMMDDHHMMSS(),
                 description: $("#createDescription").val(),
