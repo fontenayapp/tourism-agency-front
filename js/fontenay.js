@@ -138,6 +138,19 @@ function _createProduct(product) {
     });
 }
 
+function _createProvider(provider) {
+    _loadAjaxSetup();
+    $.post(host+"/provider",
+        JSON.stringify(provider),
+        function(result){
+            _parseCreatedProviderData(result);
+        }
+    ).fail(function(error) {
+        _manageError(error);
+    });
+}
+
+
 function _createSale(client, sale) {
     sale.client_id = client.client_id;
     sale.promoter_id = sale.promoter.user_id;
@@ -391,6 +404,11 @@ function  _parseCreatedProductData(result) {
     _refreshCreateProductModal(result);
 }
 
+function  _parseCreatedProviderData(result) {
+    _refreshCreateProviderModal(result);
+}
+
+
 function  _parseCreatedSaleData(result) {
     $("#wrapper").removeClass("mask");
     var noerror = true;
@@ -455,7 +473,7 @@ function _fixFormat(result) {
     var list = $.extend(true, [], result);
     list.forEach(function(e) {
         e.date = _getFormatDateDDMMYYYY(new Date(e.date));
-        e.is_expense = e.is_expense ? "Si" : "No";
+        e.expenseText = e.is_expense ? "Si" : "No";
         e.method = _getMethodString(e.method);
         e.amountARS = (e.amount * e.exchange).toFixed("2");
     });
@@ -515,13 +533,14 @@ function _fixReportsFormat(result) {
     var list = [];
     result.forEach(function(e) {
         var elem = {};
+        elem.promoter = e.promoter ? e.promoter : e.seller;
         elem.saleid = e.sale_id;
         elem.userid = e.seller.user_id;
-        elem.promoterid = e.promoter.user_id;
+        elem.promoterid = elem.promoter.user_id;
         elem.date = _getFormatDateDDMMYYYY(new Date(e.date));
         elem.seller = e.seller.first_name + " " + e.seller.last_name;
         elem.sellercommission = e.user_commission;
-        elem.promoter = e.promoter.first_name + " " + e.promoter.last_name;
+        elem.promoter = elem.promoter.first_name + " " + elem.promoter.last_name;
         elem.promotercommission = e.promoter_commission;
         elem.total = e.total;
         list.push(elem);

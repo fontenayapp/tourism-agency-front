@@ -426,7 +426,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Añadir proveedor</h4>
+                    <h4 class="modal-title">Crear proveedor</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row form-group">
@@ -435,30 +435,22 @@
                             <input class="form-control" id="createname" value="">
                         </div>
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Descripción</label>
-                            <input class="form-control" id="createdescription" value="">
+                            <label>Email</label>
+                            <input class="form-control" id="createemail" value="">
                         </div>
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Precio de venta</label>
-                            <div class=" input-group">
-                                <span class="input-group-addon">$</span>
-                                <input id="createsellingprice" class="form-control" type="number" min="1">
-                                <span class="input-group-addon">.00</span>
-                            </div>
+                            <label>Phone</label>
+                            <input class="form-control" id="createphone" value="">
                         </div>
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Precio de costo</label>
-                            <div class=" input-group">
-                                <span class="input-group-addon">$</span>
-                                <input id="createstockprice" class="form-control" type="number" min="1">
-                                <span class="input-group-addon">.00</span>
-                            </div>
+                            <label>Sitio web</label>
+                            <input class="form-control" id="createurl" value="">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success" onclick="_saveCreateProvider()">Crear proveedor</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" onclick="_saveCreateProvider()">Agregar</button>
                 </div>
             </div>
         </div>
@@ -508,28 +500,6 @@
         Models["providers"] = providers;
     }
 
-    function _loadProvidersSelectCreate() {
-        var provCreateSel = $("#createprovidersel");
-        provCreateSel.empty();
-        Models["providers"].forEach(function(element, index){
-            var opt = $(document.createElement("option"));
-            opt.text(element.name);
-            opt.attr("value", element.provider_id);
-            provCreateSel.append(opt);
-        });
-    }
-
-    function _loadProvidersSelectEdit() {
-        var provEditSel = $("#editprovidersel");
-        provEditSel.empty();
-        Models["providers"].forEach(function(element, index){
-            var opt = $(document.createElement("option"));
-            opt.text(element.name);
-            opt.attr("value", element.provider_id);
-            provEditSel.append(opt);
-        });
-    }
-
     function _openDetailsProviderModal(){
         $("#detailsModal").modal('show');
         var provider = _getProviderByEvent(event);
@@ -557,7 +527,7 @@
     }
 
     function _saveEditProvider() {
-        if(!validateModal()) {
+        if(!validateModal($("#editModal"))) {
             return;
         }
         var providerEdited = {
@@ -570,18 +540,18 @@
         _saveProviderDetails(providerEdited);
     }
 
-    function _saveCreateProduct() {
-        if(!validateModal()) {
+    function _saveCreateProvider() {
+        if(!validateModal($("#createModal"))) {
             return;
         }
-        var productCreated = {
+        var providerCreated = {
             name: $("#createname").val(),
-            selling_price: $("#createsellingprice").val(),
-            stock_price: $("#createstockprice").val(),
-            description: $("#createdescription").val(),
-            provider_id: $("#createprovidersel").val()
+            email: $("#createemail").val(),
+            phone: $("#createphone").val(),
+            url: $("#createurl").val()
         };
-        _createProduct(productCreated);
+
+        _createProvider(providerCreated);
     }
 
     function _loadDetailsInformation(provider) {
@@ -602,12 +572,10 @@
     }
 
     function _clearCreateInformation() {
-        _loadProvidersSelectCreate();
         $("#createname").val("");
-        $("#createsellingprice").val("");
-        $("#createstockprice").val("");
-        $("#createdescription").val("");
-       // $("#createprovidersel").val(1)
+        $("#createurl").val("http://");
+        $("#createemail").val("");
+        $("#createphone").val("");
     }
 
     function _loadProviders() {
@@ -686,7 +654,7 @@
 
     }
 
-    function _refreshCreateProductModal(result) {
+    function _refreshCreateProviderModal(result) {
         $("#createModal").modal('hide');
         _refreshModal();
     }
@@ -697,8 +665,8 @@
         _loadProviders();
     }
 
-    function validateModal() {
-        return _validateHTMLForm($("#editModal"));
+    function validateModal(modal) {
+        return _validateHTMLForm(modal);
     }
 
     </script>
