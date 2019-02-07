@@ -213,7 +213,8 @@
 
 
         function _downloadPDF(saleid) {
-            var w = document.getElementById("page-wrapper").offsetWidth;
+            var w = 1100;
+            $("#wrapper").width(w);
             var h = document.getElementById("wrapper").offsetHeight;
             html2canvas(document.getElementById("wrapper"), {
                 dpi: 300, // Set to 300 DPI
