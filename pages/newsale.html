@@ -506,140 +506,88 @@
                                     <option value="pesostr" curr="ARS">Peso</option>
                                 </select>
                             </div>
-                            <div class="table-responsive col-xs-12 col-sm-12 col-md-6 col-lg-9">
-                                <table class="table" id="discountstable">
-                                    <thead>
-                                        <tr><th>Cotización</th><th>Subtotal convertido</th><th>Descuento</th><th>Total a cobrar</th></tr>
-                                    </thead>
-                                    <tbody class="discountTableBody">
+                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
+                                <label>Cotización</label>
+                                <div class=" input-group">
+                                    <span class="input-group-addon">AR$</span>
+                                    <input id="exchangeRate" class="form-control exchangeRate" step="0.1" type="number" name="quantity" min="0" disabled="">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
+                                <label>Subtotal convertido</label>
+                                <div class=" input-group">
+                                    <span class="input-group-addon" id="subtotalDiscountLabel">US$</span>
+                                    <input id="subtotalDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
+                                <label>Descuento</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="discountLabel">US$</span>
+                                    <input id="discount" class="form-control" disabled value="0" step="0.1" type="number" name="quantity" min="0">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
+                                <label>Total a cobrar</label>
+                                <div class=" input-group">
+                                    <span class="input-group-addon" id="totalDiscountLabel">US$</span>
+                                    <input id="totalDiscount" class="form-control" value="0" type="number" name="quantity" min="0" disabled>
+                                </div>
+                            </div>
                                         <tr id="dollarstr" class="currtr">
-                                            <td class="increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">AR$</span>
-                                                    <input id="exchangeRateDollar" class="form-control exchangeRate" step="0.1" type="number" name="quantity" min="0" disabled="">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
-                                                    </span>
-                                                </div>
+                                            <td class="subtotalColumn ">
                                             </td>
-                                            <td class="subtotalColumn increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">US$</span>
-                                                    <input id="subtotalDollarDiscount" class="form-control" type="number" name="quantity" min="0" step="0.1" disabled>
-                                                    </div>
+                                            <td class="">
                                             </td>
-                                            <td class="increaseWidth">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">US$</span>
-                                                    <input id="dollarDiscount" class="form-control discount" disabled value="0" step="0.1" type="number" name="quantity" min="0">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td class="totalColumn increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">US$</span>
-                                                    <input id="totalDollarDiscount" class="form-control" value="0" type="number" name="quantity" min="0" disabled>
-                                                    </div>
+                                            <td class="totalColumn ">
                                             </td>
                                         </tr>
                                         <tr id="realstr" style="display: none;" class="currtr">
-                                            <td class="increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">AR$</span>
-                                                    <input id="exchangeRateReal" class="form-control exchangeRate" step="0.1" value="10" type="number" name="quantity" min="0" disabled="">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
-                                                    </span>
-                                                </div>
+                                            <td class="">
                                             </td>
-                                            <td class="subtotalColumn increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">&nbsp;R$</span>
-                                                    <input id="subtotalRealDiscount" step="0.1" class="form-control" type="number" name="quantity" min="0" disabled>
-                                                    </div>
+                                            <td class="subtotalColumn ">
                                             </td>
-                                            <td class="increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">&nbsp;R$</span>
-                                                    <input id="realDiscount" class="form-control discount" disabled value="0" step="0.1" type="number" name="quantity" min="0">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
-                                                    </span>
-                                                </div>
+                                            <td class="">
+
                                             </td>
-                                            <td class="totalColumn increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">&nbsp;R$</span>
-                                                    <input id="totalRealDiscount" class="form-control" value="0" type="number" name="quantity" min="0" disabled>
-                                                    </div>
+                                            <td class="totalColumn ">
+
                                             </td>
                                         </tr>
                                         <tr id="eurostr" style="display: none;" class="currtr">
-                                            <td class="increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">AR$</span>
-                                                    <input id="exchangeRateEuro" step="0.1" class="form-control exchangeRate" type="number" name="quantity" min="0" disabled="">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
-                                                    </span>
-                                                </div>
+                                            <td class="">
+
                                             </td>
-                                            <td class="subtotalColumn increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">&nbsp;€&nbsp;</span>
-                                                    <input id="subtotalEuroDiscount" step="0.1" class="form-control" type="number" name="quantity" min="0" disabled>
-                                                    </div>
+                                            <td class="subtotalColumn ">
+
                                             </td>
-                                            <td class="increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">&nbsp;€&nbsp;</span>
-                                                    <input id="euroDiscount" class="form-control discount" disabled value="0" step="0.1" type="number" name="quantity" min="0">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
-                                                    </span>
-                                                </div>
+                                            <td class="">
+
                                             </td>
-                                            <td class="totalColumn increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">&nbsp;€&nbsp;</span>
-                                                    <input id="totalEuroDiscount" class="form-control" value="0" type="number" name="quantity" min="0" disabled>
-                                                    </div>
+                                            <td class="totalColumn ">
+
                                             </td>
                                         </tr>
                                         <tr id="pesostr" style="display: none;" class="currtr">
-                                            <td class="increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">AR$</span>
-                                                    <input id="exchangeRatePesos" class="form-control exchangeRate" step="0.1" type="number" name="quantity" min="0" value="1" disabled="">
-                                                </div>
+                                            <td class="">
+
                                             </td>
-                                            <td class="subtotalColumn increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">AR$</span>
-                                                    <input id="subtotalPesoDiscount" step="0.1" class="form-control" type="number" name="quantity" min="0" disabled>
-                                                    </div>
+                                            <td class="subtotalColumn ">
+
                                             </td>
-                                            <td class="increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">AR$</span>
-                                                    <input id="pesosDiscount" class="form-control discount" disabled value="0" step="0.1" type="number" name="quantity" min="0">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
-                                                    </span>
-                                                </div>
+                                            <td class="">
+
                                             </td>
-                                            <td class="totalColumn increaseWidth">
-                                                <div class=" input-group">
-                                                    <span class="input-group-addon">AR$</span>
-                                                    <input id="totalPesosDiscount" class="form-control" value="0" type="number" name="quantity" min="0" disabled>
-                                                    </div>
+                                            <td class="totalColumn ">
+
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
                             <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Productos</h4>
                             <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
                                 <table class="table table-striped"id="productsconftable"></table>
@@ -874,8 +822,8 @@
             _loadCurrencies();
             $("#servicesel").change(_productChanged);
             $("#discountcurrencysel").change(_currencyChanged);
-            $(".exchangeRate").blur(_calculateSubtotalAmount);
-            $(".discount").blur(_calculateTotalAmount);
+            $("#exchangeRate").blur(_calculateSubtotalAmount);
+            $("#discount").blur(_calculateTotalAmount);
             $("#adults, #children, #babies").change(_peopleChanged);
             $("#paymentCurrency").change(_refreshPaymentAmountToAdd);
             $("#remainingAmount").change(_refreshPaymentAmountToAdd);
@@ -980,7 +928,7 @@
                         remainingAmount = false;
                     } else if (value > 0) {
                         if(undefined === sale.paymentRows["cashPARS"]) {
-                            _addPayment("cashPARS", value, value, 0, 1);
+                            _addPayment("cashPARS", value, value, 0, 1, "Redondeo ARS");
                         } else {
                             _updateARSPayment(value);
                         }
@@ -1029,17 +977,14 @@
             _calculateProductsSubtotal(sale);
             $(".productTotal").text(sale.subtotalAR);
             loadProductsTable(3);
-            loadCurrencyValues();
-            calculateSubtotals();
-            loadTotal();
+            _currencyChanged();
         }
 
         function loadPaymentTab() {
             var discountCurrencySel = $("#discountcurrencysel");
-            var currRowSel = $("#" + discountCurrencySel.val());
-            var discInput = currRowSel.find(".discount");
+            var discInput = $("#discount");
             sale.discountCurrency = discountCurrencySel.find("option:selected").attr("curr");
-            var exchInput = currRowSel.find(".exchangeRate");
+            var exchInput = $("#exchangeRate");
             var customExcRate = Number(exchInput.val());
             var excRate = _getExchangeRate(sale.discountCurrency);
             sale.totalAR = sale.subtotalAR; //Find total en pesos sin modificar
@@ -1047,17 +992,14 @@
             $("#paymentAmountToAdd").val(0);
             sale.paymentRows = [];
 
-            var totalInput = currRowSel.find(".exchangeRate");
-            var totalCurrency = 0;
-
-            if(exchInput[0].disabled !== true && customExcRate !== excRate) {
+            if(customExcRate !== excRate) {
                 excRate = customExcRate;
             }
 
             sale.customExchangeRate = excRate;
             sale.discount = Number(discInput.val() * sale.customExchangeRate);
 
-            if(discInput[0].disabled !== true && sale.discount > 0) {
+            if(sale.discount > 0) {
                 sale.totalAR -= (sale.discount).toFixed(2);
             }
 
@@ -1065,7 +1007,7 @@
             $("#remainingAmount").val(sale.totalAR).trigger("change");
             $("#totalWithCharges").val(sale.totalAR);
             $("#paymentCurrency").val(sale.discountCurrency);
-            $("#paymentAmountToAdd").val(currRowSel.find(".totalColumn input").val());
+            $("#paymentAmountToAdd").val($("#totalDiscount").val());
         }
 
         function loadFinishTab() {
@@ -1132,34 +1074,51 @@
             _updatePrice(parseInt(currP.val()), currP);
         }
 
-        function _currencyChanged(event) {
-            var selected = $(event.currentTarget).val();
-            $(".currtr").hide();
-            $("#"+selected).show();
+        function _currencyChanged() {
+            var curr = $("#discountcurrencysel").find("option:selected").attr("curr");
+            loadCurrencyValue(curr);
+            _changeCurrencySpan(curr);
+            _calculateSubtotalAmount();
         }
 
-        function _calculateSubtotalAmount(event) {
-            var target = $(event.target);
-            var currentTR = target.closest(".currtr");
-            var subtotal = (sale.subtotalAR/Number(target.val())).toFixed(2);
-
-            currentTR.find(".subtotalColumn").find("input").val(subtotal);
-
-            _assignTotalAmount(currentTR);
+        function _changeCurrencySpan(curr) {
+            var text = "";
+            switch(curr) {
+                case "USD":
+                    text = "US$";
+                    break;
+                case "BRL":
+                    text = "R$";
+                    break;
+                case "EUR":
+                    text = "€";
+                    break;
+                case "ARS":
+                    text = "AR$";
+                    break;
+                default:
+                    text = "ERROR";
+            }
+            $("#subtotalDiscountLabel").text(text);
+            $("#discountLabel").text(text);
+            $("#totalDiscountLabel").text(text);
         }
 
-        function _calculateTotalAmount(event) {
-            var target = $(event.target);
-            var currentTR = target.closest(".currtr");
-            _assignTotalAmount(currentTR);
+        function _calculateSubtotalAmount() {
+            var curr = $("#discountcurrencysel").find("option:selected").attr("curr");
+            if(curr === "ARS") {
+                $("#exchangeRate").val(1);
+            }
+            _calculateSubtotal();
+            _calculateTotalAmount();
         }
 
-        function _assignTotalAmount(currentTR) {
-            var discount = currentTR.find(".discount").val();
-            var subtotal = currentTR.find(".subtotalColumn").find("input").val();
+        function _calculateTotalAmount() {
+            var discount = $("#discount").val();
+            var subtotal = $("#subtotalDiscount").val();
             var total = Number((Number(subtotal) - Number(discount)).toFixed(2));
             if(total > 0) {
-                currentTR.find(".totalColumn").find("input").val(total);
+                $("#totalDiscount").val(total);
             }
             else
                 alert("El total no debe ser menor a 0.01");//ERROR
@@ -1258,39 +1217,20 @@
             win.focus();
         }
 
-        function getCustomExchangeRates() {
-            var exchRateUSD = _getExchangeRate("USD");
-            var exchRateBRL = _getExchangeRate("BRL");
-            var exchRateEUR =_getExchangeRate("EUR");
-
-            exchRateUSD = sale.discountCurrency === "USD" && sale.customExchangeRate !== exchRateUSD ? sale.customExchangeRate : exchRateUSD;
-            exchRateBRL = sale.discountCurrency === "BRL" && sale.customExchangeRate !== exchRateBRL ? sale.customExchangeRate : exchRateBRL;
-            exchRateEUR = sale.discountCurrency === "EUR" && sale.customExchangeRate !== exchRateEUR ? sale.customExchangeRate : exchRateEUR;
-
-            return [exchRateUSD, exchRateBRL, exchRateEUR];
+        function getCustomExchangeRates(currency) {
+            var exchRate = _getExchangeRate(currency);
+            return sale.discountCurrency === currency && sale.customExchangeRate !== exchRate ? sale.customExchangeRate : exchRate;
         }
 
-        function loadCurrencyValues() {
-            var rates = getCustomExchangeRates();
-            $("#exchangeRateDollar").val(rates[0]);
-            $("#exchangeRateReal").val(rates[1]);
-            $("#exchangeRateEuro").val(rates[2]);
+        function loadCurrencyValue(curr) {
+            var rate = getCustomExchangeRates(curr);
+            $("#exchangeRate").val(rate);
         }
 
-        function calculateSubtotals() {
+        function _calculateSubtotal() {
             var subTotal = sale.subtotalAR ;
-            var rates = getCustomExchangeRates();
-
-            $("#subtotalDollarDiscount").val((subTotal/rates[0]).toFixed(2));
-            $("#subtotalRealDiscount").val((subTotal/rates[1]).toFixed(2));
-            $("#subtotalEuroDiscount").val((subTotal/rates[2]).toFixed(2));
-            $("#subtotalPesoDiscount").val((subTotal).toFixed(2));
-        }
-
-        function loadTotal() {
-            $(".currtr").each(function(i, e) {
-                _assignTotalAmount($(e));
-            });
+            var rate = Number($("#exchangeRate").val());
+            $("#subtotalDiscount").val((subTotal/rate).toFixed(2));
         }
 
         function loadProductsTable(order) {
@@ -1432,7 +1372,7 @@
 
             var paymentAmountARSToAdd = (Number(Number(paymentAmountToAdd) * exchRate).toFixed(2));
 
-            if(_addPayment(id, paymentAmountToAdd, paymentAmountARSToAdd, cardCharge, exchRate)) {
+            if(_addPayment(id, paymentAmountToAdd, paymentAmountARSToAdd, cardCharge, exchRate, "")) {
                 var td1 = $(document.createElement("td")).text(paymentMethodOpt.text());
                 var td2 = $(document.createElement("td")).text(paymentCurrencyOpt.text());
                 var td3 = $(document.createElement("td")).text(paymentAmountToAdd);
@@ -1451,7 +1391,7 @@
             }
         }
 
-        function _addPayment(id, val, arVal, cardCharge, exchRate) {
+        function _addPayment(id, val, arVal, cardCharge, exchRate, description) {
             var status = false;
             if(!sale.paymentRows[id] || sale.paymentRows[id].length < 2) {
                 status = _calculateRemainingAmount(arVal);
@@ -1460,7 +1400,7 @@
                 alert("- El método de pago y la moneda seleccionada ya fueron agregados. Borre el registro existente e intente nuevamente.");
             }
             if(status) {
-                sale.paymentRows[id] = [val, arVal, cardCharge, exchRate];
+                sale.paymentRows[id] = [val, arVal, cardCharge, exchRate, description];
                 _calculateTotalCardCharge();
                 _calculateTotalWithCharge();
             }
@@ -1479,7 +1419,7 @@
             var cashPARS = sale.paymentRows["cashPARS"];
             var oldValue = Number(cashPARS[1]);
             _removePayment("cashPARS");
-            _addPayment("cashPARS",oldValue + value, oldValue + value, 0, 1)
+            _addPayment("cashPARS",oldValue + value, oldValue + value, 0, 1, "")
         }
 
 
@@ -1521,12 +1461,14 @@
             for (const key in sale.paymentRows) {
                 var currStr = key.slice(key.length-3,key.length);
                 var method = key.slice(0,key.length-4);
+                var roundText = sale.paymentRows[key][4];
+                var desc = roundText === "" ? "Venta cli: " + sale.client.name + " " + currStr : "Venta cli: " + sale.client.name + " " + roundText;
                 sale.payments.push({
                     "method": method,
                     "currency_id": _getCurrencyID(currStr),
                     "amount": Number(sale.paymentRows[key][0]),
                     "exchange": sale.paymentRows[key][3],
-                    "description": "Venta cli: " + sale.client.name + " " + currStr
+                    "description": desc
                 });
             }
             sale.detailedProducts = sale.products;
