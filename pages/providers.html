@@ -374,6 +374,10 @@
                         <label>Sitio web</label>
                         <p class="urllabel form-control-static"></p>
                     </div>
+                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                        <label>Comisión</label>
+                        <p class="commissionlabel form-control-static"></p>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
@@ -411,6 +415,13 @@
                             <label>Sitio web</label>
                             <input class="form-control" id="editurl" value="">
                         </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Porcentaje de comisión</label>
+                            <div class=" input-group">
+                                <input id="editcommissionpercentage" class="form-control" type="number" min="1" max="100">
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -445,6 +456,13 @@
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Sitio web</label>
                             <input class="form-control" id="createurl" value="">
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Porcentaje de comisión</label>
+                            <div class=" input-group">
+                                <input id="createcommissionpercentage" class="form-control" type="number" min="1" max="100">
+                                <span class="input-group-addon">%</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -535,7 +553,8 @@
             name: $("#editname").val(),
             email: $("#editemail").val(),
             phone: $("#editphone").val(),
-            url: $("#editurl").val()
+            url: $("#editurl").val(),
+            commission: $("#editcommissionpercentage").val()
         };
         _saveProviderDetails(providerEdited);
     }
@@ -548,7 +567,8 @@
             name: $("#createname").val(),
             email: $("#createemail").val(),
             phone: $("#createphone").val(),
-            url: $("#createurl").val()
+            url: $("#createurl").val(),
+            commission: $("#createcommissionpercentage").val()
         };
 
         _createProvider(providerCreated);
@@ -564,11 +584,13 @@
     }
 
     function _loadEditInformation(provider) {
+        provider.commission = provider.commission ? provider.commission : 10;
         $("#editname").val(provider.name);
         $("#editid").text(provider.provider_id);
         $("#editphone").val(provider.phone);
         $("#editemail").val(provider.email);
         $("#editurl").val(provider.url);
+        $("#editcommissionpercentage").val(provider.commission);
     }
 
     function _clearCreateInformation() {
@@ -576,6 +598,7 @@
         $("#createurl").val("http://");
         $("#createemail").val("");
         $("#createphone").val("");
+        $("#createcommissionpercentage").val("");
     }
 
     function _loadProviders() {
