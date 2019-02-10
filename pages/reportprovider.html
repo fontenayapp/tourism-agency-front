@@ -456,6 +456,7 @@
     <script>
         $(document).ready(function() {
             _loadPendings();
+            _loadProviders();
             var maxDate = _getCurrentDate();
             document.getElementById("maxDate").setAttribute("max", maxDate);
             $("#maxDate").val(maxDate).keyup(refreshField).blur(refreshField);
@@ -468,7 +469,7 @@
                 var totalDebt = 0;
                 var rows = $('#pendingTable').DataTable().rows({ search: 'applied', selected: true }).data();
                 rows.each(function(e){
-                    totalDebt += e.product.stock_price;
+                    totalDebt += e.amounttopay;
                 });
                 $("#totalDebt").empty().text(" "+totalDebt.toFixed(2));
             });
@@ -507,20 +508,22 @@
             var load = function(pendingsPromise) {
                 pendingsPromise
                     .then(function (result) {
-                        var listado = _fixReportsFormat(result);
+                        var listado = _fixReportsPendingFormat(result);
                         var buttonsHTML = '<button type="button" onclick="_openDetailsModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
                             +'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
                             +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
-                        $('#pendingsTable').DataTable({
+                        $('#pendingTable').DataTable({
                             responsive: true,
+                            order: [[ 0, "desc" ]],
                             data: listado,
                             columns: [
-                                { title: "ID Venta", data: "saleid"},
-                                { title: "Fecha",data: "date" },
-                                { title: "ID Promotor", data: "promoterid"},
-                                { title: "Promotor",data: "promoter" },
-                                { title: "Com. promotor",data: "promotercommission" },
-                                { title: "Monto (ARS)",data: "total" }
+                                { title: "ID Pago", data: "pendingid"},
+                                { title: "Fecha",data: "date"},
+                                { title: "Producto", data: "productname"},
+                                { title: "Cantidad", data: "numbersold"},
+                                { title: "ID Proveedor", data: "providerid"},
+                                { title: "Precio Venta", data: "totalsold"},
+                                { title: "Monto (ARS)",data: "amounttopay"}
                             ],
                             language: {
                                 "emptyTable": "No hay datos",
@@ -548,7 +551,8 @@
                             columnDefs: [
                                 {
                                     class: 'pendingid',
-                                    targets: 0  //la primer columna tendra una anchura del  20% de la tabla
+                                    targets: 0,  //la primer columna tendra una anchura del  20% de la tabla
+                                    width: '80px'
                                 },
                                 {
                                     targets: 1,
@@ -589,7 +593,7 @@
 
         $.fn.dataTableExt.afnFiltering.push(
             function(oSettings, aData, iDataIndex) {
-                var promoterID = $("#providersel").val();
+                var providerID = $("#providersel").val();
                 var minDateFilter = new Date($("#minDate").val());
                 var maxDateFilter = new Date($("#maxDate").val());
                 minDateFilter = isNaN(minDateFilter) ? new Date("2000-01-01") : minDateFilter.getTime() + 3*3600000; //3 hours of difference with server
@@ -612,11 +616,11 @@
                         return false;
                     }
                 }
-/*
-                if (promoterID !== aData[2]) {
+
+                if (providerID !== aData[4]) {
                     return false;
                 }
-*/
+
                 return true;
             }
         );

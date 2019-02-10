@@ -281,6 +281,21 @@ function _getExchangeRates(res, rej) {
     })
 }
 
+function _getPendings(res, rej) {
+    _loadAjaxSetup();
+
+    $.get(host+"/pending",
+        function (result, error) {
+            Models["pending"] = result;
+            res(result);
+        }).fail(function(error) {
+        if(error.status === 401 || error.status === 422) {
+            window.location = "/pages/login.html";
+        }
+        rej(error);
+    })
+}
+
 function _getProducts(res, rej) {
     _loadAjaxSetup();
 
@@ -543,6 +558,23 @@ function _fixReportsFormat(result) {
         elem.promoter = elem.promoter.first_name + " " + elem.promoter.last_name;
         elem.promotercommission = e.promoter_commission;
         elem.total = e.total;
+        list.push(elem);
+    });
+    return list;
+}
+
+function _fixReportsPendingFormat(result) {
+    var list = [];
+    result.forEach(function(e) {
+        var elem = {};
+        elem.pendingid = e.sold_product_id;
+        elem.date = _getFormatDateDDMMYYYY(new Date(e.date));
+        elem.productname = e.product.name;
+        elem.numbersold = e.adults + e.children + e.babies;
+        elem.saleid = 101010;
+        elem.providerid = e.product.provider.provider_id;
+        elem.totalsold = e.price;
+        elem.amounttopay = e.product.stock_price * elem.numbersold;
         list.push(elem);
     });
     return list;
