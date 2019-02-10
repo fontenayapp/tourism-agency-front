@@ -653,6 +653,15 @@ function _getLongCurrentDate(){
     return _getCurrentDate() + " " + h + ":" + m + ":" + s;
 }
 
+function _loadProviderSelect(result, select) {
+    result.forEach(function(element,index){
+        var opt = $(document.createElement("option"));
+        opt.text(element.name);
+        opt.attr("value",element.provider_id);
+        select.append(opt);
+    })
+}
+
 function _loadUserSelect(result, select) {
     result.forEach(function(element,index){
         var opt = $(document.createElement("option"));

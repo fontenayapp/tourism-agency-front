@@ -318,7 +318,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                    <h1 class="page-header">Proveedores</h1>
+                    <h1 class="page-header">Pendientes proveedores</h1>
                 </div>
                 <!-- /.col-xs-12 col-sm-12 col-md-12 col-lg-12  -->
             </div>
@@ -327,13 +327,34 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Listado de proveedores
+                            Pagos pendientes a proveedores
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="providersTable">
+                            <div class="row">
+                                <div class="form-group col-xs-6 col-sm-6 col-md-2 col-lg-2 ">
+                                    <label>Fecha desde</label>
+                                    <input class="form-control" id="minDate" type="date" value="">
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-2 col-lg-2 ">
+                                    <label>Fecha hasta</label>
+                                    <input class="form-control" id="maxDate" type="date" value="">
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                                    <label>Proveedor</label>
+                                    <select class="form-control" id="providersel">
+                                    </select>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                                    <label>Total pendientes</label>
+                                    <div class="form-control-static">
+                                        <div style="float: left;">AR$</div>
+                                        <div id="totalDebt" style="float: left;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="pendingTable">
                             </table>
-                            <button type="button" class="btn btn-success" onclick="_openCreateProviderModal()">Agregar proveedor</button>
                             <!-- /.table-responsive -->
                         </div>
                         <!-- /.panel-body -->
@@ -349,146 +370,67 @@
     <!-- /#wrapper -->
 
 
-    <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModal" aria-hidden="true">
+    <div class="modal fade" id="pendingDetailsModal" tabindex="-1" role="dialog" aria-labelledby="pendingDetailsModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Detalles del proveedor</h4>
+                    <h4 class="modal-title">Detalles del paog pendiente</h4>
                 </div>
-                <div class="modal-body row">
-                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <label>Proveedor</label>
-                        <p class="namelabel form-control-static"></p>
-                    </div>
-                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <label>ID</label>
-                        <p class="idlabel form-control-static"></p>
-                    </div>
-                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <label>Email</label>
-                        <p class="emaillabel form-control-static"></p>
-                    </div>
-                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <label>Teléfono</label>
-                        <p class="phonelabel form-control-static"></p>
-                    </div>
-                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <label>Sitio web</label>
-                        <p class="urllabel form-control-static"></p>
-                    </div>
-                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <label>Comisión</label>
-                        <p class="commissionlabel form-control-static"></p>
-                    </div>
+                <div class="modal-body">
+                    <!--<div class="form-group">-->
+                        <!--<div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-3">-->
+                            <!--<label>Nombre y Apellido</label>-->
+                            <!--<p class="clientnamelabel form-control-static"></p>-->
+                        <!--</div>-->
+                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
+                            <!--<label>DNI/Pasaporte</label>-->
+                            <!--<p class="passportlabel form-control-static"></p>-->
+                        <!--</div>-->
+                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
+                            <!--<label>Nacionalidad</label>-->
+                            <!--<p class="nationalitylabel form-control-static"></p>-->
+                        <!--</div>-->
+                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
+                            <!--<label>Hotel</label>-->
+                            <!--<p class="hotellabel form-control-static"></p>-->
+                        <!--</div>-->
+                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
+                            <!--<label>Dirección</label>-->
+                            <!--<p class="addresslabel form-control-static"></p>-->
+                        <!--</div>-->
+                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
+                            <!--<label>Habitación</label>-->
+                            <!--<p class="roomlabel form-control-static"></p>-->
+                        <!--</div>-->
+                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
+                            <!--<label>Número de contacto</label>-->
+                            <!--<p class="phonelabel form-control-static"></p>-->
+                        <!--</div>-->
+                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
+                            <!--<label>Email</label>-->
+                            <!--<p class="emaillabel form-control-static"></p>-->
+                        <!--</div>-->
+                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-12 col-lg-12 ">-->
+                            <!--<label>Promotor</label>-->
+                            <!--<p class="promoterlabel form-control-static"></p>-->
+                        <!--</div>-->
+                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-12 col-lg-12 ">-->
+                            <!--<label>Vendedor</label>-->
+                            <!--<p class="sellerlabel form-control-static"></p>-->
+                        <!--</div>-->
+                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">-->
+                            <!--<label>Total</label>-->
+                            <!--<p class="totallabel form-control-static"></p>-->
+                        <!--</div>-->
+                        <!--<h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Productos vendidos</h4>-->
+                        <!--<div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12 ">-->
+                            <!--<table class="table table-striped" id="productssoldtable"></table>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Editar proveedor</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row form-group">
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>ID</label>
-                            <p id="editid" class="form-control-static"></p>
-                        </div>
-                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <label>Proveedor</label>
-                            <input class="form-control" id="editname" value="">
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Email</label>
-                            <input class="form-control" id="editemail" value="">
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Phone</label>
-                            <input class="form-control" id="editphone" value="">
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Sitio web</label>
-                            <input class="form-control" id="editurl" value="">
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Porcentaje de comisión</label>
-                            <div class=" input-group">
-                                <input id="editcommissionpercentage" class="form-control" type="number" min="1" max="100">
-                                <span class="input-group-addon">%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success" onclick="_saveEditProvider()">Guardar cambios</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Crear proveedor</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row form-group">
-                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <label>Proveedor</label>
-                            <input class="form-control" id="createname" value="">
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Email</label>
-                            <input class="form-control" id="createemail" value="">
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Phone</label>
-                            <input class="form-control" id="createphone" value="">
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Sitio web</label>
-                            <input class="form-control" id="createurl" value="">
-                        </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Porcentaje de comisión</label>
-                            <div class=" input-group">
-                                <input id="createcommissionpercentage" class="form-control" type="number" min="1" max="100">
-                                <span class="input-group-addon">%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success" onclick="_saveCreateProvider()">Agregar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="successFinishModal" tabindex="-1" role="dialog" aria-labelledby="successFinishModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="noProductsModalTitle">Guardado exitoso</h4>
-                </div>
-                <div class="modal-body">
-                    El proveedor se ha almacenado satisfactoriamente.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
                 </div>
             </div>
         </div>
@@ -512,188 +454,172 @@
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
-    $(document).ready(function() {
-        _checkLogin();
-        _loadProviders();
-    });
+        $(document).ready(function() {
+            _loadPendings();
+            var maxDate = _getCurrentDate();
+            document.getElementById("maxDate").setAttribute("max", maxDate);
+            $("#maxDate").val(maxDate).keyup(refreshField).blur(refreshField);
+            var weekAgo = new Date();
+            weekAgo = new Date(weekAgo.setDate(weekAgo.getDate() - 7));
+            $("#minDate").val(_getFormatDateYYYYMMDDHHMMSS(weekAgo).split(" ")[0]).keyup(refreshField).blur(refreshField);
+            $("#providersel").change(refreshField);
 
-    function _loadProvidersHandler(providers) {
-        Models["providers"] = providers;
-    }
-
-    function _openDetailsProviderModal(){
-        $("#detailsModal").modal('show');
-        var provider = _getProviderByEvent(event);
-        _loadDetailsInformation(provider);
-    }
-
-    function _openEditProviderModal() {
-        $("#editModal").modal('show');
-        var provider = _getProviderByEvent(event);
-        _loadEditInformation(provider);
-    }
-
-    function _openCreateProviderModal() {
-        $("#createModal").modal('show');
-        _clearCreateInformation();
-    }
-
-    function _getProviderByEvent(event) {
-        var tr = $(event.target).closest("tr");
-        var provId = tr.find(".providerid").length !== 0 ? tr.find(".providerid").text() : tr.prev().find(".providerid").text();
-        var provider = Models["providers"].find(function(e) {
-            return e.provider_id === parseInt(provId);
+            $("#pendingTable").on("search.dt", function () {
+                var totalDebt = 0;
+                var rows = $('#pendingTable').DataTable().rows({ search: 'applied', selected: true }).data();
+                rows.each(function(e){
+                    totalDebt += e.product.stock_price;
+                });
+                $("#totalDebt").empty().text(" "+totalDebt.toFixed(2));
+            });
         });
-        return provider;
-    }
 
-    function _saveEditProvider() {
-        if(!validateModal($("#editModal"))) {
-            return;
+        function refreshField(table) {
+            $('#pendingTable').DataTable().draw();
         }
-        var providerEdited = {
-            provider_id: $("#editid").text(),
-            name: $("#editname").val(),
-            email: $("#editemail").val(),
-            phone: $("#editphone").val(),
-            url: $("#editurl").val(),
-            commission: $("#editcommissionpercentage").val()
-        };
-        _saveProviderDetails(providerEdited);
-    }
 
-    function _saveCreateProvider() {
-        if(!validateModal($("#createModal"))) {
-            return;
+        function _loadProvidersHandler(result) {
+            var provSel = $("#providersel");
+            _loadProviderSelect(result, provSel);
         }
-        var providerCreated = {
-            name: $("#createname").val(),
-            email: $("#createemail").val(),
-            phone: $("#createphone").val(),
-            url: $("#createurl").val(),
-            commission: $("#createcommissionpercentage").val()
-        };
 
-        _createProvider(providerCreated);
-    }
+        function _openDetailsModal(){
+            var pendingDetailsModal = $("#pendingDetailsModal").modal('show');
+            var tr = $(event.target).closest("tr");
+            var pendingId = tr.find(".pendingid").length !== 0 ? tr.find(".pendingid").text() : tr.prev().find(".pendingid").text();
+            var pending = Models["pending"].find(function(e) {
+                return e.sold_product_id === parseInt(pendingId);
+            });
+            if(undefined === pending) {
+                pendingDetailsModal.find(".modal-body").text("Un error ha ocurrido. EL pago pendiente no fue encontrado. Recargue la página y reintente, por favor.")
+            } else {
+                loadInformation(pending);
+            }
+        }
 
-    function _loadDetailsInformation(provider) {
-        $(".namelabel").text(provider.name);
-        $(".idlabel").text(provider.provider_id);
-        $(".phonelabel").text(provider.phone);
-        $(".emaillabel").text(provider.email);
-        var a = $(document.createElement("a")).attr("href",provider.url).attr("target","_blank").text(provider.url);
-        $(".urllabel").empty().append(a);
-    }
+        function _loadPendings() {
+            var pendingsPromise = new Promise(
+                function (resolve, reject) {
+                    _getPendings(resolve, reject);
+                }
+            );
 
-    function _loadEditInformation(provider) {
-        provider.commission = provider.commission ? provider.commission : 10;
-        $("#editname").val(provider.name);
-        $("#editid").text(provider.provider_id);
-        $("#editphone").val(provider.phone);
-        $("#editemail").val(provider.email);
-        $("#editurl").val(provider.url);
-        $("#editcommissionpercentage").val(provider.commission);
-    }
+            var load = function(pendingsPromise) {
+                pendingsPromise
+                    .then(function (result) {
+                        var listado = _fixReportsFormat(result);
+                        var buttonsHTML = '<button type="button" onclick="_openDetailsModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
+                            +'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
+                            +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
+                        $('#pendingsTable').DataTable({
+                            responsive: true,
+                            data: listado,
+                            columns: [
+                                { title: "ID Venta", data: "saleid"},
+                                { title: "Fecha",data: "date" },
+                                { title: "ID Promotor", data: "promoterid"},
+                                { title: "Promotor",data: "promoter" },
+                                { title: "Com. promotor",data: "promotercommission" },
+                                { title: "Monto (ARS)",data: "total" }
+                            ],
+                            language: {
+                                "emptyTable": "No hay datos",
+                                "info": "Mostrando _START_ a _END_ de _TOTAL_",
+                                "infoEmpty": "Mostrando 0 a 0 de 0 filas",
+                                "infoFiltered": "(filtrado de _MAX_ filas totales)",
+                                "infoPostFix":    "",
+                                "thousands":      ",",
+                                "lengthMenu":     "Mostrar _MENU_ filas",
+                                "loadingRecords": "Cargando...",
+                                "processing":     "Procesando...",
+                                "search":         "Buscar:",
+                                "zeroRecords":    "No hay coincidencias",
+                                "paginate": {
+                                    "first":      "Primero",
+                                    "last":       "Último",
+                                    "next":       "Siguiente",
+                                    "previous":   "Previo"
+                                },
+                                "aria": {
+                                    "sortAscending":  ": activar para ordenar ascendentemente",
+                                    "sortDescending": ": activar para ordenar descendentemente"
+                                }
+                            },
+                            columnDefs: [
+                                {
+                                    class: 'pendingid',
+                                    targets: 0  //la primer columna tendra una anchura del  20% de la tabla
+                                },
+                                {
+                                    targets: 1,
+                                    type: 'date'
+                                },
+                                {
+                                    targets: -1, //-1 es la ultima columna y 0 la primera
+                                    data: null,
+                                    defaultContent: buttonsHTML
+                                },
+                                { orderable: false, searchable: false, targets: -1 } //Ultima columna no ordenable para botones
+                            ]
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log(error.message);
+                    });
+            };
+            load(pendingsPromise);
+        }
 
-    function _clearCreateInformation() {
-        $("#createname").val("");
-        $("#createurl").val("http://");
-        $("#createemail").val("");
-        $("#createphone").val("");
-        $("#createcommissionpercentage").val("");
-    }
+        function loadInformation(pending) {
+            /*
+            $(".clientnamelabel").text(sale.client.name);
+            $(".passportlabel").text(sale.client.passport_number);
+            $(".nationalitylabel").text(sale.client.nationality);
+            $(".hotellabel").text(sale.client.hotel);
+            $(".addresslabel").text(sale.client.address);
+            $(".roomlabel").text(sale.client.room_number);
+            $(".phonelabel").text(sale.client.contact_number);
+            $(".emaillabel").text(sale.client.email);
+            $(".sellerlabel").text(sale.user.first_name + " " + sale.user.last_name);
+            $(".promoterlabel").text(sale.promoter.first_name + " " + sale.promoter.last_name);
+            $(".toallabel").text("ARS " + sale.total);
+            */
+        }
 
-    function _loadProviders() {
-        var providersPromise = new Promise(
-            function (resolve, reject) {
-                _getProviders(resolve, reject);
+
+        $.fn.dataTableExt.afnFiltering.push(
+            function(oSettings, aData, iDataIndex) {
+                var promoterID = $("#providersel").val();
+                var minDateFilter = new Date($("#minDate").val());
+                var maxDateFilter = new Date($("#maxDate").val());
+                minDateFilter = isNaN(minDateFilter) ? new Date("2000-01-01") : minDateFilter.getTime() + 3*3600000; //3 hours of difference with server
+                maxDateFilter = isNaN(maxDateFilter) ? new Date("2100-12-31") : maxDateFilter.getTime() + 27*3600000 - 1; // 3h + 1 day - 1 millisec to include the following day
+                var from = aData[1].split("-");
+                var rowDate = new Date(from[2], from[1] - 1, from[0]).getTime();
+
+                if (typeof rowDate === 'undefined') {
+                    rowDate = new Date(aData[0]).getTime();
+                }
+
+                if (minDateFilter && !isNaN(minDateFilter)) {
+                    if (rowDate < minDateFilter) {
+                        return false;
+                    }
+                }
+
+                if (maxDateFilter && !isNaN(maxDateFilter)) {
+                    if (rowDate > maxDateFilter) {
+                        return false;
+                    }
+                }
+/*
+                if (promoterID !== aData[2]) {
+                    return false;
+                }
+*/
+                return true;
             }
         );
-
-        var load = function(providersPromise) {
-            providersPromise
-                .then(function (result) {
-                    var list = _fixProvidersFormat(result);
-                    var buttonsHTML = '<button type="button" onclick="_openDetailsProviderModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
-                        +'<button type="button" onclick="_openEditProviderModal()" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
-                        +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
-                    $('#providersTable').DataTable({
-                        responsive: true,
-                        data: list,
-                        columns: [
-                            { title: "ID", data: "id"},
-                            { title: "Nombre",data: "name" },
-                            { title: "Email",data: "email" },
-                            { title: "Teléfono",data: "phone" },
-                            { title: "Web",data: "url" },
-                            { title: "Acciones", data: null }
-                        ],
-                        language: {
-                            "emptyTable": "No hay datos",
-                            "info": "Mostrando _START_ a _END_ de _TOTAL_",
-                            "infoEmpty": "Mostrando 0 a 0 de 0 filas",
-                            "infoFiltered": "(filtrado de _MAX_ filas totales)",
-                            "infoPostFix":    "",
-                            "thousands":      ",",
-                            "lengthMenu":     "Mostrar _MENU_ filas",
-                            "loadingRecords": "Cargando...",
-                            "processing":     "Procesando...",
-                            "search":         "Buscar:",
-                            "zeroRecords":    "No hay coincidencias",
-                            "paginate": {
-                                "first":      "Primero",
-                                "last":       "Último",
-                                "next":       "Siguiente",
-                                "previous":   "Previo"
-                            },
-                            "aria": {
-                                "sortAscending":  ": activar para ordenar ascendentemente",
-                                "sortDescending": ": activar para ordenar descendentemente"
-                            }
-                        },
-                        columnDefs: [
-                            {
-                                width: '7%',
-                                class: 'providerid',
-                                targets: 0  //la primer columna tendra una anchura del  20% de la tabla
-                            },
-                            {
-                                targets: -1, //-1 es la ultima columna y 0 la primera
-                                data: null,
-                                defaultContent: buttonsHTML
-                            },
-                            { orderable: false, searchable: false, targets: -1 } //Ultima columna no ordenable para botones
-                        ]
-                    });
-                })
-                .catch(function (error) {
-                    console.log(error.message);
-                });
-        };
-        load(providersPromise);
-    }
-
-    function _refreshEditProviderModal(result) {
-        $("#editModal").modal('hide');
-        _refreshModal();
-
-    }
-
-    function _refreshCreateProviderModal(result) {
-        $("#createModal").modal('hide');
-        _refreshModal();
-    }
-
-    function _refreshModal() {
-        $("#providersTable").dataTable().fnDestroy();
-        $("#successFinishModal").modal('show');
-        _loadProviders();
-    }
-
-    function validateModal(modal) {
-        return _validateHTMLForm(modal);
-    }
 
     </script>
 
