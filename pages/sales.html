@@ -618,27 +618,6 @@
 
         }
 
-        function _fillProductsTable(sale) {
-            var prodTableBody = $("#productsSoldTableBody");
-            prodTableBody.empty();
-            sale.products.forEach(function(el){
-                loadProdTableRow(el, prodTableBody);
-            });
-        }
-
-        function loadProdTableRow(product, tableBody) {
-            var td1 = $(document.createElement("td")).text(product.product.provider.name);
-            var td2 = $(document.createElement("td")).text(product.product.name);
-            var td3 = $(document.createElement("td")).text(_getFormatDateDDMMYYYY(new Date(product.date)));
-            var td4 = $(document.createElement("td")).text(product.transfer ? "Sí" : "No");
-            var td5 = $(document.createElement("td")).text(product.adults);
-            var td6 = $(document.createElement("td")).text(product.children);
-            var td7 = $(document.createElement("td")).text(product.babies);
-            var td8 = $(document.createElement("td")).text(product.price);
-            var tr1 = $(document.createElement("tr")).append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7).append(td8);
-            tableBody.append(tr1);
-        }
-
     </script>
 
 </body>

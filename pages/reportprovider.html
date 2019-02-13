@@ -375,62 +375,180 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Detalles del paog pendiente</h4>
+                    <h4 class="modal-title">Detalles del pago pendiente</h4>
                 </div>
                 <div class="modal-body">
-                    <!--<div class="form-group">-->
-                        <!--<div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-3">-->
-                            <!--<label>Nombre y Apellido</label>-->
-                            <!--<p class="clientnamelabel form-control-static"></p>-->
-                        <!--</div>-->
-                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
-                            <!--<label>DNI/Pasaporte</label>-->
-                            <!--<p class="passportlabel form-control-static"></p>-->
-                        <!--</div>-->
-                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
-                            <!--<label>Nacionalidad</label>-->
-                            <!--<p class="nationalitylabel form-control-static"></p>-->
-                        <!--</div>-->
-                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
-                            <!--<label>Hotel</label>-->
-                            <!--<p class="hotellabel form-control-static"></p>-->
-                        <!--</div>-->
-                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
-                            <!--<label>Dirección</label>-->
-                            <!--<p class="addresslabel form-control-static"></p>-->
-                        <!--</div>-->
-                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
-                            <!--<label>Habitación</label>-->
-                            <!--<p class="roomlabel form-control-static"></p>-->
-                        <!--</div>-->
-                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
-                            <!--<label>Número de contacto</label>-->
-                            <!--<p class="phonelabel form-control-static"></p>-->
-                        <!--</div>-->
-                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">-->
-                            <!--<label>Email</label>-->
-                            <!--<p class="emaillabel form-control-static"></p>-->
-                        <!--</div>-->
-                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-12 col-lg-12 ">-->
-                            <!--<label>Promotor</label>-->
-                            <!--<p class="promoterlabel form-control-static"></p>-->
-                        <!--</div>-->
-                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-12 col-lg-12 ">-->
-                            <!--<label>Vendedor</label>-->
-                            <!--<p class="sellerlabel form-control-static"></p>-->
-                        <!--</div>-->
-                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">-->
-                            <!--<label>Total</label>-->
-                            <!--<p class="totallabel form-control-static"></p>-->
-                        <!--</div>-->
-                        <!--<h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Productos vendidos</h4>-->
-                        <!--<div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12 ">-->
-                            <!--<table class="table table-striped" id="productssoldtable"></table>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                    <div class="row form-group">
+                        <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Datos del pago</h4>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                            <label>Producto</label>
+                            <p class="productnamelabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Proveedor</label>
+                            <p class="providernamelabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Precio u. stock</label>
+                            <p class="stockpricelabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Total vendido</label>
+                            <p class="totalsalelabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Total a pagar</label>
+                            <p class="totalstocklabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                            <label>Utilidad</label>
+                            <p class="utilitylabel form-control-static"></p>
+                        </div>
+                        <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Datos de la venta</h4>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                            <label>Nombre y Apellido</label>
+                            <p class="clientnamelabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Nacionalidad</label>
+                            <p class="nationalitylabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Email</label>
+                            <p class="emaillabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>DNI/Pasaporte</label>
+                            <p class="passportlabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Hotel</label>
+                            <p class="hotellabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Dirección</label>
+                            <p class="addresslabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Habitación</label>
+                            <p class="roomlabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Número de contacto</label>
+                            <p class="phonelabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                            <label>Promotor</label>
+                            <p class="promoterlabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4 ">
+                            <label>Vendedor</label>
+                            <p class="sellerlabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Total</label>
+                            <p class="totallabel form-control-static"></p>
+                        </div>
+                        <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Productos vendidos</h4>
+                        <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                            <table class="table table-striped" id="productsSoldTable">
+                                <thead>
+                                <tr>
+                                    <th>Proveedor</th>
+                                    <th>Producto</th>
+                                    <th>Fecha</th>
+                                    <th>Transfer</th>
+                                    <th>Adultos</th>
+                                    <th>Niños</th>
+                                    <th>Bebés</th>
+                                    <th>Importe</th>
+                                </tr>
+                                </thead>
+                                <tbody id="productsSoldTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Pagar a proveedor</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group" id="paymentForm">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label>Descripción</label>
+                            <input class="form-control" id="paymentDescription" value="" required>
+                        </div>
+                        <!--<div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Moneda</label>
+                            <select class="form-control" id="paymentCurrency">
+                                <option value="ARS">Peso</option>
+                                <option value="USD">Dólar</option>
+                                <option value="BRL">Real</option>
+                                <option value="EUR">Euro</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Cotización</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">AR$</span>
+                                <input id="exchangeRate" class="form-control exchangeRate" step="0.1" type="number" name="quantity" min="0" disabled="">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Ingreso/Gasto</label>
+                            <select class="form-control" id="paymentexpensesel">
+                                <option value="1">Gasto</option>
+                                <option value="0">Ingreso</option></select>
+                            </select>
+                        </div>-->
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Método de pago</label>
+                            <select class="form-control" id="paymentMethod">
+                                <option value="cash">Efectivo</option>
+                                <option value="transfer">Transferencia</option>
+                                <option value="card">Tarjeta</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Monto</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="paymentAmount" class="form-control" type="number" min="1" step="0.01" value="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" onclick="_savePayment()">Pagar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="successFinishModal" tabindex="-1" role="dialog" aria-labelledby="successFinishModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="noProductsModalTitle">Guardado exitoso</h4>
+                </div>
+                <div class="modal-body">
+                    La transacción se ha almacenado satisfactoriamente.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
                 </div>
             </div>
         </div>
@@ -455,8 +573,11 @@
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
         $(document).ready(function() {
-            _loadPendings();
             _loadProviders();
+            _loadPendings();
+            _loadSales();
+            _loadCurrencies();
+            $("#paymentCurrency").change(_currencyChanged);
             var maxDate = _getCurrentDate();
             document.getElementById("maxDate").setAttribute("max", maxDate);
             $("#maxDate").val(maxDate).keyup(refreshField).blur(refreshField);
@@ -475,6 +596,18 @@
             });
         });
 
+        function _loadCurrenciesHandler(result) {
+            var ev;
+            _currencyChanged(ev, "ARS");
+        }
+
+        function _currencyChanged(event, currency) {
+            if(undefined !== event) {
+                currency = $(event.currentTarget).val();
+            }
+            $("#exchangeRate").val(_getExchangeRate(currency));
+        }
+
         function refreshField(table) {
             $('#pendingTable').DataTable().draw();
         }
@@ -486,16 +619,20 @@
 
         function _openDetailsModal(){
             var pendingDetailsModal = $("#pendingDetailsModal").modal('show');
-            var tr = $(event.target).closest("tr");
-            var pendingId = tr.find(".pendingid").length !== 0 ? tr.find(".pendingid").text() : tr.prev().find(".pendingid").text();
-            var pending = Models["pending"].find(function(e) {
-                return e.sold_product_id === parseInt(pendingId);
-            });
+            pending = _getPaymentByTr(event);
             if(undefined === pending) {
                 pendingDetailsModal.find(".modal-body").text("Un error ha ocurrido. EL pago pendiente no fue encontrado. Recargue la página y reintente, por favor.")
             } else {
                 loadInformation(pending);
             }
+        }
+
+        function _getPaymentByTr(event) {
+            var tr = $(event.target).closest("tr");
+            var pendingId = tr.find(".pendingid").length !== 0 ? tr.find(".pendingid").text() : tr.prev().find(".pendingid").text();
+            return Models["pending"].find(function(e) {
+                return e.sold_product_id === parseInt(pendingId);
+            });
         }
 
         function _loadPendings() {
@@ -522,7 +659,7 @@
                                 { title: "Cantidad", data: "numbersold"},
                                 { title: "ID Proveedor", data: "providerid"},
                                 { title: "Precio Venta", data: "totalsold"},
-                                { title: "Monto (ARS)",data: "amounttopay"},
+                                { title: "Monto a pagar (ARS)",data: "amounttopay"},
                                 { title: "Acciones", data: null }
                             ],
                             language: {
@@ -575,7 +712,18 @@
         }
 
         function loadInformation(pending) {
-            /*
+            var sale = Models["sales"].find(function(e) {
+                return e.sale_id === parseInt(pending.sale_id);
+            });
+            var totalStockPrice = getTotalStockPrice(pending);
+            var utility = ((pending.price/totalStockPrice - 1)*100).toFixed(2);
+            $(".productnamelabel").text(pending.product.name);
+            $(".providernamelabel").text(pending.product.provider.name);
+            $(".stockpricelabel").text("ARS " + pending.product.stock_price);
+            $(".totalsalelabel").text("ARS " + pending.price);
+            $(".totalstocklabel").text("ARS " + totalStockPrice);
+            $(".utilitylabel").text(utility + "%");
+
             $(".clientnamelabel").text(sale.client.name);
             $(".passportlabel").text(sale.client.passport_number);
             $(".nationalitylabel").text(sale.client.nationality);
@@ -584,12 +732,44 @@
             $(".roomlabel").text(sale.client.room_number);
             $(".phonelabel").text(sale.client.contact_number);
             $(".emaillabel").text(sale.client.email);
-            $(".sellerlabel").text(sale.user.first_name + " " + sale.user.last_name);
+            $(".sellerlabel").text(sale.seller.first_name + " " + sale.seller.last_name);
             $(".promoterlabel").text(sale.promoter.first_name + " " + sale.promoter.last_name);
-            $(".toallabel").text("ARS " + sale.total);
-            */
+            $(".totallabel").text("ARS " + sale.total);
+            _fillProductsTable(sale);
         }
 
+        function _openPaymentModal() {
+            $("#paymentModal").modal('show');
+            _preparePaymentInformation(event);
+        }
+
+        function _preparePaymentInformation(event) {
+            var pending = _getPaymentByTr(event);
+            $("#paymentAmount").val(_getTotalStockPrice(pending));
+            $("#paymentDescription").val("Pago Proveedor " + pending.product.provider.name + ". Venta ID: " + pending.sale_id);
+        }
+
+        function _getTotalStockPrice(pending) {
+            return pending.product.stock_price * (pending.adults + pending.children + pending.babies);
+        }
+        function _loadSales() {
+            var salesPromise = new Promise(
+                function (resolve, reject) {
+                    _getSales(resolve, reject);
+                }
+            );
+
+            var load = function(salesPromise) {
+                salesPromise
+                    .then(function (result) {
+                        Models["sales"] = result;
+                    })
+                    .catch(function (error) {
+                        console.log(error.message);
+                    });
+            };
+            load(salesPromise);
+        }
 
         $.fn.dataTableExt.afnFiltering.push(
             function(oSettings, aData, iDataIndex) {
@@ -624,6 +804,39 @@
                 return true;
             }
         );
+
+
+        function _savePayment() {
+            if(!validateModal()) {
+                return;
+            }
+            var transactionCreated = {
+                category_id: 1,
+                amount: $("#paymentAmount").val(),
+                is_expense: true,
+                currency_id: _getCurrencyID("ARS"),
+                date: _getFormatDateYYYYMMDDHHMMSS(),
+                description: $("#paymentDescription").val(),
+                method: $("#paymentMethod").val(),
+                exchange: 1
+            };
+            _createTransaction(transactionCreated);
+        }
+
+        function _refreshCreateTransactionModal(result) {
+            $("#paymentModal").modal('hide');
+            _refreshModal();
+        }
+
+        function _refreshModal() {
+            $("#paymentsTable").dataTable().fnDestroy();
+            $("#successFinishModal").modal('show');
+            _loadPendings();
+        }
+
+        function validateModal() {
+            return _validateHTMLForm($("#paymentModal"));
+        }
 
     </script>
 

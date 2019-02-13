@@ -1062,7 +1062,7 @@
         }
 
         function _loadProductsSelect(result) {
-            _refreshProductsSelect(1);
+            _refreshProductsSelect($("#providerSel option:selected").val());
         }
 
         function _providerChanged(event) {
@@ -1168,7 +1168,7 @@
         function _refreshProductsSelect(providerID, select) {
             var prodSel = select ? select : $("#servicesel");
             Models["products"].filter(function(element){
-                if(element.provider.provider_id === providerID)
+                if(element.provider.provider_id === Number(providerID))
                     return element;})
                 .forEach(function(element){
                     var opt = $(document.createElement("option"));
