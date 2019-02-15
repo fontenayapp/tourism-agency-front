@@ -376,6 +376,7 @@ function _getTransactions(res, rej) {
 
     $.get(host+"/transactions",
         function (result, error) {
+            Models["transactions"] = result;
             res(result);
         }).fail(function(error) {
         if(error.status === 401 || error.status === 422) {

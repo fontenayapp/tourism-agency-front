@@ -163,6 +163,123 @@
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
+    <div class="modal fade" id="transactionDetailsModal" tabindex="-1" role="dialog" aria-labelledby="transactionDetailsModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Detalles de la transacción</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Datos de la transacción</h4>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                            <label>Descripción</label>
+                            <p class="descriptiondetailslabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Fecha</label>
+                            <p class="datedetailslabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Moneda</label>
+                            <p class="currencydetailslabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Cotización</label>
+                            <p class="exchangedetailslabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                            <label>Total en moneda</label>
+                            <p class="totaldetailslabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                            <label>Total ARS</label>
+                            <p class="totalarsdetailslabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                            <label>Método</label>
+                            <p class="methoddetailslabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                            <label>Ingreso/gasto</label>
+                            <p class="expensedetailslabel form-control-static"></p>
+                        </div>
+                        <div id="saleDetailsDiv">
+                            <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Datos de la venta</h4>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                                <label>Nombre y Apellido</label>
+                                <p class="clientnamelabel form-control-static"></p>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>Nacionalidad</label>
+                                <p class="nationalitylabel form-control-static"></p>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>Email</label>
+                                <p class="emaillabel form-control-static"></p>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>DNI/Pasaporte</label>
+                                <p class="passportlabel form-control-static"></p>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>Hotel</label>
+                                <p class="hotellabel form-control-static"></p>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>Dirección</label>
+                                <p class="addresslabel form-control-static"></p>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>Habitación</label>
+                                <p class="roomlabel form-control-static"></p>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>Número de contacto</label>
+                                <p class="phonelabel form-control-static"></p>
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                                <label>Promotor</label>
+                                <p class="promoterlabel form-control-static"></p>
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4 ">
+                                <label>Vendedor</label>
+                                <p class="sellerlabel form-control-static"></p>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>Total</label>
+                                <p class="totallabel form-control-static"></p>
+                            </div>
+                            <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Productos vendidos</h4>
+                            <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                                <table class="table table-striped" id="productsSoldTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Proveedor</th>
+                                        <th>Producto</th>
+                                        <th>Fecha</th>
+                                        <th>Transfer</th>
+                                        <th>Adultos</th>
+                                        <th>Niños</th>
+                                        <th>Bebés</th>
+                                        <th>Importe</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="productsSoldTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -210,7 +327,7 @@
                         <div class="form-group col-md-offset-6 col-lg-offset-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Monto</label>
                             <div class=" input-group">
-                                <span class="input-group-addon">$</span>
+                                <span id="createAmountLabel" class="input-group-addon">$</span>
                                 <input id="createAmount" class="form-control" type="number" min="1" step="0.01" value="0">
                             </div>
                         </div>
@@ -283,8 +400,8 @@
                     .then(function (result) {
                         var listado = _fixFormat(result);
                         _calculateResults(listado);
-                        var buttonsHTML = '<button type="button" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
-                            +'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
+                        var buttonsHTML = '<button type="button"  onclick="_openDetailsModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
+                            //+'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
                             +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
                         $('#transactionsTable').DataTable({
                             responsive: true,
@@ -327,6 +444,7 @@
                             columnDefs: [
                                 {
                                     width: '30px',
+                                    class: 'transactionid',
                                     targets: 0  //la primer columna tendra una anchura del  20% de la tabla
                                 },
                                 {
@@ -395,6 +513,28 @@
                 currency = $(event.currentTarget).val();
             }
             $("#exchangeRate").val(_getExchangeRate(currency));
+            $("#createAmountLabel").empty().text(_getExchangeRateLabel(currency));
+        }
+
+        function _getExchangeRateLabel(currency) {
+            var exchRateLabel = "";
+            switch(currency) {
+                case "ARS":
+                    exchRateLabel = "AR$";
+                    break;
+                case "USD":
+                    exchRateLabel = "US$";
+                    break;
+                case "EUR":
+                    exchRateLabel = "€";
+                    break;
+                case "BRL":
+                    exchRateLabel = "R$";
+                    break;
+                default:
+                    exchRateLabel = "$";
+            }
+            return exchRateLabel;
         }
 
         function validateModal() {
@@ -410,6 +550,58 @@
             $("#transactionsTable").dataTable().fnDestroy();
             $("#successFinishModal").modal('show');
             _loadTransactions();
+        }
+
+        function _openDetailsModal() {
+            var tr = $(event.target).closest("tr");
+            var transactionId = tr.find(".transactionid").length !== 0 ? tr.find(".transactionid").text() : tr.prev().find(".transactionid").text();
+            var transaction = Models["transactions"].find(function(e) {
+                return e.transaction_id === parseInt(transactionId);
+            });
+            if(undefined === transaction) {
+                $("#transactionDetailsModal").find(".modal-body").text("Un error ha ocurrido. La venta no fue encontrada. Recargue la página y reintente, por favor.")
+            } else {
+                loadInformation(transaction);
+                transaction.sale_id ? _loadSale(transaction.sale_id) : $("#saleDetailsDiv").hide();
+            }
+
+            function _loadSale(id) {
+                var salePromise = new Promise(
+                    function (resolve, reject) {
+                        _getSale(resolve, reject, id);
+                    }
+                );
+
+                var load = function(salePromise) {
+                    salePromise
+                        .then(function (result) {
+                            _fillSaleInformation(result);
+                        })
+                        .catch(function (error) {
+                            console.log(error.message);
+                        });
+                };
+                load(salePromise);
+            }
+
+            function loadInformation(tx) {
+                var currency = Models["exchangerates"].find(function(e) {
+                    return e.currency_id === parseInt(tx.currency_id);
+                });
+                $(".descriptiondetailslabel").text(tx.description);
+                $(".datedetailslabel").text(_getFormatDateDDMMYYYYHHMM(new Date(tx.date)));
+                $(".currencydetailslabel").text(currency.code);
+                $(".exchangedetailslabel").text(tx.exchange);
+                $(".totaldetailslabel").text(tx.amount);
+                $(".totalarsdetailslabel").text((tx.amount * tx.exchange).toFixed(2));
+                $(".methoddetailslabel").text(_getMethodString(tx.method));
+                $(".expensedetailslabel").text(tx.is_expense ? "Gasto" : "Ingreso");
+                $("#transactionDetailsModal").modal("show");
+            }
+
+            function _fillSaleInformation(result) {
+
+            }
         }
     </script>
 
