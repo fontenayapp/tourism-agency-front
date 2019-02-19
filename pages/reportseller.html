@@ -464,7 +464,7 @@
             weekAgo = new Date(weekAgo.setDate(weekAgo.getDate() - 7));
             $("#minDate").val(_getFormatDateYYYYMMDDHHMMSS(weekAgo).split(" ")[0]).keyup(refreshField).blur(refreshField);
 
-            $("#promotersel").change(refreshField);
+            $("#sellersel").change(refreshField);
 
             $("#commissionstable").on("search.dt", function () {
                 var totalCommissions = 0;
@@ -590,6 +590,7 @@
 
         $.fn.dataTableExt.afnFiltering.push(
             function(oSettings, aData, iDataIndex) {
+                var sellerID = $("#sellersel").val();
                 var minDateFilter = new Date($("#minDate").val());
                 var maxDateFilter = new Date($("#maxDate").val());
                 minDateFilter = isNaN(minDateFilter) ? new Date("2000-01-01") : minDateFilter.getTime() + 3*3600000; //3 hours of difference with server
@@ -613,8 +614,11 @@
                     }
                 }
 
-                return true;
-            }
+                if (sellerID !== aData[2]) {
+                    return false;
+                }
+
+                return true;            }
         );
 
     </script>
