@@ -592,6 +592,7 @@ function _fixReportsPendingFormat(result) {
             return sale.sale_id === e.sale_id;
         });
         elem.pendingid = e.sold_product_id;
+        elem.providerid = e.product.provider.provider_id;
         elem.date = _getFormatDateDDMMYYYY(new Date(e.date));
         elem.productname = e.product.name;
         elem.clientname = sale.client.name;
@@ -748,12 +749,11 @@ function _loadSaleProducts() {
             var elem = $(el);
             var prodID = Number(elem.find("#servicesel").val());
             var product = _findProduct(prodID);
-            var provider = _findProvider(product.provider_id);
 
             var prod = {
                 product_id: prodID,
                 product: product,
-                provider: provider,
+                provider: product.provider,
                 date: elem.find("#date").val() + ":00",
                 transfer: elem.find("#transfersel").val(),
                 price: Number(elem.find("#uprice").val()),

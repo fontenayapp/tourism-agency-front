@@ -524,7 +524,7 @@
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Monto</label>
                             <div class=" input-group">
-                                <span class="input-group-addon">$</span>
+                                <span class="input-group-addon">ARS</span>
                                 <input id="paymentAmount" class="form-control" type="number" min="1" step="0.01" value="0">
                             </div>
                         </div>
@@ -660,6 +660,7 @@
                             columns: [
                                 { title: "ID Pago", data: "pendingid"},
                                 { title: "Fecha",data: "date"},
+                                { title: "ID Proveedor",data: "providerid"},
                                 { title: "Servicio", data: "productname"},
                                 { title: "Cliente", data: "clientname"},
                                 { title: "Cantidad", data: "numbersold"},
@@ -698,6 +699,10 @@
                                 {
                                     targets: 1,
                                     type: 'date'
+                                },
+                                {
+                                    targets: 2,
+                                    visible: false
                                 },
                                 {
                                     targets: -1, //-1 es la ultima columna y 0 la primera
@@ -803,7 +808,7 @@
                     }
                 }
 
-                if (providerID !== aData[4]) {
+                if (Number(providerID) !== Number(aData[2])) {
                     return false;
                 }
 
