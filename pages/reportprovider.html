@@ -485,6 +485,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row form-group" id="paymentForm">
+                        <input class="form-control" id="paymentID" style="display: none">
                         <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <label>Descripción</label>
                             <input class="form-control" id="paymentDescription" value="" required>
@@ -573,9 +574,8 @@
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
         $(document).ready(function() {
-            _loadProviders();
-            _loadPendings();
             _loadSales();
+            _loadProviders();
             _loadCurrencies();
             $("#paymentCurrency").change(_currencyChanged);
             var maxDate = _getCurrentDate();
@@ -635,6 +635,11 @@
             });
         }
 
+        function _parseCreatedPaymentData(result) {
+            $("#paymentModal").modal('hide');
+            _refreshModal();
+        }
+
         function _loadPendings() {
             var pendingsPromise = new Promise(
                 function (resolve, reject) {
@@ -655,10 +660,9 @@
                             columns: [
                                 { title: "ID Pago", data: "pendingid"},
                                 { title: "Fecha",data: "date"},
-                                { title: "Producto", data: "productname"},
+                                { title: "Servicio", data: "productname"},
+                                { title: "Cliente", data: "clientname"},
                                 { title: "Cantidad", data: "numbersold"},
-                                { title: "ID Proveedor", data: "providerid"},
-                                { title: "Precio Venta", data: "totalsold"},
                                 { title: "Monto a pagar (ARS)",data: "amounttopay"},
                                 { title: "Acciones", data: null }
                             ],
@@ -745,6 +749,7 @@
 
         function _preparePaymentInformation(event) {
             var pending = _getPaymentByTr(event);
+            $("#paymentID").val(pending.sold_product_id);
             $("#paymentAmount").val(_getTotalStockPrice(pending));
             $("#paymentDescription").val("Pago Proveedor " + pending.product.provider.name + ". Venta ID: " + pending.sale_id);
         }
@@ -763,6 +768,7 @@
                 salesPromise
                     .then(function (result) {
                         Models["sales"] = result;
+                        _loadPendings();
                     })
                     .catch(function (error) {
                         console.log(error.message);
@@ -810,26 +816,21 @@
             if(!validateModal()) {
                 return;
             }
-            var transactionCreated = {
-                category_id: 1,
-                amount: $("#paymentAmount").val(),
-                is_expense: true,
-                currency_id: _getCurrencyID("ARS"),
+            var paymentProduct = {
+                total: $("#paymentAmount").val(),
+                products: [{ id : $("#paymentID").val()}],
                 date: _getFormatDateYYYYMMDDHHMMSS(),
                 description: $("#paymentDescription").val(),
+                is_expense: true,
                 method: $("#paymentMethod").val(),
+                currency_id: _getCurrencyID("ARS"),
                 exchange: 1
             };
-            _createTransaction(transactionCreated);
-        }
-
-        function _refreshCreateTransactionModal(result) {
-            $("#paymentModal").modal('hide');
-            _refreshModal();
+            _payPendingProduct(paymentProduct);
         }
 
         function _refreshModal() {
-            $("#paymentsTable").dataTable().fnDestroy();
+            $("#pendingTable").dataTable().fnDestroy();
             $("#successFinishModal").modal('show');
             _loadPendings();
         }

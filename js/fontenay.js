@@ -1,5 +1,5 @@
 Models = [];
-Models["default"] = {exchangerates : [{"currency_id": 1000000, "code": "BRL", "date": "2018-12-01 00:00:00", "exchange": 10.0}, {"currency_id": 1000001, "code": "EUR", "date": "2018-12-01 00:00:00", "exchange": 45.5}, {"currency_id": 1000003, "code": "USD", "date": "2018-12-01 00:00:00", "exchange": 39.5}]};
+Models["default"] = {exchangerates : [{"currency_id": 1000000, "code": "BRL", "date": "2018-12-01 00:00:00", "exchange": 10.0}, {"currency_id": 1000004, "code": "BRT", "date": "2018-12-01 00:00:00", "exchange": 9.5}, {"currency_id": 1000001, "code": "EUR", "date": "2018-12-01 00:00:00", "exchange": 45.5}, {"currency_id": 1000003, "code": "USD", "date": "2018-12-01 00:00:00", "exchange": 39.5}]};
 
 $(function() {
     $('#side-menu').metisMenu();
@@ -175,6 +175,18 @@ function _createTransaction(tx) {
         JSON.stringify(tx),
         function(result){
             _parseCreatedTransactionData(result);
+        }
+    ).fail(function(error) {
+        _manageError(error);
+    });
+}
+
+function _payPendingProduct(payment) {
+    _loadAjaxSetup();
+    $.post(host+"/pay",
+        JSON.stringify(payment),
+        function(result){
+            _parseCreatedPaymentData(result);
         }
     ).fail(function(error) {
         _manageError(error);
@@ -576,11 +588,14 @@ function _fixReportsPendingFormat(result) {
     var list = [];
     result.forEach(function(e) {
         var elem = {};
+        var sale = Models["sales"].find(function(sale) {
+            return sale.sale_id === e.sale_id;
+        });
         elem.pendingid = e.sold_product_id;
         elem.date = _getFormatDateDDMMYYYY(new Date(e.date));
         elem.productname = e.product.name;
+        elem.clientname = sale.client.name;
         elem.numbersold = e.adults + e.children + e.babies;
-        elem.saleid = 101010;
         elem.providerid = e.product.provider.provider_id;
         elem.totalsold = e.price;
         elem.amounttopay = e.product.stock_price * elem.numbersold;

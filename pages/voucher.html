@@ -68,6 +68,10 @@
                             <label>Servicio:</label>
                             <p class="productlabel form-control-static inlineBlock"></p>
                         </div>
+                        <div class="form-group lessSpace">
+                            <label>Proveedor:</label>
+                            <p class="providerlabel form-control-static inlineBlock"></p>
+                        </div>
                     </div>
                     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
                         <div class="form-group lessSpace">
@@ -202,8 +206,9 @@
         function _fillProductData(prod, container) {
             var prodDate = _getFormatDateDDMMYYYYHHMM(new Date(prod.date));
             var transferLabel = prod.transfer? "SÍ  (" + prodDate.split(" ")[1] + " hs.)" : "NO";
-            container.find(".voucher-id").text("N°-F000000" + prod.sold_product_id);
+            container.find(".voucher-id").text("N°- F000000" + prod.sold_product_id);
             container.find(".productlabel").text(prod.product.name);
+            container.find(".providerlabel").text(prod.product.provider.name);
             container.find(".adultslabel").text(prod.adults);
             container.find(".childrenlabel").text(prod.children);
             container.find(".babieslabel").text(prod.babies);

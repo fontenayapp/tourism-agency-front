@@ -299,6 +299,7 @@
                                 <option value="ARS">Peso</option>
                                 <option value="USD">Dólar</option>
                                 <option value="BRL">Real</option>
+                                <option value="BRT">Real Transf.</option>
                                 <option value="EUR">Euro</option>
                             </select>
                         </div>
@@ -530,6 +531,9 @@
                     break;
                 case "BRL":
                     exchRateLabel = "R$";
+                    break;
+                case "BRT":
+                    exchRateLabel = "RT$";
                     break;
                 default:
                     exchRateLabel = "$";

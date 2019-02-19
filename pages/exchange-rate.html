@@ -121,6 +121,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label>Real Transf.</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">&nbsp;RT$</span>
+                                        <input id="BRT" class="form-control" step="0.1" type="number" min="0" disabled required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick= "_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label>Euro</label>
                                     <div class="input-group">
                                         <span class="input-group-addon">&nbsp;€&nbsp;</span>
@@ -159,6 +169,7 @@
         function _fillExchangesValues() {
             $("#USD").val(_getExchangeRate("USD"));
             $("#BRL").val(_getExchangeRate("BRL"));
+            $("#BRT").val(_getExchangeRate("BRT"));
             $("#EUR").val(_getExchangeRate("EUR"));
         }
 
