@@ -268,10 +268,10 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav in" id="side-menu">
-                        <li>
+                        <li class="forbidden">
                             <a href="transactions.html"><i class="fa fa-table fa-fw"></i> Movimientos</a>
                         </li>
-                        <li>
+                        <li class="forbidden">
                             <a href="sales.html"><i class="fa fa-table fa-fw"></i> Ventas</a>
                         </li>
                         <li>
@@ -280,13 +280,13 @@
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Configuración<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
-                                <li>
+                                <li class="forbidden">
                                     <a href="exchange-rate.html">Cotización divisas</a>
                                 </li>
                                 <li>
                                     <a href="products.html">Productos</a>
                                 </li>
-                                <li>
+                                <li class="forbidden">
                                     <a href="providers.html">Proveedores</a>
                                 </li>
                             </ul>
@@ -303,7 +303,7 @@
                                 <li>
                                     <a href="reportpromoter.html">Comisión promotores</a>
                                 </li>
-                                <li>
+                                <li class="forbidden">
                                     <a href="reportprovider.html">Pagos pendientes</a>
                                 </li>
                             </ul>
@@ -574,6 +574,7 @@
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
         $(document).ready(function() {
+            _checkLogin(true);
             _loadSales();
             _loadProviders();
             _loadCurrencies();
@@ -581,9 +582,9 @@
             var maxDate = _getCurrentDate();
             document.getElementById("maxDate").setAttribute("max", maxDate);
             $("#maxDate").val(maxDate).keyup(refreshField).blur(refreshField);
-            var weekAgo = new Date();
-            weekAgo = new Date(weekAgo.setDate(weekAgo.getDate() - 7));
-            $("#minDate").val(_getFormatDateYYYYMMDDHHMMSS(weekAgo).split(" ")[0]).keyup(refreshField).blur(refreshField);
+            var yearAgo = new Date();
+            yearAgo = new Date(yearAgo.setDate(yearAgo.getDate() - 365));
+            $("#minDate").val(_getFormatDateYYYYMMDDHHMMSS(yearAgo).split(" ")[0]).keyup(refreshField).blur(refreshField);
             $("#providersel").change(refreshField);
 
             $("#pendingTable").on("search.dt", function () {
@@ -701,8 +702,8 @@
                                     type: 'date'
                                 },
                                 {
-                                    targets: 2,
-                                    visible: false
+                                    visible: false,
+                                    targets: [2,3,4]
                                 },
                                 {
                                     targets: -1, //-1 es la ultima columna y 0 la primera
@@ -711,7 +712,7 @@
                                 },
                                 { orderable: false, searchable: false, targets: -1 } //Ultima columna no ordenable para botones
                             ]
-                        });
+                        }).column(2).visible(false);
                     })
                     .catch(function (error) {
                         console.log(error.message);

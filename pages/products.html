@@ -268,10 +268,10 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav in" id="side-menu">
-                        <li>
+                        <li class="forbidden">
                             <a href="transactions.html"><i class="fa fa-table fa-fw"></i> Movimientos</a>
                         </li>
-                        <li>
+                        <li class="forbidden">
                             <a href="sales.html"><i class="fa fa-table fa-fw"></i> Ventas</a>
                         </li>
                         <li>
@@ -280,13 +280,13 @@
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Configuración<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
-                                <li>
+                                <li class="forbidden">
                                     <a href="exchange-rate.html">Cotización divisas</a>
                                 </li>
                                 <li>
                                     <a href="products.html">Productos</a>
                                 </li>
-                                <li>
+                                <li class="forbidden">
                                     <a href="providers.html">Proveedores</a>
                                 </li>
                             </ul>
@@ -303,9 +303,9 @@
                                 <li>
                                     <a href="reportpromoter.html">Comisión promotores</a>
                                 </li>
-<li>
-<a href="reportprovider.html">Pagos pendientes</a>
-</li>
+                                <li class="forbidden">
+                                    <a href="reportprovider.html">Pagos pendientes</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -331,9 +331,13 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
+                            <div class="row forbidden">
+                                <div class="form-group col-xs-6 col-sm-6 col-md-4 col-lg-2">
+                                    <button type="button" class="btn btn-success" onclick="_openCreateProductModal()">Agregar producto</button>
+                                </div>
+                            </div>
                             <table width="100%" class="table table-striped table-bordered table-hover" id="productTable">
                             </table>
-                            <button type="button" class="btn btn-success" onclick="_openCreateProductModal()">Agregar producto</button>
                             <!-- /.table-responsive -->
                         </div>
                         <!-- /.panel-body -->
@@ -377,7 +381,7 @@
                         <label>Precio de venta</label>
                         <p class="sellingpricelabel form-control-static"></p>
                     </div>
-                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4 forbidden">
                         <label>Precio de costo</label>
                         <p class="stockpricelabel form-control-static"></p>
                     </div>
@@ -647,9 +651,10 @@
                 .then(function (result) {
                     var list = _fixProductsFormat(result);
                     var buttonsHTML = '<button type="button" onclick="_openDetailsProductModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
-                        +'<button type="button" onclick="_openEditProductModal()" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
-                        +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
-                    $('#productTable').DataTable({
+                        +'<button type="button" onclick="_openEditProductModal()" class="btn btn-info btn-circle forbidden"><i class="fa fa-edit"></i></button>'
+                        +'<button type="button" class="btn btn-danger btn-circle forbidden"><i class="fa fa-trash-o"></i></button>';
+                    var table = $('#productTable');
+                    table.DataTable({
                         responsive: true,
                         data: list,
                         columns: [
@@ -698,6 +703,10 @@
                             { orderable: false, searchable: false, targets: -1 } //Ultima columna no ordenable para botones
                         ]
                     });
+                    if(getCookie("role") === "2")
+                        table.DataTable().column(5).visible(false);
+                    else if(getCookie("role") === "1")
+                        $(".forbidden").removeClass("forbidden");
                 })
                 .catch(function (error) {
                     console.log(error.message);

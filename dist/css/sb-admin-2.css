@@ -409,6 +409,9 @@ table.dataTable thead .sorting:after {
     width: 12.5%;
   }
 }
+.forbidden {
+  display: none!important;
+}
 .increaseWidth {
   min-width: 175px;
 }

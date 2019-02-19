@@ -68,10 +68,7 @@ function _login() {
         function (result, error) {
             setCookie("access_token", result.access_token, 1);
             setCookie("refresh_token", result.refresh_token, 1);
-
-            _loadAjaxSetup();
-
-            window.location = '/pages/transactions.html';
+            _getUser();
         }).fail(function(error) {
         if(error.status === 401) {
             $("#loginUnauthorizedText").show();
@@ -80,7 +77,14 @@ function _login() {
     //.always(function() {});
 }
 
-function _checkLogin() {
+function _checkLogin(check) {
+    var role = getCookie("role");
+    if ((role === "undefined" || role === "") || (role === "2" && check))
+        window.location = "/pages/login.html";
+    if(role === "2")
+        $(".forbidden").remove();
+    if(role === "1")
+        $(".forbidden").removeClass("forbidden");
 }
 
 function _manageError(error) {
@@ -395,6 +399,23 @@ function _getTransactions(res, rej) {
             window.location = "/pages/login.html";
         }
         rej(error);
+    })
+}
+
+function _getUser(res, rej) {
+    _loadAjaxSetup();
+    $.get(host+"/user",
+        function (result, error) {
+            Models["user"] = result;
+            setCookie("role", result.role, 1);
+            if(result.role === 1)
+                window.location = '/pages/transactions.html';
+            else
+                window.location = '/pages/newsale.html';
+        }).fail(function(error) {
+        if(error.status === 401 || error.status === 422) {
+            window.location = "/pages/login.html";
+        }
     })
 }
 

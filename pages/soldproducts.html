@@ -56,11 +56,11 @@
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav in" id="side-menu">
-                        <li>
+                    <ul class="nav" id="side-menu">
+                        <li class="forbidden">
                             <a href="transactions.html"><i class="fa fa-table fa-fw"></i> Movimientos</a>
                         </li>
-                        <li>
+                        <li class="forbidden">
                             <a href="sales.html"><i class="fa fa-table fa-fw"></i> Ventas</a>
                         </li>
                         <li>
@@ -69,13 +69,13 @@
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Configuración<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
-                                <li>
+                                <li class="forbidden">
                                     <a href="exchange-rate.html">Cotización divisas</a>
                                 </li>
                                 <li>
                                     <a href="products.html">Productos</a>
                                 </li>
-                                <li>
+                                <li class="forbidden">
                                     <a href="providers.html">Proveedores</a>
                                 </li>
                             </ul>
@@ -92,9 +92,9 @@
                                 <li>
                                     <a href="reportpromoter.html">Comisión promotores</a>
                                 </li>
-<li>
-<a href="reportprovider.html">Pagos pendientes</a>
-</li>
+                                <li class="forbidden">
+                                    <a href="reportprovider.html">Pagos pendientes</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -155,8 +155,11 @@
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
-
-    function _loadProducts() {
+        $(document).ready(function() {
+            _checkLogin(true);
+            _loadProducts();
+        });
+        function _loadProducts() {
         var productsPromise = new Promise(
             function (resolve, reject) {
                 _getTransactions(resolve, reject);
@@ -227,7 +230,6 @@
         load(productsPromise);
     }
 
-    _loadProducts();
     </script>
 
 </body>
