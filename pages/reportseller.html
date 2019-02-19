@@ -585,7 +585,16 @@
 
         function _loadPromotersHandler(result) {
             var sellSel = $("#sellersel");
-            _loadUserSelect(result, sellSel);
+            var res = [];
+            if(getCookie("role") === "2") {
+                var userid = Number(getCookie("userid"));
+                res.push(result.find(function(e) {
+                    return e.user_id === userid;
+                }));
+            } else {
+                res = result;
+            }
+            _loadUserSelect(res, sellSel);
         }
 
 

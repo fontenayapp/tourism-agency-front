@@ -483,7 +483,16 @@
 
         function _loadPromotersHandler(result) {
             var promSel = $("#promotersel");
-            _loadUserSelect(result, promSel);
+            var res = [];
+            if(getCookie("role") === "2") {
+                var userid = Number(getCookie("userid"));
+                res.push(result.find(function(e) {
+                    return e.user_id === userid;
+                }));
+            } else {
+                res = result;
+            }
+            _loadUserSelect(res, promSel);
         }
 
         function _openDetailsModal(){

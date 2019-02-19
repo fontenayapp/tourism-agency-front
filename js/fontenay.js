@@ -408,6 +408,7 @@ function _getUser(res, rej) {
         function (result, error) {
             Models["user"] = result;
             setCookie("role", result.role, 1);
+            setCookie("userid", result.user_id, 1);
             if(result.role === 1)
                 window.location = '/pages/transactions.html';
             else
