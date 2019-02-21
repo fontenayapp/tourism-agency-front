@@ -785,6 +785,21 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="invalidExchangeModal" tabindex="-1" role="dialog" aria-labelledby="invalidExchangeModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Cotización inválida</h4>
+                        </div>
+                        <div class="modal-body" id="invalidExchangeModalText">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade" id="noPeopleModal" tabindex="-1" role="dialog" aria-labelledby="noPeopleModal" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -839,7 +854,7 @@
             _loadCurrencies();
             $("#servicesel").change(_productChanged);
             $("#discountcurrencysel").change(_currencyChanged);
-            $("#exchangeRate").blur(_calculateSubtotalAmount);
+            $("#exchangeRate").blur(_validateExchangeRate);
             $("#discount").blur(_calculateTotalAmount);
             $("#adults, #children, #babies").change(_peopleChanged);
             $("#paymentCurrency").change(_refreshPaymentAmountToAdd);
@@ -1124,6 +1139,23 @@
             $("#totalDiscountLabel").text(text);
         }
 
+        function _validateExchangeRate(e) {
+            var exchRateInp = $("#exchangeRate");
+            var min = Number(exchRateInp.attr("min"));
+            var max = Number(exchRateInp.attr("max"));
+            var val = Number(exchRateInp.val());
+            if(val >= min && val <= max) {
+                _calculateSubtotalAmount();
+            } else {
+                val = min === max ? 1 : min + 0.5;
+                exchRateInp.val(val);
+                $('#invalidExchangeModal').modal('show');
+                $('#invalidExchangeModalText').empty().text("Los valores válidos para esta cotización varian entre AR$ "
+                + min + " y AR$ "+ max +
+                ", y dependen del valor configurado en el sistema (AR$ "+ val +"). Contacte al administrador para modificar estos valores.");
+            }
+        }
+
         function _calculateSubtotalAmount() {
             var curr = $("#discountcurrencysel").find("option:selected").attr("curr");
             if(curr === "ARS") {
@@ -1243,8 +1275,20 @@
         }
 
         function loadCurrencyValue(curr) {
-            var rate = getCustomExchangeRates(curr);
-            $("#exchangeRate").val(rate);
+            var min = 1;
+            var max = 1;
+            var defaultExchRate = 1;
+            var customExchRate = 1;
+            if("ARS" !== curr) {
+                defaultExchRate = _getExchangeRate(curr);
+                customExchRate = getCustomExchangeRates(curr);
+                min = defaultExchRate - 0.5;
+                max = defaultExchRate + 1;
+            }
+            $("#exchangeRate").val(customExchRate).attr({
+                "max" : max,
+                "min" : min
+            });
         }
 
         function _calculateSubtotal() {
