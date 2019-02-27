@@ -581,8 +581,12 @@ function _fixProductsFormat(result) {
         elem.providerid = e.provider_id;
         elem.description = e.description;
         elem.name = e.name;
-        elem.sellingprice = e.selling_price;
-        elem.stockprice = e.stock_price;
+        elem.sellingpriceadults = e.selling_price_adult;
+        elem.stockpriceadults = e.stock_price_adult;
+        elem.sellingpricechildren = e.selling_price_child;
+        elem.stockpricechildren = e.stock_price_child;
+        elem.sellingpricebabies = e.selling_price_baby;
+        elem.stockpricebabies = e.stock_price_baby;
         list.push(elem);
     });
     return list;

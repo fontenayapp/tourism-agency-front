@@ -434,7 +434,7 @@
                                                 <input id="babies" class="form-control" type="number" name="quantity" value="0" min="0">
                                             </div>
                                             <div class="form-group">
-                                                <label>Precio lista</label>
+                                                <label>Subtotal producto</label>
                                                 <div class=" input-group">
                                                     <span class="input-group-addon">$</span>
                                                     <input id="uprice" class="form-control" type="number" name="quantity" min="0" disabled>
@@ -1202,10 +1202,12 @@
             var prodPrice = prodPanel.find("#uprice");
             var stockPrice = prodPanel.find("#stockprice");
 
-            var numberOfPeople = _numberOfPeople(prodPanel);
-            
-            prodPrice.val(prod.selling_price * (numberOfPeople));
-            stockPrice.val(prod.stock_price * (numberOfPeople));
+            var numberAdults = parseInt(prodPanel.find("#adults").val());
+            var numberChildren = parseInt(prodPanel.find("#children").val());
+            var numberBabies = parseInt(prodPanel.find("#babies").val());
+
+            prodPrice.val(prod.selling_price_adult*numberAdults + prod.selling_price_child*numberChildren + prod.selling_price_baby*numberBabies);
+            stockPrice.val(prod.stock_price_adult*numberAdults + prod.stock_price_child*numberChildren + prod.stock_price_baby*numberBabies);
         }
 
         function _numberOfPeople(panel) {
@@ -1322,7 +1324,7 @@
             var th5 = $(document.createElement("th")).text("Adulto(s)");
             var th6 = $(document.createElement("th")).text("Niños(s)");
             var th7 = $(document.createElement("th")).text("Bebé(s)");
-            var th8 = $(document.createElement("th")).text("Precio lista");
+            var th8 = $(document.createElement("th")).text("Subtotal producto");
             var tr1 = $(document.createElement("tr")).append(th1).append(th2).append(th3).append(th4).append(th5).append(th6).append(th7).append(th8);
             var thd1 = $(document.createElement("thead")).append(tr1);
             var clss = o === 3? "productConfTableBody" : "productFinishTableBody";
@@ -1375,7 +1377,7 @@
             var inp6 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","children").attr("value","0").attr("min","0");
             var lbl7 = $(document.createElement('label')).text("Bebé(s)");
             var inp7 = $(document.createElement('input')).addClass("form-control").attr("type","number").attr("id","babies").attr("value","0").attr("min","0");
-            var lbl8 = $(document.createElement('label')).text("Precio lista");
+            var lbl8 = $(document.createElement('label')).text("Subtotal producto");
             var spn81 = $(document.createElement('span')).addClass("input-group-addon").text("$");
             var spn82 = $(document.createElement('span')).addClass("input-group-addon").text(".00");
             var ig8 = $(document.createElement('div')).addClass("input-group");

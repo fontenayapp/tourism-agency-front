@@ -378,12 +378,28 @@
                         <p class="descriptionlabel form-control-static"></p>
                     </div>
                     <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <label>Precio de venta</label>
-                        <p class="sellingpricelabel form-control-static"></p>
+                        <label>Precio de venta adulto</label>
+                        <p class="sellingpriceadultlabel form-control-static"></p>
                     </div>
                     <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4 forbidden">
-                        <label>Precio de costo</label>
-                        <p class="stockpricelabel form-control-static"></p>
+                        <label>Costo adulto</label>
+                        <p class="stockpriceadultlabel form-control-static"></p>
+                    </div>
+                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                        <label>Precio de venta niños</label>
+                        <p class="sellingpricechildlabel form-control-static"></p>
+                    </div>
+                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4 forbidden">
+                        <label>Costo niños</label>
+                        <p class="stockpricechildlabel form-control-static"></p>
+                    </div>
+                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                        <label>Precio de venta bebé</label>
+                        <p class="sellingpricebabylabel form-control-static"></p>
+                    </div>
+                    <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4 forbidden">
+                        <label>Costo bebé</label>
+                        <p class="stockpricebabylabel form-control-static"></p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -420,18 +436,50 @@
                             <input class="form-control" id="editdescription" value="">
                         </div>
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Precio de venta</label>
+                            <label>Precio de venta adulto</label>
                             <div class=" input-group">
                                 <span class="input-group-addon">$</span>
-                                <input id="editsellingprice" class="form-control" type="number" min="1">
+                                <input id="editsellingpriceadult" class="form-control" type="number" min="1">
                                 <span class="input-group-addon">.00</span>
                             </div>
                         </div>
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Precio de costo</label>
+                            <label>Costo adulto</label>
                             <div class=" input-group">
                                 <span class="input-group-addon">$</span>
-                                <input id="editstockprice" class="form-control" type="number" min="1">
+                                <input id="editstockpriceadult" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Precio de venta niño</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="editsellingpricechild" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Costo niño</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="editstockpricechild" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Precio de venta bebés</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="editsellingpricebaby" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Costo bebés</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="editstockpricebaby" class="form-control" type="number" min="1">
                                 <span class="input-group-addon">.00</span>
                             </div>
                         </div>
@@ -463,23 +511,55 @@
                             <select class="form-control" id="createprovidersel">
                             </select>
                         </div>
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <label>Descripción</label>
                             <input class="form-control" id="createdescription" value="">
                         </div>
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Precio de venta</label>
+                            <label>Precio de venta adulto</label>
                             <div class=" input-group">
                                 <span class="input-group-addon">$</span>
-                                <input id="createsellingprice" class="form-control" type="number" min="1">
+                                <input id="createsellingpriceadult" class="form-control" type="number" min="1">
                                 <span class="input-group-addon">.00</span>
                             </div>
                         </div>
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Precio de costo</label>
+                            <label>Costo adulto</label>
                             <div class=" input-group">
                                 <span class="input-group-addon">$</span>
-                                <input id="createstockprice" class="form-control" type="number" min="1">
+                                <input id="createstockpriceadult" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Precio de venta niño</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="createsellingpricechild" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Costo niño</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="createstockpricechild" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Precio de venta bebé</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="createsellingpricebaby" class="form-control" type="number" min="1">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Costo bebé</label>
+                            <div class=" input-group">
+                                <span class="input-group-addon">$</span>
+                                <input id="createstockpricebaby" class="form-control" type="number" min="1">
                                 <span class="input-group-addon">.00</span>
                             </div>
                         </div>
@@ -590,8 +670,12 @@
         var productEdited = {
             product_id: $("#editid").text(),
             name: $("#editname").val(),
-            selling_price: $("#editsellingprice").val(),
-            stock_price: $("#editstockprice").val(),
+            selling_price_adult: $("#editsellingpriceadult").val(),
+            stock_price_adult: $("#editstockpriceadult").val(),
+            selling_price_child: $("#editsellingpricechild").val(),
+            stock_price_child: $("#editstockpricechild").val(),
+            selling_price_baby: $("#editsellingpricebaby").val(),
+            stock_price_baby: $("#editstockpricebaby").val(),
             description: $("#editdescription").val(),
             provider_id: $("#editprovidersel").val()
         };
@@ -604,8 +688,12 @@
         }
         var productCreated = {
             name: $("#createname").val(),
-            selling_price: $("#createsellingprice").val(),
-            stock_price: $("#createstockprice").val(),
+            selling_price_adult: $("#createsellingpriceadult").val(),
+            stock_price_adult: $("#createstockpriceadult").val(),
+            selling_price_child: $("#createsellingpricechild").val(),
+            stock_price_child: $("#createstockpricechild").val(),
+            selling_price_baby: $("#createsellingpricebaby").val(),
+            stock_price_baby: $("#createstockpricebaby").val(),
             description: $("#createdescription").val(),
             provider_id: $("#createprovidersel").val()
         };
@@ -617,8 +705,12 @@
         $(".idlabel").text(product.product_id);
         $(".providernamelabel").text(product.provider.name);
         $(".descriptionlabel").text(product.description);
-        $(".sellingpricelabel").text(product.selling_price);
-        $(".stockpricelabel").text(product.stock_price);
+        $(".sellingpriceadultlabel").text(product.selling_price_adult);
+        $(".stockpriceadultlabel").text(product.stock_price_adult);
+        $(".sellingpricechildlabel").text(product.selling_price_child);
+        $(".stockpricechildlabel").text(product.stock_price_child);
+        $(".sellingpricebabylabel").text(product.selling_price_baby);
+        $(".stockpricebabylabel").text(product.stock_price_baby);
     }
 
     function _loadEditInformation(product) {
@@ -626,15 +718,23 @@
         $("#editname").val(product.name);
         $("#editid").text(product.product_id);
         $("#editdescription").val(product.description);
-        $("#editsellingprice").val(product.selling_price);
-        $("#editstockprice").val(product.stock_price);
+        $("#editsellingpriceadult").val(product.selling_price_adult);
+        $("#editstockpriceadult").val(product.stock_price_adult);
+        $("#editsellingpricechild").val(product.selling_price_child);
+        $("#editstockpricechild").val(product.stock_price_child);
+        $("#editsellingpricebaby").val(product.selling_price_baby);
+        $("#editstockpricebaby").val(product.stock_price_baby);
     }
 
     function _clearCreateInformation() {
         _loadProvidersSelectCreate();
         $("#createname").val("");
-        $("#createsellingprice").val("");
-        $("#createstockprice").val("");
+        $("#createsellingpriceadult").val("");
+        $("#createstockpriceadult").val("");
+        $("#createsellingpricechild").val("");
+        $("#createstockpricechild").val("");
+        $("#createsellingpricebaby").val("");
+        $("#createstockpricebaby").val("");
         $("#createdescription").val("");
        // $("#createprovidersel").val(1)
     }
@@ -662,8 +762,12 @@
                             { title: "Nombre",data: "name" },
                             { title: "Proveedor",data: "providername" },
                             { title: "Descripcion",data: "description" },
-                            { title: "Precio venta",data: "sellingprice" },
-                            { title: "Precio proveedor",data: "stockprice" },
+                            { title: "Precio adulto",data: "sellingpriceadults" },
+                            { title: "Costo adulto",data: "stockpriceadults" },
+                            { title: "Precio niños",data: "sellingpricechildren" },
+                            { title: "Costo niños",data: "stockpricechildren" },
+                            { title: "Precio bebés",data: "sellingpricebabies" },
+                            { title: "Costo bebés",data: "stockpricebabies" },
                             { title: "Acciones", data: null }
                         ],
                         language: {
