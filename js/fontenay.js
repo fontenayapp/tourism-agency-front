@@ -651,15 +651,16 @@ function _fixReportsPendingFormat(result) {
         var sale = Models["sales"].find(function(sale) {
             return sale.sale_id === e.sale_id;
         });
+        var soldText = (e.adults !== 0 ? e.adults + " Ad. " : "") + (e.children !== 0 ? e.children + " Ni. " : "") + (e.babies !== 0 ? e.babies + " Be. " : "");
         elem.pendingid = e.sold_product_id;
         elem.providerid = e.product.provider.provider_id;
         elem.date = _getFormatDateDDMMYYYY(new Date(e.date));
         elem.productname = e.product.name;
         elem.clientname = sale.client.name;
-        elem.numbersold = e.adults + e.children + e.babies;
+        elem.numbersold = soldText;
         elem.providerid = e.product.provider.provider_id;
         elem.totalsold = e.price;
-        elem.amounttopay = e.product.stock_price * elem.numbersold;
+        elem.amounttopay = e.product.stock_price_adult * e.adults + e.product.stock_price_child * e.children + e.product.stock_price_baby * e.babies;
         list.push(elem);
     });
     return list;
