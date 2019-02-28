@@ -159,8 +159,9 @@ function _createSale(client, sale) {
     sale.client_id = client.client_id;
     sale.promoter_id = sale.promoter.user_id;
     sale.total = sale.totalAR;
-    sale.promoter_commission = _calculatePromoterCommission(sale);
-    sale.seller_commission = _calculateSellerCommission(sale);
+    var commissions = _calculateCommissions(sale)
+    sale.promoter_commission = commissions[0];
+    sale.seller_commission = commissions[1];
 
     _loadAjaxSetup();
     $.post(host+"/sale",
@@ -501,28 +502,25 @@ function _calculateProductsSubtotal(sale) {
     sale.totalStockAR = totalStock;
 }
 
-function _calculatePromoterCommission(sale) {
-    var subtotalNoCommission = 0;
-    var subtotalCommission = 0;
+function _calculateCommissions(sale) {
+    var subtotal1 = 0;
+    var subtotal2 = 0;
     var discount = sale.discount;
+    var totalSale = sale.totalAR;
+    var totalMinusDisc = totalSale - discount;
+    var adjust = totalMinusDisc/totalSale;
+
     sale.products.forEach(function(e) {
         var commRate = Number(e.provider.commission_rate);
         if(commRate === 8)
-            subtotalNoCommission += e.price * commRate;
+            subtotalNoCommission += e.price * commRate * adjust;
         else
-            subtotalCommission += e.price * commRate;
+            subtotalCommission += e.price * commRate * adjust;
     });
-    return sale.total*0.1;
-}
 
-function _calculateSellerCommission(sale) {
-    var subtotal = 0;
-    var totalStock = 0;
-    sale.products.forEach(function(e) {
-        subtotal += e.price;
-        totalStock += e.stock_price;
-    });
-    return Number(((sale.total*0.9 - Number(sale.totalStockAR))*0.1625).toFixed(2));
+    var subtotalSeller = totalMinusDisc - (subtotal1+subtotal2);
+    var totalSeller = Number(((subtotalSeller - sale.totalStockAR)*0.1625).toFixed(2));
+    return [subtotal1+subtotal2 , totalSeller];
 }
 
 

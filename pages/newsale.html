@@ -411,7 +411,7 @@
                                                 <select class="form-control" id="servicesel"></select>
                                             </div>
                                             <div class="form-group">
-                                                <label>Fecha</label>
+                                                <label>Fecha/Hora pick-up (Si aplica)</label>
                                                 <input class="form-control" id="date" type="datetime-local" value="" step="300">
                                             </div>
                                             <div class="form-group">
@@ -506,7 +506,7 @@
                                 <select class="form-control" id="discountcurrencysel">
                                     <option value="dollarstr" curr="USD">Dólar</option>
                                     <option value="realstr" curr="BRL">Real</option>
-                                    <option value="realtstr" curr="BRL">Real T.</option>
+                                    <option value="realtstr" curr="BRT">Real T.</option>
                                     <option value="eurostr" curr="EUR">Euro</option>
                                     <option value="pesostr" curr="ARS">Peso</option>
                                 </select>
@@ -633,11 +633,11 @@
                                 <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-2">
                                     <label>Moneda</label>
                                     <select class="form-control" id="paymentCurrency">
-                                        <option value="USD">Dólar</option>
-                                        <option value="BRL">Real</option>
-                                        <option value="BRT">Real</option>
-                                        <option value="EUR">Euro</option>
-                                        <option value="ARS">Peso</option>
+                                        <option class="paymentN" value="USD">Dólar</option>
+                                        <option class="paymentN" value="BRL">Real</option>
+                                        <option class="paymentT" value="BRT" style="display:none">Real transf</option>
+                                        <option class="paymentN" value="EUR">Euro</option>
+                                        <option class="paymentN" value="ARS">Peso</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-2">
@@ -858,6 +858,7 @@
             $("#exchangeRate").blur(_validateExchangeRate);
             $("#discount").blur(_calculateTotalAmount);
             $("#adults, #children, #babies").change(_peopleChanged);
+            $("#paymentMethod").change(_refreshPaymentCurrency);
             $("#paymentCurrency").change(_refreshPaymentAmountToAdd);
             $("#remainingAmount").change(_refreshPaymentAmountToAdd);
 
@@ -1040,6 +1041,10 @@
             $("#remainingAmount").val(sale.totalAR).trigger("change");
             $("#totalWithCharges").val(sale.totalAR);
             $("#paymentCurrency").val(sale.discountCurrency);
+            if(sale.discountCurrency === "BRT") {
+                $("#paymentMethod").val("transferP");
+                _refreshPaymentCurrency();
+            }
             $("#paymentAmountToAdd").val($("#totalDiscount").val());
         }
 
@@ -1192,6 +1197,22 @@
             $("#paymentAmountToAdd").val(newValue);
         }
 
+        function _refreshPaymentCurrency(e) {
+            var method = $("#paymentMethod").val();
+            if("transferP" === method) {
+                $(".paymentT").show();
+                $(".paymentN").hide();
+                $("#paymentCurrency").val("BRT");
+            } else {
+                $(".paymentT").hide();
+                $(".paymentN").show();
+                var curr = $("#paymentCurrency").val();
+                if(curr === "BRT")
+                    $("#paymentCurrency").val("USD");
+            }
+            _refreshPaymentAmountToAdd();
+        }
+
         function _updatePrice(productID, select) {
             var prod = Models["products"].find(function(element){
                 if(element.product_id === productID)
@@ -1319,7 +1340,7 @@
         function loadProdTableHeader(prodTable, o) {
             var th1 = $(document.createElement("th")).text("Proveedor");
             var th2 = $(document.createElement("th")).text("Servicio");
-            var th3 = $(document.createElement("th")).text("Fecha");
+            var th3 = $(document.createElement("th")).text("Fecha/Hora pick-up (Si aplica)");
             var th4 = $(document.createElement("th")).text("Traslado");
             var th5 = $(document.createElement("th")).text("Adulto(s)");
             var th6 = $(document.createElement("th")).text("Niños(s)");
@@ -1365,7 +1386,7 @@
             var sel1 = $(document.createElement('select')).addClass("form-control").attr("id","providerSel");
             var lbl2 = $(document.createElement('label')).text("Servicio");
             var sel2 = $(document.createElement('select')).addClass("form-control").attr("id","servicesel");
-            var lbl3 = $(document.createElement('label')).text("Fecha");
+            var lbl3 = $(document.createElement('label')).text("Fecha/Hora pick-up (Si aplica)");
             var fec3 = $(document.createElement('input')).addClass("form-control").attr("type","datetime-local").attr("id","date").attr("step","300").val(_getCurrentDate()+"T12:00");
             var lbl4 = $(document.createElement('label')).text("Traslado");
             var sel4 = $(document.createElement('select')).addClass("form-control").attr("id","transfersel");
