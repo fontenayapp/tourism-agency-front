@@ -506,19 +506,17 @@ function _calculateCommissions(sale) {
     var subtotal1 = 0;
     var subtotal2 = 0;
     var discount = sale.discount;
-    var totalSale = sale.totalAR;
-    var totalMinusDisc = totalSale - discount;
-    var adjust = totalMinusDisc/totalSale;
+    var adjust = sale.totalAR/sale.subtotalAR;
 
     sale.products.forEach(function(e) {
-        var commRate = Number(e.provider.commission_rate);
+        var commRate = Number(e.provider.commission_rate/100);
         if(commRate === 8)
-            subtotalNoCommission += e.price * commRate * adjust;
+            subtotal1 += e.price * commRate * adjust;
         else
-            subtotalCommission += e.price * commRate * adjust;
+            subtotal2 += e.price * commRate * adjust;
     });
 
-    var subtotalSeller = totalMinusDisc - (subtotal1+subtotal2);
+    var subtotalSeller = sale.totalAR - (subtotal1+subtotal2);
     var totalSeller = Number(((subtotalSeller - sale.totalStockAR)*0.1625).toFixed(2));
     return [subtotal1+subtotal2 , totalSeller];
 }
