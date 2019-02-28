@@ -332,14 +332,6 @@ function _getPromoters(res, rej) {
 
     $.get(host+"/promoters",
         function (result, error) {
-            if(result.length === 0)
-                result = [{
-                    "user_id": 2,
-                    "email": "q",
-                    "first_name": "BORRAR",
-                    "last_name": "GETPROMOTERS",
-                    "role": 1
-                }];
             Models["promoters"] = result;
             res(result);
         }).fail(function(error) {
