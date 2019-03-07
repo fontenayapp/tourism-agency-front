@@ -239,10 +239,6 @@
                                 <label>Número de contacto</label>
                                 <p class="phonelabel form-control-static"></p>
                             </div>
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                                <label>Promotor</label>
-                                <p class="promoterlabel form-control-static"></p>
-                            </div>
                             <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4 ">
                                 <label>Vendedor</label>
                                 <p class="sellerlabel form-control-static"></p>
@@ -604,8 +600,16 @@
                 $("#transactionDetailsModal").modal("show");
             }
 
-            function _fillSaleInformation(result) {
-
+            function _fillSaleInformation(sale) {
+                $(".clientnamelabel").text(sale.client.name);
+                $(".passportlabel").text(sale.client.passport_number);
+                $(".nationalitylabel").text(sale.client.nationality);
+                $(".hotellabel").text(sale.client.hotel);
+                $(".addresslabel").text(sale.client.address);
+                $(".roomlabel").text(sale.client.room_number);
+                $(".phonelabel").text(sale.client.contact_number);
+                $(".emaillabel").text(sale.client.email);
+                _fillProductsTable(sale);
             }
         }
     </script>
