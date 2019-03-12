@@ -805,12 +805,12 @@
                                 defaultContent: buttonsHTML
                             },
                             { orderable: false, searchable: false, targets: -1 } //Ultima columna no ordenable para botones
-                        ]
+                        ],
+                        drawCallback: function( settings ) {
+                            _checkRole();
+                        }
+
                     });
-                    if(getCookie("role") === "2")
-                        table.DataTable().column(5).visible(false);
-                    else if(getCookie("role") === "1")
-                        $(".forbidden").removeClass("forbidden");
                 })
                 .catch(function (error) {
                     console.log(error.message);
@@ -839,6 +839,14 @@
 
     function validateModal() {
         return _validateHTMLForm($("#createModal"));
+    }
+
+    function _checkRole() {
+        var table = $('#productTable');
+        if(getCookie("role") === "2")
+            table.DataTable().column(5).visible(false);
+        else if(getCookie("role") === "1")
+            $(".forbidden").removeClass("forbidden");
     }
     </script>
 
