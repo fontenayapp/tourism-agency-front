@@ -526,7 +526,8 @@ function _calculateCommissions(sale) {
 function _enableEdit(e) {
     $(".panel").removeClass("panel-green").addClass("panel-default");
     $(e.target).closest(".input-group").find("input")[0].disabled = false;
-    $("form button.btn-success")[0].disabled = false;
+    var successBtn = $("form button.btn-success")[0];
+    successBtn ? successBtn.disabled = false : 0;
 }
 
 function _fillProductsTable(sale) {

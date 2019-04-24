@@ -301,9 +301,12 @@
                         </div>
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Cotización</label>
-                            <div class=" input-group">
+                            <div class="input-group">
                                 <span class="input-group-addon">AR$</span>
-                                <input id="exchangeRate" class="form-control exchangeRate" step="0.1" type="number" name="quantity" min="0" disabled="">
+                                <input id="exchangeRate" class="form-control exchangeRate" step="0.1" type="number" name="quantity" min="0" disabled required>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" onclick= "_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                </span>
                             </div>
                         </div>
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
