@@ -275,6 +275,37 @@
         </div>
     </div>
 
+    <div class="modal fade" id="transactionDeleteModal" tabindex="-1" role="dialog" aria-labelledby="transactionDeleteModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Eliminar la transacción</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Datos de la transacción a ser eliminada</h4>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                            <label>ID</label>
+                            <p id="iddeletelabel" class="form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                            <label>Descripción</label>
+                            <p class="descriptiondeletelabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                            <label>Total ARS</label>
+                            <p class="totalarsdeletelabel form-control-static"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger"  onclick="_saveDeleteTransaction()">Borrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModal" aria-hidden="true">
         <div class="modal-dialog">
@@ -401,9 +432,9 @@
                     .then(function (result) {
                         var listado = _fixFormat(result);
                         _calculateResults(listado);
-                        var buttonsHTML = '<button type="button"  onclick="_openDetailsModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
+                        var buttonsHTML = '<button type="button" onclick="_openDetailsModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
                             //+'<button type="button" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
-                            +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
+                            +'<button type="button"  onclick="_openDeleteModal()" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
                         $('#transactionsTable').DataTable({
                             responsive: true,
                             order: [[ 0, "desc" ]],
@@ -417,7 +448,7 @@
                                 { title: "Método",data: "method" },
                                 { title: "¿Es gasto?",data: "expenseText" },
                                 { title: "ID de venta",data: "sale_id" },
-                                { title: "Eliminada",data: "deleted", visible: "false" },
+                                { title: "Eliminada",data: "deleted"},
                                 { title: "Acciones",data: null }
                             ],
                             language: {
@@ -447,14 +478,20 @@
                                 {
                                     width: '30px',
                                     class: 'transactionid',
-                                    targets: 0  //la primer columna tendra una anchura del  20% de la tabla
+                                    targets: 0
+                                },
+                                {
+                                    targets: 8,
+                                    class: 'never' //no mostrar columna. Sirve solo para responsive
                                 },
                                 {
                                     targets: -1, //-1 es la ultima columna y 0 la primera
                                     data: null,
-                                    defaultContent: buttonsHTML
-                                },
-                                { orderable: false, searchable: false, targets: -1 } //Ultima columna no ordenable para botones
+                                    defaultContent: buttonsHTML,
+                                    orderable: false,
+                                    searchable: false,
+                                    class: 'all'
+                                }
                             ]
                         });
                     })
@@ -498,6 +535,14 @@
                 exchange: $("#exchangeRate").val()
             };
             _createTransaction(transactionCreated);
+        }
+
+        function _saveDeleteTransaction() {
+            var transactionDeleted = Models["transactions"].find(function(e) {
+                return e.transaction_id === parseInt($("#iddeletelabel").text());
+            });
+            transactionDeleted.deleted = true;
+            _deleteTransaction(transactionDeleted);
         }
 
         function _openCreateTransactionModal() {
@@ -553,6 +598,11 @@
 
         function _refreshCreateTransactionModal(result) {
             $("#createModal").modal('hide');
+            _refreshModal();
+        }
+
+        function _refreshDeleteTransactionModal(result) {
+            $("#transactionDeleteModal").modal('hide');
             _refreshModal();
         }
 
@@ -622,6 +672,25 @@
             }
         }
 
+        function _openDeleteModal() {
+            var tr = $(event.target).closest("tr");
+            var transactionId = tr.find(".transactionid").length !== 0 ? tr.find(".transactionid").text() : tr.prev().find(".transactionid").text();
+            var transaction = Models["transactions"].find(function(e) {
+                return e.transaction_id === parseInt(transactionId);
+            });
+            if(undefined === transaction) {
+                $("#transactionDetailsModal").find(".modal-body").text("Un error ha ocurrido. La transacción no fue encontrada. Recargue la página y reintente, por favor.")
+            } else {
+                loadInformation(transaction);
+            }
+
+            function loadInformation(tx) {
+                $("#iddeletelabel").text(tx.transaction_id);
+                $(".descriptiondeletelabel").text(tx.description);
+                $(".totalarsdeletelabel").text((tx.amount * tx.exchange).toFixed(2));
+                $("#transactionDeleteModal").modal("show");
+            }
+        }
 
         $.fn.dataTableExt.afnFiltering.push(
             function(oSettings, aData, iDataIndex) {
