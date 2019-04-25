@@ -417,6 +417,7 @@
                                 { title: "Método",data: "method" },
                                 { title: "¿Es gasto?",data: "expenseText" },
                                 { title: "ID de venta",data: "sale_id" },
+                                { title: "Eliminada",data: "deleted", visible: "false" },
                                 { title: "Acciones",data: null }
                             ],
                             language: {
@@ -620,6 +621,16 @@
                 _fillProductsTable(sale);
             }
         }
+
+
+        $.fn.dataTableExt.afnFiltering.push(
+            function(oSettings, aData, iDataIndex) {
+                if("true" === aData[8]) {
+                    return false;
+                }
+                return true;
+            }
+        );
     </script>
 
 </body>

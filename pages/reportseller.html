@@ -608,7 +608,7 @@
                 var from = aData[1].split("-");
                 var rowDate = new Date(from[2], from[1] - 1, from[0]).getTime();
 
-                if (typeof rowDate == 'undefined') {
+                if (typeof rowDate === 'undefined') {
                     rowDate = new Date(aData[0]).getTime();
                 }
 
@@ -628,7 +628,8 @@
                     return false;
                 }
 
-                return true;            }
+                return true;
+            }
         );
 
     </script>
