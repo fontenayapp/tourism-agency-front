@@ -554,7 +554,8 @@ function _calculateCommissions(sale) {
 
     var subtotalSeller = sale.totalAR - (subtotal1+subtotal2);
     var totalSeller = Number(((subtotalSeller - sale.totalStockAR)*0.1625).toFixed(2));
-    return [subtotal1+subtotal2 , totalSeller];
+    var totalPromoter = subtotal1+subtotal2;
+    return [totalPromoter, totalSeller];
 }
 
 

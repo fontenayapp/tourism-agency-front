@@ -561,7 +561,7 @@
             email: $("#editemail").val(),
             phone: $("#editphone").val(),
             url: $("#editurl").val(),
-            commission: $("#editcommissionpercentage").val()
+            commission_rate: $("#editcommissionpercentage").val()
         };
         _saveProviderDetails(providerEdited);
     }
@@ -575,7 +575,7 @@
             email: $("#createemail").val(),
             phone: $("#createphone").val(),
             url: $("#createurl").val(),
-            commission: $("#createcommissionpercentage").val()
+            commission_rate: $("#createcommissionpercentage").val()
         };
 
         _createProvider(providerCreated);
@@ -591,13 +591,13 @@
     }
 
     function _loadEditInformation(provider) {
-        provider.commission = provider.commission ? provider.commission : 10;
+        provider.commission_rate = provider.commission_rate ? provider.commission_rate : 10;
         $("#editname").val(provider.name);
         $("#editid").text(provider.provider_id);
         $("#editphone").val(provider.phone);
         $("#editemail").val(provider.email);
         $("#editurl").val(provider.url);
-        $("#editcommissionpercentage").val(provider.commission);
+        $("#editcommissionpercentage").val(provider.commission_rate);
     }
 
     function _clearCreateInformation() {
