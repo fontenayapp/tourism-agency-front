@@ -289,8 +289,21 @@ function _deleteTransaction(tx) {
     });
 }
 
+function _deleteSale(tx) {
+    _loadAjaxSetup();
 
-
+    $.ajax({
+        url: host+"/sales",
+        type: "PUT",
+        data: JSON.stringify(tx),
+        success: function(result){
+            _parseDeletedSaleData(result)
+        },
+        fail: function(error) {
+            _manageError(error);
+        }
+    });
+}
 
 
 
@@ -496,6 +509,10 @@ function  _parseCreatedTransactionData(result) {
 
 function _parseDeletedTransactionData(result) {
     _refreshDeleteTransactionModal(result);
+}
+
+function _parseDeletedSaleData(result) {
+    _refreshDeleteSaleModal(result);
 }
 
 function  _parseEditedProduct(result) {

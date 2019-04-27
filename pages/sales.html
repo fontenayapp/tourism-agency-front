@@ -435,6 +435,38 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="saleDeleteModal" tabindex="-1" role="dialog" aria-labelledby="saleDeleteModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Eliminar la venta</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Datos de la venta a ser eliminada</h4>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                            <label>ID</label>
+                            <p id="iddeletelabel" class="form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                            <label>Cliente</label>
+                            <p class="namedeletelabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                            <label>Total ARS</label>
+                            <p class="totalarsdeletelabel form-control-static"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger"  onclick="_saveDeleteSale()">Borrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -500,6 +532,26 @@
             }
         }
 
+        function _openDeleteModal() {
+            var tr = $(event.target).closest("tr");
+            var saleId = tr.find(".saleid").length !== 0 ? tr.find(".saleid").text() : tr.prev().find(".saleid").text();
+            var sale = Models["sales"].find(function(e) {
+                return e.sale_id === parseInt(saleId);
+            });
+            if(undefined === sale) {
+                $("#saleDetailsModal").find(".modal-body").text("Un error ha ocurrido. La venta no fue encontrada. Recargue la página y reintente, por favor.")
+            } else {
+                loadInformation(sale);
+            }
+
+            function loadInformation(sale) {
+                $("#iddeletelabel").text(sale.sale_id);
+                $(".namedeletelabel").text(sale.client.name);
+                $(".totalarsdeletelabel").text((sale.total).toFixed(2));
+                $("#saleDeleteModal").modal("show");
+            }
+        }
+
         function _openPrintSale() {
             var tr = $(event.target).closest("tr");
             var saleId = tr.find(".saleid").length !== 0 ? tr.find(".saleid").text() : tr.prev().find(".saleid").text();
@@ -528,7 +580,7 @@
                         var buttonsHTML = '<button type="button" onclick="_openDetailsModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
                             +'<button type="button" onclick="_openPrintSale()" class="btn btn-info btn-circle"><i class="fa fa-print"></i></button>'
                             +'<button type="button" onclick="_openDownloadSale()" class="btn btn-info btn-circle"><i class="fa fa-download"></i></button>'
-                            +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
+                            +'<button type="button" onclick="_openDeleteModal()" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
                         $('#salesTable').DataTable({
                             responsive: true,
                             order: [[ 0, "desc" ]],
@@ -635,6 +687,18 @@
 
         }
 
+        function _saveDeleteSale() {
+            var saleDeleted = Models["sales"].find(function(e) {
+                return e.sale_id === parseInt($("#iddeletelabel").text());
+            });
+            saleDeleted.deleted = true;
+            _deleteSale(saleDeleted);
+        }
+
+        function _refreshDeleteSaleModal(result) {
+            $("#saleDeleteModal").modal('hide');
+            //_refreshModal();
+        }
     </script>
 
 </body>
