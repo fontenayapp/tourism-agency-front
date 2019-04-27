@@ -514,7 +514,7 @@
             });
             var cost = 0;
             sale.products.forEach(function(e){
-                cost += e.product.stock_price * (e.adults + e.babies + e.children);
+                cost += e.product.stock_price_adult * e.adults + e.product.stock_price_child * e.children + e.product.stock_price_baby * e.babies;
             });
             return cost;
         }
