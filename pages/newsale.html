@@ -489,63 +489,67 @@
                                     <p class="phonelabel form-control-static"></p>
                                 </div>
                             </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
-                                <label>Subtotal</label>
-                                <div class="form-control-static">
-                                    <div style="float: left;">AR$</div>
-                                    <div class="productTotal" style="float: left;"></div>
-                                    <div>.00</div>
+                            <div class="row">
+                                <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-2">
+                                    <label>Subtotal</label>
+                                    <div class="form-control-static">
+                                        <div style="float: left;">AR$</div>
+                                        <div class="productTotal" style="float: left;"></div>
+                                        <div>.00</div>
+                                    </div>
+                                </div>
+                                <!--<div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-3">-->
+                                <!--<label>Vendedor</label>-->
+                                <!--<p id="sellerconf" class="form-control-static"></p>-->
+                                <!--</div>-->
+                                <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-2">
+                                    <label>Moneda descuento</label>
+                                    <select class="form-control" id="discountcurrencysel">
+                                        <option value="dollarstr" curr="USD">Dólar</option>
+                                        <option value="realstr" curr="BRL">Real</option>
+                                        <option value="realtstr" curr="BRT">Real T.</option>
+                                        <option value="eurostr" curr="EUR">Euro</option>
+                                        <option value="pesostr" curr="ARS">Peso</option>
+                                    </select>
                                 </div>
                             </div>
-                            <!--<div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-3">-->
-                            <!--<label>Vendedor</label>-->
-                            <!--<p id="sellerconf" class="form-control-static"></p>-->
-                            <!--</div>-->
-                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
-                                <label>Moneda descuento</label>
-                                <select class="form-control" id="discountcurrencysel">
-                                    <option value="dollarstr" curr="USD">Dólar</option>
-                                    <option value="realstr" curr="BRL">Real</option>
-                                    <option value="realtstr" curr="BRT">Real T.</option>
-                                    <option value="eurostr" curr="EUR">Euro</option>
-                                    <option value="pesostr" curr="ARS">Peso</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
-                                <label>Cotización</label>
-                                <div class=" input-group">
-                                    <span class="input-group-addon">AR$</span>
-                                    <input id="exchangeRate" class="form-control exchangeRate" step="0.1" type="number" name="quantity" min="0" disabled="">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
-                                    </span>
+                            <div class="row">
+                                <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                                    <label>Cotización</label>
+                                    <div class=" input-group">
+                                        <span class="input-group-addon">AR$</span>
+                                        <input id="exchangeRate" class="form-control exchangeRate" step="0.1" type="number" name="quantity" min="0" disabled="">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                                    <label>Subtotal convertido</label>
+                                    <div class=" input-group">
+                                        <span class="input-group-addon" id="subtotalDiscountLabel">US$</span>
+                                        <input id="subtotalDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                                    <label>Descuento</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="discountLabel">US$</span>
+                                        <input id="discount" class="form-control" disabled value="0" step="0.1" type="number" name="quantity" min="0">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                                    <label>Total a cobrar</label>
+                                    <div class=" input-group">
+                                        <span class="input-group-addon" id="totalDiscountLabel">US$</span>
+                                        <input id="totalDiscount" class="form-control" value="0" type="number" name="quantity" min="0" disabled>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
-                                <label>Subtotal convertido</label>
-                                <div class=" input-group">
-                                    <span class="input-group-addon" id="subtotalDiscountLabel">US$</span>
-                                    <input id="subtotalDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
-                                <label>Descuento</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="discountLabel">US$</span>
-                                    <input id="discount" class="form-control" disabled value="0" step="0.1" type="number" name="quantity" min="0">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-1 col-lg-1-5">
-                                <label>Total a cobrar</label>
-                                <div class=" input-group">
-                                    <span class="input-group-addon" id="totalDiscountLabel">US$</span>
-                                    <input id="totalDiscount" class="form-control" value="0" type="number" name="quantity" min="0" disabled>
-                                </div>
-                            </div>
-                                <tr id="dollarstr" class="currtr">
+                            <tr id="dollarstr" class="currtr">
                                     <td class="subtotalColumn ">
                                     </td>
                                     <td class="">
