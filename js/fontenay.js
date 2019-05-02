@@ -102,7 +102,7 @@ function _manageError(error) {
 function _loadAjaxSetup() {
     $.ajaxSetup({
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': 'Bearer ' + getCookie("access_token")
         }
     });
