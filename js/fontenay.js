@@ -99,7 +99,7 @@ function _manageError(error) {
     }
 }
 
-function _loadAjaxSetup() {
+function _loadGetAjaxSetup() {
     $.ajaxSetup({
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -108,7 +108,14 @@ function _loadAjaxSetup() {
     });
 }
 
-
+function _loadAjaxSetup() {
+    $.ajaxSetup({
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("access_token")
+        }
+    });
+}
 
 
 
@@ -312,7 +319,7 @@ function _deleteSale(tx) {
 /*------------------------ GET -----------------------------------------*/
 /*----------------------------------------------------------------------*/
 function _getExchangeRates(res, rej) {
-    _loadAjaxSetup();
+    _loadGetAjaxSetup();
 
     $.get(host+"/currencies",
         function (result, error) {
@@ -327,7 +334,7 @@ function _getExchangeRates(res, rej) {
 }
 
 function _getPendings(res, rej) {
-    _loadAjaxSetup();
+    _loadGetAjaxSetup();
 
     $.get(host+"/pending",
         function (result, error) {
@@ -342,7 +349,7 @@ function _getPendings(res, rej) {
 }
 
 function _getProducts(res, rej) {
-    _loadAjaxSetup();
+    _loadGetAjaxSetup();
 
     $.get(host+"/products",
         function (result, error) {
@@ -357,7 +364,7 @@ function _getProducts(res, rej) {
 }
 
 function _getPromoters(res, rej) {
-    _loadAjaxSetup();
+    _loadGetAjaxSetup();
 
     $.get(host+"/promoters",
         function (result, error) {
@@ -372,7 +379,7 @@ function _getPromoters(res, rej) {
 }
 
 function _getProviders(res, rej) {
-    _loadAjaxSetup();
+    _loadGetAjaxSetup();
 
     $.get(host+"/providers",
         function (result, error) {
@@ -387,7 +394,7 @@ function _getProviders(res, rej) {
 }
 
 function _getSale(res, rej, id) {
-    _loadAjaxSetup();
+    _loadGetAjaxSetup();
 
     $.get(host+"/sale/" + id,
         function (result, error) {
@@ -402,7 +409,7 @@ function _getSale(res, rej, id) {
 }
 
 function _getSales(res, rej) {
-    _loadAjaxSetup();
+    _loadGetAjaxSetup();
 
     $.get(host+"/sales",
         function (result, error) {
@@ -417,7 +424,7 @@ function _getSales(res, rej) {
 }
 
 function _getTransactions(res, rej) {
-    _loadAjaxSetup();
+    _loadGetAjaxSetup();
 
     $.get(host+"/transactions",
         function (result, error) {
@@ -432,7 +439,7 @@ function _getTransactions(res, rej) {
 }
 
 function _getUser(res, rej) {
-    _loadAjaxSetup();
+    _loadGetAjaxSetup();
     $.get(host+"/user",
         function (result, error) {
             Models["user"] = result;
@@ -450,7 +457,7 @@ function _getUser(res, rej) {
 }
 
 function _getUsers(res, rej) {
-    _loadAjaxSetup();
+    _loadGetAjaxSetup();
 
     $.get(host+"/users",
         function (result, error) {
