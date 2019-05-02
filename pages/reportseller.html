@@ -457,7 +457,7 @@
         $(document).ready(function() {
             _checkLogin();
             _loadSales();
-            _loadPromoters();
+            _loadSellers();
             var maxDate = _getCurrentDate();
             document.getElementById("maxDate").setAttribute("max", maxDate);
             $("#maxDate").val(maxDate).keyup(refreshField).blur(refreshField);
@@ -585,7 +585,7 @@
             $(".toallabel").text("ARS " + sale.total);
         }
 
-        function _loadPromotersHandler(result) {
+        function _loadSellersHandler(result) {
             var sellSel = $("#sellersel");
             var res = [];
             if(getCookie("role") === "2") {

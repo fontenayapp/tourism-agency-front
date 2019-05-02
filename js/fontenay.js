@@ -406,6 +406,22 @@ function _getSale(res, rej, id) {
     })
 }
 
+
+function _getSellers(res, rej) {
+    _loadGetAjaxSetup();
+
+    $.get(host+"/sellers",
+        function (result, error) {
+            Models["sellers"] = result;
+            res(result);
+        }).fail(function(error) {
+        if(error.status === 401 || error.status === 422) {
+            window.location = "/pages/login.html";
+        }
+        rej(error);
+    })
+}
+
 function _getSales(res, rej) {
     _loadGetAjaxSetup();
 
@@ -919,6 +935,26 @@ function _loadPromoters() {
         promotersPromise
             .then(function (result) {
                 _loadPromotersHandler(result);
+            })
+            .catch(function (error) {
+                console.log(error.message);
+            });
+    };
+    load();
+}
+
+
+function _loadSellers() {
+    var sellersPromise = new Promise(
+        function (resolve, reject) {
+            _getSellers(resolve, reject);
+        }
+    );
+
+    var load = function() {
+        sellersPromise
+            .then(function (result) {
+                _loadSellersHandler(result);
             })
             .catch(function (error) {
                 console.log(error.message);
