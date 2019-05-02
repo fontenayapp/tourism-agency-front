@@ -863,7 +863,7 @@ function _loadSaleProducts() {
                 product: product,
                 provider: product.provider,
                 date: elem.find("#date").val() + ":00",
-                transfer: elem.find("#transfersel").val(),
+                transfer: JSON.parse(elem.find("#transfersel").val()),
                 price: Number(elem.find("#uprice").val()),
                 adults: Number(elem.find("#adults").val()),
                 children: Number(elem.find("#children").val()),
