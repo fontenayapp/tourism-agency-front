@@ -377,10 +377,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="noProductsModalTitle">Guardado exitoso</h4>
+                    <h4 class="modal-title" id="noProductsModalTitle">Operación exitosa</h4>
                 </div>
                 <div class="modal-body">
-                    La transacción se ha almacenado satisfactoriamente.
+                    La operación ha finalizado satisfactoriamente.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
@@ -507,6 +507,8 @@
             var exp = 0;
             var bal = 0;
             result.forEach(function(e) {
+                if(e.deleted === true)
+                    return;
                 var amt = Number(e.amountARS);
                 if(e.is_expense)
                     exp += amt;
@@ -538,11 +540,7 @@
         }
 
         function _saveDeleteTransaction() {
-            var transactionDeleted = Models["transactions"].find(function(e) {
-                return e.transaction_id === parseInt($("#iddeletelabel").text());
-            });
-            transactionDeleted.deleted = true;
-            _deleteTransaction(transactionDeleted);
+            _deleteTransaction(parseInt($("#iddeletelabel").text()));
         }
 
         function _openCreateTransactionModal() {

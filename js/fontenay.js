@@ -280,13 +280,12 @@ function _saveProviderDetails(providerEdited) {
     });
 }
 
-function _deleteTransaction(tx) {
+function _deleteTransaction(txId) {
     _loadAjaxSetup();
 
     $.ajax({
-        url: host+"/transaction",
-        type: "PUT",
-        data: JSON.stringify(tx),
+        url: host+"/transaction/"+txId,
+        type: "DELETE",
         success: function(result){
             _parseDeletedTransactionData(result)
         },
@@ -296,13 +295,12 @@ function _deleteTransaction(tx) {
     });
 }
 
-function _deleteSale(tx) {
+function _deleteSale(saleId) {
     _loadAjaxSetup();
 
     $.ajax({
-        url: host+"/sales",
-        type: "PUT",
-        data: JSON.stringify(tx),
+        url: host+"/sale/"+saleId,
+        type: "DELETE",
         success: function(result){
             _parseDeletedSaleData(result)
         },
