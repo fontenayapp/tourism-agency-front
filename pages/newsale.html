@@ -1049,7 +1049,11 @@
                 $("#paymentMethod").val("transferP");
                 _refreshPaymentCurrency();
             }
-            $("#paymentAmountToAdd").val($("#totalDiscount").val());
+            var pymntAmtToAdd = Number($("#totalDiscount").val());
+            if(sale.totalAR < pymntAmtToAdd*sale.customExchangeRate)
+                pymntAmtToAdd -= 0.01;
+
+            $("#paymentAmountToAdd").val(pymntAmtToAdd.toFixed(2));
         }
 
         function loadFinishTab() {
