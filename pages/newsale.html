@@ -1503,7 +1503,7 @@
 
         function _removePayment(id) {
             _removeBorders();
-            sale.paymentRows[id] = [];
+            delete sale.paymentRows[id];
             _calculateRemainingAmount(0);
             _calculateTotalCardCharge();
             _calculateTotalWithCharge();
