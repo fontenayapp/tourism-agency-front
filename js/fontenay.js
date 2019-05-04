@@ -79,12 +79,18 @@ function _login() {
 
 function _checkLogin(check) {
     var role = getCookie("role");
-    if ((role === "undefined" || role === "") || (role === "2" && check))
+    if ((role === "undefined" || role === "") || (role === "2" && check) || (role === "3" && check))
         window.location = "/pages/login.html";
-    if(role === "2")
-        $(".forbidden").remove();
     if(role === "1")
         $(".forbidden").removeClass("forbidden");
+    else {
+        if(role === "2") {
+            $("#reportseller").removeClass("forbidden");
+        } else if(role === "3") {
+            $("#reportpromoter").removeClass("forbidden");
+        }
+        $(".forbidden").remove();
+    }
 }
 
 function _manageError(error) {

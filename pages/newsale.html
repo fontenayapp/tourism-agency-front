@@ -321,10 +321,10 @@
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
-                                <li>
+                                <li id="reportseller" class="forbidden">
                                     <a href="reportseller.html">Comisión vendedores</a>
                                 </li>
-                                <li>
+                                <li id="reportpromoter" class="forbidden">
                                     <a href="reportpromoter.html">Comisión promotores</a>
                                 </li>
                                 <li class="forbidden">
@@ -1203,8 +1203,12 @@
             if(sale.discountCurrency === currency) {
                 exchRate = sale.customExchangeRate;
             }
-            var newValue = Number(Number($("#remainingAmount").val()) / exchRate).toFixed(2);
-            $("#paymentAmountToAdd").val(newValue);
+
+            var pymntAmtToAdd = Number((Number($("#remainingAmount").val()) / exchRate).toFixed(2));
+            if(sale.totalAR < pymntAmtToAdd*sale.customExchangeRate)
+                pymntAmtToAdd -= 0.01;
+
+            $("#paymentAmountToAdd").val(pymntAmtToAdd.toFixed(2));
         }
 
         function _refreshPaymentCurrency(e) {
@@ -1487,6 +1491,9 @@
                 });
             } else {
             }
+
+            $("#paymentMethod").val("cashP");
+            $("#paymentCurrency").val("ARS");
         }
 
         function _addPayment(id, val, arVal, cardCharge, exchRate, description) {
