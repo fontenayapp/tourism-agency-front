@@ -855,7 +855,7 @@
             _checkLogin();
             $("#date").val(_getCurrentDate()+"T12:00");
             _loadPromoters();
-            _loadProviders();
+            _loadProducts();
             _loadCurrencies();
             $("#servicesel").change(_productChanged);
             $("#discountcurrencysel").change(_currencyChanged);
@@ -1079,7 +1079,7 @@
             var load = function(productsPromise) {
                 productsPromise
                     .then(function (result) {
-                        _loadProductsSelect(result);
+                        _loadProviders();
                     })
                     .catch(function (error) {
                         console.log(error.message);
@@ -1090,7 +1090,7 @@
 
         function _loadProvidersHandler(result) {
             _refreshProvidersSelect($("#providerSel"));
-            _loadProducts();
+            _loadProductsSelect();
         }
 
         function _refreshProvidersSelect(select) {
@@ -1104,7 +1104,7 @@
             provSel.change(_providerChanged);
         }
 
-        function _loadProductsSelect(result) {
+        function _loadProductsSelect() {
             _refreshProductsSelect($("#providerSel option:selected").val());
         }
 
@@ -1445,7 +1445,7 @@
             panelContainer.append(panel);
             container.append(panelContainer);
             _refreshProvidersSelect(sel1);
-            _refreshProductsSelect(1,sel2);
+            _refreshProductsSelect(Number(sel1.val()),sel2);
             sel2.change(_productChanged);
             inp5.change(_peopleChanged);
             inp6.change(_peopleChanged);
