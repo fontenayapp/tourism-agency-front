@@ -662,6 +662,8 @@ function _fixProvidersFormat(result) {
 function _fixSalesFormat(result) {
     var list = [];
     result.forEach(function(e) {
+        if(e.deleted === true)
+            return;
         var elem = {};
         elem.promoter = e.promoter ? e.promoter : e.seller;
         elem.id = e.sale_id;
