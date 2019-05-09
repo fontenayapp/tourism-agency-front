@@ -372,6 +372,10 @@ function _getPromoters(res, rej) {
 
     $.get(host+"/promoters",
         function (result, error) {
+            //Discard the test users (id 2, 39 & 40)
+            result = result.filter(function(value) {
+                return (value.user_id !== 2) && (value.user_id !== 39) && (value.user_id !== 40);
+            });
             Models["promoters"] = result;
             res(result);
         }).fail(function(error) {
