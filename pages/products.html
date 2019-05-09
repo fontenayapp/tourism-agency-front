@@ -629,7 +629,7 @@
         });
     }
 
-    function _loadProvidersSelectEdit() {
+    function _loadProvidersSelectEdit(providerID) {
         var provEditSel = $("#editprovidersel");
         provEditSel.empty();
         Models["providers"].forEach(function(element, index){
@@ -638,6 +638,7 @@
             opt.attr("value", element.provider_id);
             provEditSel.append(opt);
         });
+        provEditSel.val(providerID);
     }
 
     function _openDetailsProductModal(){
@@ -714,7 +715,7 @@
     }
 
     function _loadEditInformation(product) {
-        _loadProvidersSelectEdit();
+        _loadProvidersSelectEdit(product.provider.provider_id);
         $("#editname").val(product.name);
         $("#editid").text(product.product_id);
         $("#editdescription").val(product.description);

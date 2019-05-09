@@ -666,6 +666,8 @@ function _fixSalesFormat(result) {
             return;
         var elem = {};
         elem.promoter = e.promoter ? e.promoter : e.seller;
+        elem.promoter_commission = e.promoter_commission;
+        elem.seller_commission = e.user_commission;
         elem.id = e.sale_id;
         elem.email = e.client.email;
         elem.clientname = e.client.name;

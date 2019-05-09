@@ -512,10 +512,10 @@
                 var totalCost = 0;
                 var rows = $('#salesTable').DataTable().rows({ search: 'applied', selected: true }).data();
                 rows.each(function(e){
-                    totalCost += _getSaleCost(e.id);
+                    totalCost += _getSaleCost(e.id) + e.promoter_commission + e.seller_commission;
                     totalUtilities += e.total;
                 });
-                var avgPerc = (totalUtilities/totalCost - 1)*100;
+                var avgPerc = (1 - totalCost/totalUtilities)*100;
                 avgPerc = isNaN(avgPerc) ? 0 : avgPerc;
                 $("#averagePercentage").empty().text((avgPerc).toFixed(2)+" %");
             });
@@ -608,7 +608,9 @@
                                 { title: "Email",data: "email" },
                                 { title: "Fecha",data: "date" },
                                 { title: "Promotor",data: "promoter" },
+                                { title: "Comisión Promotor",data: "promoter_commission" },
                                 { title: "Vendedor",data: "seller" },
+                                { title: "Comisión Vendedor",data: "seller_commission" },
                                 { title: "Monto (ARS)",data: "total" },
                                 { title: "Acciones", data: null }
                             ],
@@ -640,6 +642,14 @@
                                     width: '30px',
                                     class: 'saleid',
                                     targets: 0  //la primer columna tendra una anchura del  20% de la tabla
+                                },
+                                {
+                                    targets: 5,
+                                    class: 'never' //no mostrar columna. Sirve solo para responsive
+                                },
+                                {
+                                    targets: 7,
+                                    class: 'never' //no mostrar columna. Sirve solo para responsive
                                 },
                                 {
                                     targets: -1, //-1 es la ultima columna y 0 la primera
