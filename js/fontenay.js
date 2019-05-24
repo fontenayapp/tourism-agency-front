@@ -77,6 +77,21 @@ function _login() {
     //.always(function() {});
 }
 
+function _logout() {
+
+    $.post(host+"/logout",
+        {},
+        function (result, error) {
+            setCookie("access_token");
+            setCookie("refresh_token");
+            setCookie("role");
+            setCookie("userid");
+            window.location = "/pages/login.html";
+        }).fail(function(error) {
+            window.location = "/pages/login.html";
+        })
+}
+
 function _checkLogin(check) {
     var role = getCookie("role");
     if ((role === "undefined" || role === "") || (role === "2" && check) || (role === "3" && check))
