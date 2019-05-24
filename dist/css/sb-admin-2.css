@@ -20,6 +20,9 @@ body {
     margin: 0 0 0 0;
   }
 }
+.navbar-right {
+  margin-right: 0!important;
+}
 .navbar-top-links {
   margin-right: 0;
 }
