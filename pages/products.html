@@ -573,6 +573,43 @@
         </div>
     </div>
 
+    <div class="modal fade" id="productDeleteModal" tabindex="-1" role="dialog" aria-labelledby="productDeleteModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Eliminar producto</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Datos del producto a ser eliminado</h4>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                            <label>ID</label>
+                            <p id="iddeletelabel" class="form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                            <label>Nombre</label>
+                            <p class="namedeletelabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                            <label>Descripción</label>
+                            <p class="descriptiondeletelabel form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                            <label>Proveedor</label>
+                            <p class="providerdeletelabel form-control-static"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger"  onclick="_saveDeleteProduct()">Borrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="modal fade" id="successFinishModal" tabindex="-1" role="dialog" aria-labelledby="successFinishModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -753,7 +790,7 @@
                     var list = _fixProductsFormat(result);
                     var buttonsHTML = '<button type="button" onclick="_openDetailsProductModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
                         +'<button type="button" onclick="_openEditProductModal()" class="btn btn-info btn-circle forbidden"><i class="fa fa-edit"></i></button>'
-                        +'<button type="button" class="btn btn-danger btn-circle forbidden"><i class="fa fa-trash-o"></i></button>';
+                        +'<button type="button" onclick="_openDeleteProductModal()" class="btn btn-danger btn-circle forbidden"><i class="fa fa-trash-o"></i></button>';
                     var table = $('#productTable');
                     table.DataTable({
                         responsive: true,
@@ -833,11 +870,42 @@
         _refreshModal();
     }
 
+    function _refreshDeleteProductModal(result) {
+        $("#productDeleteModal").modal('hide');
+        _refreshModal();
+    }
+
     function _refreshModal() {
         $("#productTable").dataTable().fnDestroy();
         $("#successFinishModal").modal('show');
         _loadProducts();
         _loadProviders();
+    }
+
+    function _openDeleteProductModal() {
+        var tr = $(event.target).closest("tr");
+        var productId = tr.find(".productid").length !== 0 ? tr.find(".productid").text() : tr.prev().find(".productid").text();
+        var product = Models["products"].find(function(e) {
+            return e.product_id === parseInt(productId);
+        });
+        if(undefined === product) {
+            $("#productDetailsModal").find(".modal-body").text("Un error ha ocurrido. La transacción no fue encontrada. Recargue la página y reintente, por favor.")
+        } else {
+            loadInformation(product);
+        }
+
+        function loadInformation(prod) {
+            $("#iddeletelabel").text(prod.product_id);
+            $(".namedeletelabel").text(prod.name);
+            $(".descriptiondeletelabel").text(prod.description);
+            $(".providerdeletelabel").text(prod.provider.name);
+            $("#productDeleteModal").modal("show");
+        }
+    }
+
+
+    function _saveDeleteProduct() {
+        _deleteProduct(parseInt($("#iddeletelabel").text()));
     }
 
     function validateModal() {

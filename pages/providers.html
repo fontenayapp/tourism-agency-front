@@ -497,6 +497,40 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="providerDeleteModal" tabindex="-1" role="dialog" aria-labelledby="providerDeleteModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Eliminar proveeddor</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">Datos del proveedor a ser eliminado</h4>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                            <label>ID</label>
+                            <p id="iddeletelabel" class="form-control-static"></p>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                            <label>Nombre</label>
+                            <p class="namedeletelabel form-control-static"></p>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="alert alert-warning" role="alert">
+                            ¡Atención! Se borrarán todos los productos asociados al proveedor. Puede revisar los productos a ser borrados en la sección Productos.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger"  onclick="_saveDeleteProvider()">Borrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -519,6 +553,7 @@
     $(document).ready(function() {
         _checkLogin(true);
         _loadProviders();
+        _loadProducts();
     });
 
     function _loadProvidersHandler(providers) {
@@ -621,7 +656,7 @@
                     var list = _fixProvidersFormat(result);
                     var buttonsHTML = '<button type="button" onclick="_openDetailsProviderModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
                         +'<button type="button" onclick="_openEditProviderModal()" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></button>'
-                        +'<button type="button" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
+                        +'<button type="button" onclick="_openDeleteProviderModal()" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
                     $('#providersTable').DataTable({
                         responsive: true,
                         data: list,
@@ -680,6 +715,26 @@
         load(providersPromise);
     }
 
+    function _openDeleteProviderModal() {
+        var tr = $(event.target).closest("tr");
+        var providerId = tr.find(".providerid").length !== 0 ? tr.find(".providerid").text() : tr.prev().find(".providerid").text();
+        var provider = Models["providers"].find(function(e) {
+            return e.provider_id === parseInt(providerId);
+        });
+        if(undefined === provider) {
+            $("#providerDetailsModal").find(".modal-body").text("Un error ha ocurrido. La transacción no fue encontrada. Recargue la página y reintente, por favor.")
+        } else {
+            loadInformation(provider);
+        }
+
+        function loadInformation(tx) {
+            $("#iddeletelabel").text(tx.provider_id);
+            $(".namedeletelabel").text(tx.name);
+            $("#providerDeleteModal").modal("show");
+        }
+    }
+
+
     function _refreshEditProviderModal(result) {
         $("#editModal").modal('hide');
         _refreshModal();
@@ -691,14 +746,58 @@
         _refreshModal();
     }
 
+    function _refreshDeleteProviderModal(result) {
+        $("#providerDeleteModal").modal('hide');
+        _refreshModal();
+    }
+
     function _refreshModal() {
         $("#providersTable").dataTable().fnDestroy();
         $("#successFinishModal").modal('show');
         _loadProviders();
     }
 
+    function _saveDeleteProvider() {
+        var id = parseInt($("#iddeletelabel").text());
+        _deleteProviderProducts(id);
+        _deleteProvider(id);
+    }
+
+    function _refreshDeleteProductModal(message) {
+        console.log(message);
+    }
+
+    function _deleteProviderProducts(id) {
+        var products = Models["products"].filter(function(e) {
+            return e.provider.provider_id === parseInt(id);
+        });
+        if(!products)
+            return;
+        products.forEach(function(element){
+            _deleteProduct(element.product_id);
+        });
+    }
+
     function validateModal(modal) {
         return _validateHTMLForm(modal);
+    }
+
+    function _loadProducts() {
+        var productsPromise = new Promise(
+            function (resolve, reject) {
+                _getProducts(resolve, reject);
+            }
+        );
+
+        var load = function(productsPromise) {
+            productsPromise
+                .then(function (result) {
+                })
+                .catch(function (error) {
+                    console.log(error.message);
+                });
+        };
+        load(productsPromise);
     }
 
     </script>
