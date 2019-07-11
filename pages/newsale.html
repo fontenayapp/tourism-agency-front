@@ -1045,6 +1045,11 @@
                 sale.totalAR -= (sale.discount).toFixed(2);
             }
 
+            var possiblyGreaterTotal = Number($("#totalDiscount").val())*excRate;
+
+            if(possiblyGreaterTotal > sale.totalAR)
+                sale.totalAR = Number(possiblyGreaterTotal.toFixed(2));
+
             $("#totalAmountPayment").text(sale.totalAR);
             $("#remainingAmount").val(sale.totalAR).trigger("change");
             $("#totalWithCharges").val(sale.totalAR);
