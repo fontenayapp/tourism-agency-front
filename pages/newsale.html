@@ -545,7 +545,10 @@
                                     <label>Total a cobrar</label>
                                     <div class=" input-group">
                                         <span class="input-group-addon" id="totalDiscountLabel">US$</span>
-                                        <input id="totalDiscount" class="form-control" value="0" type="number" name="quantity" min="0" disabled>
+                                        <input id="totalDiscount" class="form-control" value="0" type="number" name="quantity" min="0" step="0.01" disabled>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -861,6 +864,7 @@
             $("#discountcurrencysel").change(_currencyChanged);
             $("#exchangeRate").blur(_validateExchangeRate);
             $("#discount").blur(_calculateTotalAmount);
+            $("#totalDiscount").blur(_changeTotalAmount);
             $("#adults, #children, #babies").change(_peopleChanged);
             $("#paymentMethod").change(_refreshPaymentCurrency);
             $("#paymentCurrency").change(_refreshPaymentAmountToAdd);
@@ -1184,13 +1188,28 @@
             var subtotal = $("#subtotalDiscount").val();
             var total = Number((Number(subtotal) - Number(discount)).toFixed(2));
             if(total > 0) {
-                $("#totalDiscount").val(total);
+                $("#totalDiscount").val(total).attr("min",total);
             }
             else {
                 alert("El descuento no debe superar el subtotal");//ERROR
                 $("#totalDiscount").val("");
             }
         }
+
+        function _changeTotalAmount() {
+            var discount = $("#discount").val();
+            var subtotal = $("#subtotalDiscount").val();
+            var oldTotal = Number((Number(subtotal) - Number(discount)).toFixed(2));
+            var newTotal = Number($("#totalDiscount").val());
+            if(newTotal >= oldTotal) {
+                $("#totalDiscount").val(newTotal);
+            }
+            else {
+                alert("El nuevo valor total no debe ser menor al subtotal menos el descuento. Para asignar un valor mas bajo, indique un descuento mayor.");//ERROR
+                $("#totalDiscount").val(oldTotal);
+            }
+        }
+
 
         function _peopleChanged(event) {
             var currP = $(event.target).closest(".productPanel").find("#servicesel");
