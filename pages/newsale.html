@@ -536,9 +536,6 @@
                                     <div class="input-group">
                                         <span class="input-group-addon" id="discountLabel">US$</span>
                                         <input id="discount" class="form-control" disabled value="0" step="0.1" type="number" name="quantity" min="0">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
-                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-3">
@@ -1104,7 +1101,7 @@
 
         function _refreshProvidersSelect(select) {
             var provSel = select ? select : $("#providerSel");
-            Models["providers"].forEach(function(element, index){
+            Models["providers"].filter(function(p) { return !p.deleted}).forEach(function(element, index){
                 var opt = $(document.createElement("option"));
                 opt.text(element.name);
                 opt.attr("value", element.provider_id);
