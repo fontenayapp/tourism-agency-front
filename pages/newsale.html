@@ -528,7 +528,7 @@
                                     <label>Subtotal convertido</label>
                                     <div class=" input-group">
                                         <span class="input-group-addon" id="subtotalDiscountLabel">US$</span>
-                                        <input id="subtotalDiscount" class="form-control" type="number" name="quantity" min="0" disabled>
+                                        <input id="subtotalDiscount" class="form-control" type="number" name="quantity" min="0" step="0.01" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-3">
@@ -860,7 +860,7 @@
             $("#servicesel").change(_productChanged);
             $("#discountcurrencysel").change(_currencyChanged);
             $("#exchangeRate").blur(_validateExchangeRate);
-            $("#discount").blur(_calculateTotalAmount);
+            //$("#discount").blur(_calculateDiscountAmount);
             $("#totalDiscount").blur(_changeTotalAmount);
             $("#adults, #children, #babies").change(_peopleChanged);
             $("#paymentMethod").change(_refreshPaymentCurrency);
@@ -1182,20 +1182,21 @@
                 $("#exchangeRate").val(1);
             }
             _calculateSubtotal();
-            _calculateTotalAmount();
+            _calculateDiscountAmount();
         }
 
-        function _calculateTotalAmount() {
-            var discount = $("#discount").val();
+        function _calculateDiscountAmount() {
+            var discountColor;
+            var totalDiscount = $("#totalDiscount").val();
             var subtotal = $("#subtotalDiscount").val();
-            var total = Number((Number(subtotal) - Number(discount)).toFixed(2));
-            if(total > 0) {
-                $("#totalDiscount").val(total).attr("min",total);
+            var discount = Number((Number(subtotal) - Number(totalDiscount)).toFixed(2));
+            if(discount > 0) {
+                discountColor = 1;
             }
             else {
-                alert("El descuento no debe superar el subtotal");//ERROR
-                $("#totalDiscount").val("");
+                discountColor = 2;
             }
+            $("#discount").val(discount).addClass(discountColor);
         }
 
         function _changeTotalAmount() {
@@ -1275,9 +1276,9 @@
 
         function _refreshProductsSelect(providerID, select) {
             var prodSel = select ? select : $("#servicesel");
-            Models["products"].filter(function(element){
-                if(element.provider.provider_id === Number(providerID))
-                    return element;})
+            Models["products"].filter(function(e) {
+                   return e.provider.provider_id === Number(providerID) && !e.deleted;
+                })
                 .forEach(function(element){
                     var opt = $(document.createElement("option"));
                     opt.text(element.name);
