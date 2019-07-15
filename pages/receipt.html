@@ -124,10 +124,17 @@
 
         function  _fillInformation(sale) {
             _fillReceiptInfo(sale);
-            var subtotal = (sale.total + sale.discount);
-            $(".productSubtotal").text("ARS "+ subtotal + ".00");
-            $(".discount").text("ARS "+sale.discount + ".00");
-            $(".productTotal").text("ARS "+sale.total + ".00");
+            var subt = 0, disc = 0;
+            if(sale.discount > 0) {
+                disc = sale.discount;
+                subt = sale.total + sale.discount;
+            } else {
+                subt = sale.total;
+            }
+
+            $(".productSubtotal").text("ARS "+ subt.toFixed(2));
+            $(".discount").text("ARS "+ disc.toFixed(2));
+            $(".productTotal").text("ARS "+ sale.total.toFixed(2));
             sale.products.forEach(function(el){
                 loadItemTableRow(el);
             });

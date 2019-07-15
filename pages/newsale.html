@@ -542,10 +542,7 @@
                                     <label>Total a cobrar</label>
                                     <div class=" input-group">
                                         <span class="input-group-addon" id="totalDiscountLabel">US$</span>
-                                        <input id="totalDiscount" class="form-control" value="0" type="number" name="quantity" min="0" step="0.01" disabled>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button" onclick="_enableEdit(event)"><i class="fa fa-edit"></i></button>
-                                        </span>
+                                        <input id="totalDiscount" class="form-control" value="0" type="number" name="quantity" min="0" step="0.01">
                                     </div>
                                 </div>
                             </div>
@@ -861,7 +858,7 @@
             $("#discountcurrencysel").change(_currencyChanged);
             $("#exchangeRate").blur(_validateExchangeRate);
             //$("#discount").blur(_calculateDiscountAmount);
-            $("#totalDiscount").blur(_changeTotalAmount);
+            $("#totalDiscount").blur(_calculateDiscountAmount);
             $("#adults, #children, #babies").change(_peopleChanged);
             $("#paymentMethod").change(_refreshPaymentCurrency);
             $("#paymentCurrency").change(_refreshPaymentAmountToAdd);
@@ -960,6 +957,12 @@
                         $('#noPeopleModal').modal('show');
                         peopleNumber = false;
                     }
+                } else if(2 === currentTab) {
+                    var inpTot = $("#totalDiscount");
+                    if(Number(inpTot.val()) <= 0) {
+                        inpTot.addClass("invalid").parent().addClass("has-error");
+                        valid = false;
+                    }
                 } else if(3 === currentTab) {
                     var value = Math.abs(Number($("#remainingAmount").val()));
                     if(value > 1) {
@@ -1039,13 +1042,15 @@
             sale.discount = Number(discInput.val() * sale.customExchangeRate);
 
             if(sale.discount > 0) {
-                sale.totalAR -= (sale.discount).toFixed(2);
+                sale.totalAR -= sale.discount;
             }
 
             var possiblyGreaterTotal = Number($("#totalDiscount").val())*excRate;
 
             if(possiblyGreaterTotal > sale.totalAR)
                 sale.totalAR = Number(possiblyGreaterTotal.toFixed(2));
+            else
+                sale.totalAR = Number((Math.round(sale.totalAR * 100)/100).toFixed(2));
 
             $("#totalAmountPayment").text(sale.totalAR);
             $("#remainingAmount").val(sale.totalAR).trigger("change");
@@ -1187,30 +1192,22 @@
 
         function _calculateDiscountAmount() {
             var discountColor;
-            var totalDiscount = $("#totalDiscount").val();
-            var subtotal = $("#subtotalDiscount").val();
-            var discount = Number((Number(subtotal) - Number(totalDiscount)).toFixed(2));
+            var borderWidth = 1;
+            var totalDiscount = Number($("#totalDiscount").val());
+            var subtotal = Number($("#subtotalDiscount").val());
+            totalDiscount = totalDiscount ? totalDiscount : subtotal;
+            var discount = Number((subtotal - totalDiscount).toFixed(2));
             if(discount > 0) {
-                discountColor = 1;
+                discountColor = "red;";
+                borderWidth = 3;
+            } else if(discount === 0) {
+                discountColor = "rgb(204, 204, 204);";
+                borderWidth = 1;
+            } else {
+                discountColor = "green;";
+                borderWidth = 3;
             }
-            else {
-                discountColor = 2;
-            }
-            $("#discount").val(discount).addClass(discountColor);
-        }
-
-        function _changeTotalAmount() {
-            var discount = $("#discount").val();
-            var subtotal = $("#subtotalDiscount").val();
-            var oldTotal = Number((Number(subtotal) - Number(discount)).toFixed(2));
-            var newTotal = Number($("#totalDiscount").val());
-            if(newTotal >= oldTotal) {
-                $("#totalDiscount").val(newTotal);
-            }
-            else {
-                alert("El nuevo valor total no debe ser menor al subtotal menos el descuento. Para asignar un valor mas bajo, indique un descuento mayor.");//ERROR
-                $("#totalDiscount").val(oldTotal);
-            }
+            $("#discount").val(discount).attr("style", "border-width: " + borderWidth + "px; border-color: " + discountColor);
         }
 
 
