@@ -569,18 +569,16 @@
             }
         }
 
-        function _openPrintSale() {
+        function _openPrintVoucher() {
             var tr = $(event.target).closest("tr");
             var saleId = tr.find(".saleid").length !== 0 ? tr.find(".saleid").text() : tr.prev().find(".saleid").text();
-            window.open("receipt.html?saleid=" + saleId, "_blank");
-            window.open("voucher.html?saleid=" + saleId, "_blank");
+            window.open("voucher.html?saleid=" + saleId+"&download=true", "_blank");
         }
 
-        function _openDownloadSale() {
+        function _openPrintReceipt() {
             var tr = $(event.target).closest("tr");
             var saleId = tr.find(".saleid").length !== 0 ? tr.find(".saleid").text() : tr.prev().find(".saleid").text();
             window.open("receipt.html?saleid=" + saleId+"&download=true", "_blank");
-            window.open("voucher.html?saleid=" + saleId+"&download=true", "_blank");
         }
 
         function _loadSales() {
@@ -595,8 +593,8 @@
                     .then(function (result) {
                         var listado = _fixSalesFormat(result);
                         var buttonsHTML = '<button type="button" onclick="_openDetailsModal()" class="btn btn-primary btn-circle"><i class="fa fa-eye"></i></button>'
-                            +'<button type="button" onclick="_openPrintSale()" class="btn btn-info btn-circle"><i class="fa fa-print"></i></button>'
-                            +'<button type="button" onclick="_openDownloadSale()" class="btn btn-info btn-circle"><i class="fa fa-download"></i></button>'
+                            +'<button type="button" onclick="_openPrintVoucher()" class="btn btn-info btn-circle"><i class="fa fa-print"></i></button>'
+                            +'<button type="button" onclick="_openPrintReceipt()" class="btn btn-info btn-circle"><i class="fa fa-download"></i></button>'
                             +'<button type="button" onclick="_openDeleteModal()" class="btn btn-danger btn-circle"><i class="fa fa-trash-o"></i></button>';
                         $('#salesTable').DataTable({
                             responsive: true,
