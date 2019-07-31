@@ -623,22 +623,24 @@ function _calculateProductsSubtotal(sale) {
 }
 
 function _calculateCommissions(sale) {
-    var subtotal1 = 0;
-    var subtotal2 = 0;
-    var discount = sale.discount;
-    var adjust = sale.totalAR/sale.subtotalAR;
+    var subtotal = 0;
+    var buenosAiresBusPromoter = 0;
+    var buenosAiresBusSeller = 0;
+    var adjust = sale.totalAR/sale.subtotalAR; //NECESARIO PARA SABER LA VARIACION ENTRE DESCUENTO APLICADO Y SUBTOTAL PARA DESCONTAR DEL VALOR DE CADA PRODUCTO
 
     sale.products.forEach(function(e) {
         var commRate = Number(e.provider.commission_rate/100);
-        if(commRate === 8)
-            subtotal1 += e.price * commRate * adjust;
-        else
-            subtotal2 += e.price * commRate * adjust;
+        var provID = Number(e.provider.provider_id);
+        if(provID === 23) {//ES BUENOS AIRES BUS EN PRODUCCION
+            buenosAiresBusPromoter += 50;
+            buenosAiresBusSeller += 17.87;
+        } else
+            subtotal += e.price * commRate * adjust;
     });
 
-    var subtotalSeller = sale.totalAR - (subtotal1+subtotal2);
-    var totalSeller = Number(((subtotalSeller - sale.totalStockAR)*0.1625).toFixed(2));
-    var totalPromoter = subtotal1+subtotal2;
+    var totalPromoter = subtotal + buenosAiresBusPromoter;
+    var subtotalSeller = sale.totalAR - totalPromoter;
+    var totalSeller = Number(((subtotalSeller - sale.totalStockAR)*0.1625).toFixed(2)) + buenosAiresBusSeller;
     return [totalPromoter, totalSeller];
 }
 
