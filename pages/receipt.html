@@ -52,7 +52,13 @@
                     </p>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 ">
-                    <p class ="receiptInfo"></p>
+                    <div class ="receiptInfo">
+                        N° de formato: <div id="saleid"></div>
+                        Fecha del formato: <div id="saledate"></div>
+                        <br/>
+                        Cliente: <div id="saleclient"></div>
+                        Email: <div id="saleemail"></div>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -159,7 +165,10 @@
             html += "<br/>Cliente: " + sale.client.name +"<br/>";
             html += "Email: " + sale.client.email +"<br/>";
 
-            $(".receiptInfo").append(html);
+            $("#saleid").text(sale.sale_id);
+            $("#saledate").text(saleDate);
+            $("#saleclient").text(sale.client.name);
+            $("#saleemail").text(sale.client.email);
         }
 
         function _downloadPDF(saleid) {
