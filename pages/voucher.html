@@ -204,7 +204,7 @@
         }
 
         function _fillProductData(prod, container) {
-            var prodDate = _getFormatDateDDMMYYYYHHMM(new Date(prod.date));
+            var prodDate = _getFormatDateDDMMYYYYHHMM(prod.date);
             var transferLabel = prod.transfer? "SÍ  (" + prodDate.split(" ")[1] + " hs.)" : "NO";
             container.find(".voucher-id").text("N°- F000000" + prod.sold_product_id);
             container.find(".productlabel").text(prod.product.name);

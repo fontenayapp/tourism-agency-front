@@ -647,7 +647,7 @@
                     return e.currency_id === parseInt(tx.currency_id);
                 });
                 $(".descriptiondetailslabel").text(tx.description);
-                $(".datedetailslabel").text(_getFormatDateDDMMYYYYHHMM(new Date(tx.date)));
+                $(".datedetailslabel").text(_getFormatDateDDMMYYYYHHMM(tx.date));
                 $(".currencydetailslabel").text(currency.code);
                 $(".exchangedetailslabel").text(tx.exchange);
                 $(".totaldetailslabel").text(tx.amount);

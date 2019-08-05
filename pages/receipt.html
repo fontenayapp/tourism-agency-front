@@ -37,8 +37,12 @@
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 ">
                     <p>
-                        Av. Córdoba 543, local 74.<br/>
-                        CP 1054, CABA.<br/>
+                        Av. Córdoba 543, local 74.
+                    </p>
+                    <p>
+                        CP 1054, CABA.
+                    </p>
+                    <p>
                         Ciudad Autónoma de Buenos Aires, Argentina.
                     </p>
                     <p>
@@ -52,13 +56,11 @@
                     </p>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 ">
-                    <div class ="receiptInfo">
-                        N° de formato: <div id="saleid"></div>
-                        Fecha del formato: <div id="saledate"></div>
-                        <br/>
-                        Cliente: <div id="saleclient"></div>
-                        Email: <div id="saleemail"></div>
-                    </div>
+                    N° de formato: <div id="saleid"></div>
+                    Fecha del formato: <div id="saledate"></div>
+                    <br/>
+                    Cliente: <div id="saleclient"></div>
+                    Email: <div id="saleemail"></div>
                 </div>
             </div>
             <div class="row">
@@ -159,7 +161,7 @@
         }
 
         function _fillReceiptInfo(sale) {
-            var saleDate = _getFormatDateDDMMYYYY(new Date(sale.date.replace(/-/g, '/')));
+            var saleDate = _getFormatDateDDMMYYYY(sale.date);
 
             var html = "N° de formato: " + sale.sale_id + "<br/>Fecha del formato: " + saleDate +"<br/>";
             html += "<br/>Cliente: " + sale.client.name +"<br/>";

@@ -1389,7 +1389,7 @@
         function loadProdTableRow(product, o) {
             var td1 = $(document.createElement("td")).addClass("increaseWidth").text(product.product.provider.name);
             var td2 = $(document.createElement("td")).addClass("increaseWidth").text(product.product.name);
-            var td3 = $(document.createElement("td")).addClass("increaseWidth").text(_getFormatDateDDMMYYYYHHMM(new Date(product.date)));
+            var td3 = $(document.createElement("td")).addClass("increaseWidth").text(_getFormatDateDDMMYYYYHHMM(product.date));
             var td4 = $(document.createElement("td")).text(product.transfer ? "Sí" : "No");
             var td5 = $(document.createElement("td")).text(product.adults);
             var td6 = $(document.createElement("td")).text(product.children);
