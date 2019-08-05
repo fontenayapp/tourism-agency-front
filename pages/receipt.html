@@ -153,7 +153,8 @@
         }
 
         function _fillReceiptInfo(sale) {
-            var saleDate = _getFormatDateDDMMYYYY(new Date(sale.date));
+            var saleDate = _getFormatDateDDMMYYYY(new Date(sale.date.replace(/-/g, '/')));
+
             var html = "N° de formato: " + sale.sale_id + "<br>Fecha del formato: " + saleDate +"<br>";
             html += "<br>Cliente: " + sale.client.name +"<br>";
             html += "Email: " + sale.client.email +"<br>";
