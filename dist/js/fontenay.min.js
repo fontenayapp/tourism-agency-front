@@ -622,7 +622,7 @@ function _calculateProductsSubtotal(sale) {
     sale.totalStockAR = totalStock;
 }
 
-function _calculateCommissions(sale) {
+function _calculateCommissions2(sale) {
     var subtotal = 0;
     var buenosAiresBusSold = false;
     var otherProductsSold = false;
@@ -634,7 +634,6 @@ function _calculateCommissions(sale) {
     var adjust = sale.totalAR/sale.subtotalAR; //NECESARIO PARA SABER LA VARIACION ENTRE DESCUENTO APLICADO Y SUBTOTAL PARA DESCONTAR DEL VALOR DE CADA PRODUCTO
 
     sale.products.forEach(function(e) {
-        var commRate = Number(e.provider.commission_rate/100);
         var provID = Number(e.provider.provider_id);
         if(provID === 23) {//ES BUENOS AIRES BUS EN PRODUCCION
             buenosAiresBusSold = true;
@@ -660,6 +659,37 @@ function _calculateCommissions(sale) {
     return [totalPromoter, totalSeller];
 }
 
+function _calculateCommissions(sale) {
+    var reducedSale = sale.total;
+    var otherProdCost = 0;
+    var subtotalPromoter = 0;
+    var totalBsAsSale = 0;
+    var totalSeller = 0;
+    var totalPromoter = 0;
+    var otrosProductos = [];
+    var productosBuenosAiresBus = [];
+
+    sale.products.forEach(function(e) { (Number(e.provider.provider_id) === 23 ? productosBuenosAiresBus : otrosProductos).push(e);});
+
+    productosBuenosAiresBus.forEach(function(e) {
+        totalBsAsSale += e.price;
+        var totalPeople = e.adults + e.children + e.babies;
+        totalSeller += 17.87 * totalPeople;
+        totalPromoter += 50 * totalPeople;
+    });
+
+    reducedSale -= totalBsAsSale;
+
+    otrosProductos.forEach(function(e) {
+        otherProdCost += e.stock_price;
+    });
+
+    subtotalPromoter = (reducedSale)*0.1;
+    totalPromoter += subtotalPromoter;
+    totalSeller += (reducedSale - otherProdCost - subtotalPromoter)*0.1625;
+
+    return [totalPromoter, totalSeller];
+}
 
 
 function _enableEdit(e) {
