@@ -408,6 +408,9 @@ table.dataTable thead .sorting:after {
   margin-top: 25px;
 }
 @media print {
+  .manualPadding {
+    height: 0!important;
+  }
   .voucherFooter {
     page-break-after: always;
   }
