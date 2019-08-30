@@ -407,6 +407,11 @@ table.dataTable thead .sorting:after {
 #addPaymentRow {
   margin-top: 25px;
 }
+@media print {
+  .voucherFooter {
+    page-break-after: always;
+  }
+}
 @media (min-width: 1200px) {
   .col-lg-1-5 {
     width: 12.5%;
@@ -421,17 +426,30 @@ table.dataTable thead .sorting:after {
 .form-control-static.inlineBlock {
   display: inline-block;
 }
+.lessSpace {
+  margin: 0;
+}
 .printIconVoucher {
   font-size: 39px!important;
   color: #F2572A;
   padding: 8px 0;
 }
+.providerBox {
+  background-color: lightgrey;
+  padding: 5px 20px;
+}
 .voucherBarTitle {
   background-color: lightgrey;
   font-weight: bold;
+  padding: 10px;
 }
 .voucherHeader {
   border-bottom: black dashed 2px;
+  margin-bottom: 30px;
+}
+.voucherH5 {
+  font-weight: bold;
+  color: lightgrey;
 }
 .voucherHeaderDetails {
   border-left: black dashed 2px;
@@ -441,6 +459,10 @@ table.dataTable thead .sorting:after {
   border-top: black solid 2px;
   border-bottom: black solid 3px;
   height: 60px;
+}
+.voucherMainProduct {
+  text-transform: uppercase;
+  font-weight: bold;
 }
 .voucherText {
   font-size: 13px;
