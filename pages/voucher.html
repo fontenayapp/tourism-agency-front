@@ -33,13 +33,11 @@
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="height: 80px;">
                     <img src="../dist/images/logo.png" style="width: 100%;margin: 10px 0 0 0;max-height: 65px;">
                 </div>
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 voucherHeaderDetails">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 voucherHeaderDetails"  style="height: 80px;">
                     <div>Número de solicitud de compra:</div>
-                    <div><strong>325853086800</strong></div>
-                    <div>Email:</div>
-                    <div><strong>fontenaytours@gmail.com</strong></div>
+                    <div><strong>3258537</strong></div>
                 </div>
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"  style="height: 80px;">
                     <div>Código de reserva / Reservation number:</div>
                     <h4><strong class="voucher-id">N°-</strong></h4>
                 </div>
@@ -81,6 +79,17 @@
                             <p class="providerlabel form-control-static inlineBlock"></p>
                         </div>
                     </div>
+                    <!--<h5 class="voucherH5">Información de la venta / Sale information</h5>
+                    <div class="providerBox">
+                        <div class="form-group lessSpace">
+                            <label>Promotor / Promoter:</label>
+                            <p class="promoterlabel form-control-static inlineBlock"></p>
+                        </div>
+                        <div class="form-group lessSpace">
+                            <label>Vendedor / Seller:</label>
+                            <p class="sellerlabel form-control-static inlineBlock"></p>
+                        </div>
+                    </div>-->
                 </div>
             </div>
             <div class="row">
@@ -210,6 +219,8 @@
             container.find(".transferlabel").text(transferLabel);
             container.find(".datelabel").text(prodDate.split(" ")[0]);
             container.find(".cancelText").text(_getCancelText(prod.date.split(" ")[0]));
+            container.find(".promoterlabel").text();
+            container.find(".sellerlabel").text();
         }
 
         function _getPassengersText(prod) {
@@ -221,11 +232,15 @@
         }
 
         function _getTransferTimePeriod(strHour) {
-            var strEndTime= "";
-            var dateFinish = new Date("2019-01-01T"+strHour+":00");
-            dateFinish.setTime(dateFinish.getTime() + 1800000);
-            strEndTime = dateFinish.getHours() + ":" + dateFinish.getMinutes();
-            return strHour + "hs. a " + strEndTime + "hs.";
+            var dateString = "2019-01-01T"+strHour+":00";
+
+            var dateFinish = new Date(dateString);
+            dateFinish.setMinutes(dateFinish.getMinutes() + 30);
+            var hr = dateFinish.getHours();
+            var min = dateFinish.getMinutes();
+            hr = hr > 9 ? hr : "0"+ hr;
+            min = min > 9 ? min : "0"+min;
+            return strHour + "hs. a " + hr + ":" + min + "hs.";
         }
 
         function _getCancelText(dateProd) {
