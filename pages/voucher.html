@@ -127,7 +127,7 @@
             </div>
             <div class="row">
                 <h4><strong>Políticas de cancelación</strong></h4>
-                <p class="voucherText cancelText"></p>
+                <p class="voucherText">Puede realizar la cancelación sin cargo hasta 24hs. antes de iniciar la actividad (excepto actividades internacionales). Para más información, consulte las políticas de cancelación en nuestra página web.</p>
             </div>
             <div class="row voucherFooter">
                 <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"><i class="printIconVoucher fa fa-print"></i></div>
@@ -218,7 +218,6 @@
             container.find(".passengerslabel").text(_getPassengersText(prod));
             container.find(".transferlabel").text(transferLabel);
             container.find(".datelabel").text(prodDate.split(" ")[0]);
-            container.find(".cancelText").text(_getCancelText(prod.date.split(" ")[0]));
             container.find(".promoterlabel").text();
             container.find(".sellerlabel").text();
         }
@@ -242,19 +241,6 @@
             min = min > 9 ? min : "0"+min;
             return strHour + "hs. a " + hr + ":" + min + "hs.";
         }
-
-        function _getCancelText(dateProd) {
-            var dat = new Date(dateProd + "T00:00:00");
-            dat.setDate(dat.getDate() - 1);
-
-            var day = dat.getDate();
-            var month = dat.getMonth()+1;
-            day = day > 9 ? day : "0"+day;
-            month = month > 9 ? month : "0"+month;
-
-            return "Si cancelás a partir del " + day+ "/" + month + "/"+ dat.getFullYear() + " a las 00:00 hs. (fecha y hora del destino donde inicia la actividad), no podés solicitar reembolso. La reserva no permite cambios.";
-        }
-
 
         function _downloadPDF(saleid) {
             var w = 1100;
