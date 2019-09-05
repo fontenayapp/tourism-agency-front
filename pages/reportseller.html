@@ -594,7 +594,9 @@
                     return e.user_id === userid;
                 }));
             } else {
-                res = result;
+                res = result.filter(function(e) {
+                    return (e.user_id !== 2 && e.user_id !== 39 && e.user_id !== 40)
+                });
             }
             _loadUserSelect(res, sellSel);
         }
