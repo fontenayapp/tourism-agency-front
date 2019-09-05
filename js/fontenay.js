@@ -686,7 +686,10 @@ function _calculateCommissions(sale) {
 
     subtotalPromoter = (reducedSale)*0.1;
     totalPromoter += subtotalPromoter;
-    totalSeller += (reducedSale - otherProdCost - subtotalPromoter)*0.1625;
+    //TODO Improve this with new DB value
+    var userid = Number(getCookie("userid"));
+    var perc = (userid === 41) || (userid === 42) ? 0.2 : 0.1625;
+    totalSeller += (reducedSale - otherProdCost - subtotalPromoter)*perc;
 
     return [totalPromoter, totalSeller];
 }
