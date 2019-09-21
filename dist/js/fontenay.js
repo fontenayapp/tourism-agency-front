@@ -796,7 +796,9 @@ function _fixSalesFormat(result) {
 
 function _fixReportsFormat(result) {
     var list = [];
-    result.forEach(function(e) {
+    result.filter(function(e) {
+        return !e.deleted;
+    }).forEach(function(e) {
         var elem = {};
         elem.promoter = e.promoter ? e.promoter : e.seller;
         elem.saleid = e.sale_id;
