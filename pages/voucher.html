@@ -231,7 +231,7 @@
         }
 
         function _getTransferTimePeriod(strHour) {
-            var dateString = "2019-01-01T"+strHour+":00";
+            var dateString = "2019-01-01T"+strHour+":00.000-03:00";
 
             var dateFinish = new Date(dateString);
             dateFinish.setMinutes(dateFinish.getMinutes() + 30);
