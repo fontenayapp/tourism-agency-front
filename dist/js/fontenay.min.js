@@ -1173,3 +1173,81 @@ function checkCookie() {
 function deleteCookie(cname) {
     document.cookie = cname+'=; Max-Age=-99999999;';
 }
+
+
+/*-------------------------------------------------*/
+
+var placeSearch, autocomplete;
+
+function initAutocomplete() {
+    // Create the autocomplete object, restricting the search to geographical location types.
+    autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')),{
+        componentRestrictions: {country: "AR"}
+    });
+    autocomplete.addListener('place_changed', fillInAddress);
+}
+
+function fillInAddress() {
+    var place = autocomplete.getPlace();
+    document.getElementById('originPlaceID').value = place.place_id;
+    document.getElementById('originPlaceID').disabled = true;
+    _validateOrigin();
+    /*$('#autocompleteOrigin').val(_getDirection(place.address_components))*/
+
+}
+
+function geolocate() {
+    var travelCat = $("#selectTravelCategory").val();
+    var geolocation = {
+        lat: -34.3766824,
+        lng: -59.82270990000001
+    };
+    var circle = new google.maps.Circle({
+        center: geolocation,
+        radius: 1
+    });
+
+    switch(travelCat) {
+        case "to":
+            autocompleteDestination.setBounds(circle.getBounds());
+            break;
+        case "from":
+            autocompleteOrigin.setBounds(circle.getBounds());
+            break;
+        case "other":
+            break;
+        case "inside":
+            autocompleteOrigin.setBounds(circle.getBounds());
+            autocompleteDestination.setBounds(circle.getBounds());
+            break;
+        default:
+            break;
+    }
+
+
+}
+/*
+ function _getDirection (address_components) {
+ var aux = extractFromAddress(address_components , "route"), dir = "";
+ dir += aux ? aux + " ":"";
+ aux = extractFromAddress(address_components , "street_number");
+ dir += aux ? aux + ", ": dir ? ",":"";
+ aux = extractFromAddress(address_components , "locality");
+ dir += aux ? aux + ", ":"";
+ aux =  extractFromAddress(address_components , "administrative_area_level_1");
+ dir += aux ? aux:"";
+ return dir;
+ }*/
+
+function extractFromAddress(components, type) {
+    try {
+        var address = components.filter(function(component){
+                return component.types.indexOf(type) === 0;
+            }).map(function(item) {
+                return item.long_name;
+            }).pop() || null;
+    } catch (e) {
+        address = ""
+    }
+    return address;
+}

@@ -373,7 +373,7 @@
                             </div>
                             <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                                 <label>Dirección</label>
-                                <input class="form-control no-required" id="address" value="">
+                                <input class="form-control no-required" id="autocomplete" value="" onkeyup="_changeAutocomplete()">
                             </div>
                             <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                                 <label>Habitación</label>
@@ -844,6 +844,9 @@
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.9/metisMenu.min.js"></script>
+
+    <!-- GMaps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNWLOJK3lvF4GsJ-fTC9EaV-778MmvpwA&libraries=places,geometry&callback=initAutocomplete" async defer></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/fontenay.js"></script>
@@ -1578,6 +1581,17 @@
         function _calculateTotalWithCharge() {
             var totalWithCharges = Number((Number($("#sumCardCharge").val()) + sale.totalAR - Number($("#remainingAmount").val())).toFixed(2));
             $("#totalWithCharges").val(totalWithCharges);
+        }
+
+        function _changeAutocomplete() {
+            console.log(event.currentTarget.value);
+            /*$.get("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + event.currentTarget.value + "&inputtype=textquery&fields=formatted_address,name,geometry&key=AIzaSyCNWLOJK3lvF4GsJ-fTC9EaV-778MmvpwA",
+                function (result, error) {
+                    console.log(result);
+                    autocomplete(document.getElementById("myInput"), result.candidates);
+                }).fail(function(error) {
+                    console.log(error);
+                })*/
         }
 
         function _parseSale() {
