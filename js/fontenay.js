@@ -1186,15 +1186,15 @@ function initAutocomplete() {
     });
     autocomplete.addListener('place_changed', fillInAddress);
 }
-
+/*
 function fillInAddress() {
     var place = autocomplete.getPlace();
     document.getElementById('originPlaceID').value = place.place_id;
     document.getElementById('originPlaceID').disabled = true;
     _validateOrigin();
-    /*$('#autocompleteOrigin').val(_getDirection(place.address_components))*/
+    $('#autocompleteOrigin').val(_getDirection(place.address_components))
 
-}
+}*/
 
 function geolocate() {
     var travelCat = $("#selectTravelCategory").val();

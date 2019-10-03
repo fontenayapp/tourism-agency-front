@@ -367,13 +367,23 @@
                                 <label>DNI/Pasaporte</label>
                                 <input class="form-control no-required" id="passport" value="" >
                             </div>
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                                <label>Hotel</label>
-                                <input class="form-control no-required" id="hotel" value="">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                                <label>Lugar de hospedaje</label>
+
+                                <div class=" input-group">
+                                    <input class="form-control" id="autocomplete" value="" onkeyup="_changeAutocomplete()">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-info" id="mapsPlace" onclick="_openMapLocation()" disabled><i class="fa fa-map"></i></button>
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                                 <label>Dirección</label>
-                                <input class="form-control no-required" id="autocomplete" value="" onkeyup="_changeAutocomplete()">
+                                <input class="form-control no-required" id="address" value="" disabled>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>Hotel</label>
+                                <input class="form-control no-required" id="hotel" value="" disabled>
                             </div>
                             <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                                 <label>Habitación</label>
@@ -1584,14 +1594,21 @@
         }
 
         function _changeAutocomplete() {
-            console.log(event.currentTarget.value);
-            /*$.get("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + event.currentTarget.value + "&inputtype=textquery&fields=formatted_address,name,geometry&key=AIzaSyCNWLOJK3lvF4GsJ-fTC9EaV-778MmvpwA",
-                function (result, error) {
-                    console.log(result);
-                    autocomplete(document.getElementById("myInput"), result.candidates);
-                }).fail(function(error) {
-                    console.log(error);
-                })*/
+            $("#mapsPlace").prop( "disabled", true);
+        }
+
+        function fillInAddress() {
+            var place = autocomplete.getPlace();
+            $("#hotel").val(place.name);
+            $("#address").val(place.formatted_address);
+            $("#phonenumber").val(place.formatted_phone_number);
+            $("#mapsPlace").attr("mapURL", place.url).prop( "disabled", false);
+            /*$('#autocompleteOrigin').val(_getDirection(place.address_components))*/
+
+        }
+
+        function _openMapLocation() {
+            window.open($("#mapsPlace").attr("mapURL"), "_blank");
         }
 
         function _parseSale() {
