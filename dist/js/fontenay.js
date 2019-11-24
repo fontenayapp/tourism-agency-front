@@ -184,6 +184,7 @@ function _createProvider(provider) {
 
 
 function _createSale(client, sale) {
+    sale.seller_id = sale.seller.user_id;
     sale.client_id = client.client_id;
     sale.promoter_id = sale.promoter.user_id;
     sale.total = sale.totalAR;
