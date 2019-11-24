@@ -422,7 +422,11 @@ function _getPromoters(res, rej) {
                 return (value.user_id !== 2) && (value.user_id !== 39) && (value.user_id !== 40);
             });
             Models["promoters"] = result;
-            res(result);
+            Models["user"] = result.find(function(e) {return e.user_id === Number(getCookie("userid"));});
+
+            var orderedRes = result.filter(function(e) {return e.user_id !== Models["user"].user_id;});
+            orderedRes.unshift(Models["user"]);
+            res(orderedRes);
         }).fail(function(error) {
         if(error.status === 401 || error.status === 422) {
             window.location = "/pages/login.html";
@@ -715,6 +719,10 @@ function _findProduct(id) {
 }
 
 function _findPromoter(id) {
+    return Models.promoters.find(function(el){return el.user_id === Number(id)});
+}
+
+function _findSeller(id) {
     return Models.promoters.find(function(el){return el.user_id === Number(id)});
 }
 

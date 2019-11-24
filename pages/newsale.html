@@ -364,6 +364,11 @@
                                 </select>
                             </div>
                             <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <label>Vendedor</label>
+                                <select class="form-control" id="sellersel">
+                                </select>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4">
                                 <label>DNI/Pasaporte</label>
                                 <input class="form-control no-required" id="passport" value="" >
                             </div>
@@ -477,6 +482,10 @@
                                 <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3 ">
                                     <label>Promotor</label>
                                     <p class="promoterlabel form-control-static"></p>
+                                </div>
+                                <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3 ">
+                                    <label>Vendedor</label>
+                                    <p class="sellerlabel form-control-static"></p>
                                 </div>
                                 <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
                                     <label>DNI/Pasaporte</label>
@@ -746,6 +755,10 @@
                             <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
                                 <label>Promotor</label>
                                 <p class="promoterlabel form-control-static"></p>
+                            </div>
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                                <label>Promotor</label>
+                                <p class="sellerlabel form-control-static"></p>
                             </div>
                             <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-3">
                                 <label>Total</label>
@@ -1024,6 +1037,7 @@
                 contact_number: $("#phonenumber").val()
             };
             sale.promoter = _findPromoter($("#promotersel").val());
+            sale.seller = _findSeller($("#sellersel").val());
         }
 
         function loadConfirmationTab() {
@@ -1090,7 +1104,11 @@
 
         function _loadPromotersHandler(result) {
             var promSel = $("#promotersel");
+            var sellerSel = $("#sellersel");
             _loadUserSelect(result, promSel);
+            _loadUserSelect(result.filter(function(e){return e.role < 3;}), sellerSel);
+            if(Models["user"].role !== 1)
+                sellerSel.attr("disabled","true");
         }
 
         function _loadProducts() {
@@ -1308,6 +1326,7 @@
             $(".phonelabel").text(sale.client.contact_number);
             $(".emaillabel").text(sale.client.email);
             $(".promoterlabel").text(sale.promoter.first_name + " " + sale.promoter.last_name);
+            $(".sellerlabel").text(sale.seller.first_name + " " + sale.seller.last_name);
         }
 
         function _enablePrintBtns() {
